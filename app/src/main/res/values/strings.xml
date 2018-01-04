@@ -1,0 +1,30 @@
+<resources>
+<string name="app_name">Immigration</string>
+
+<string name="txt_subscription">Subscription</string>
+<string name="txt_generate_report">Generate Report</string>
+<string name="txt_stattistics_report">Stattistics Report</string>
+<string name="txt_notification">Notification</string>
+<string name="txt_change_pass">Change Password</string>
+<string name="txt_faq">FAQ \t s</string>
+<string name="txt_privacy">Privacy Policy</string>
+<string name="txt_support">Support</string>
+<string name="txt_logout">Logout</string>
+
+
+    <string name="menu_option_1">Express Entry Point Calculator</string>
+    <string name="menu_option_2">BCPNP Point Calculator</string>
+    <string name="menu_option_3">Manitoba Point Calculator</string>
+    <string name="menu_option_4">Alberta Point Calculator</string>
+    <string name="menu_option_5">PEI Point &#032; &#032; &#032; &#032;Calculator</string>
+    <string name="menu_option_6">Saskatchewan Point Calculator</string>
+
+    <string name="txt_close_app">Do you want to close app !!</string>
+    <string name="txt_yes">yes</string>
+    <string name="txt_No">No</string>
+
+    <string name="create_login">Create an account? &#032;<b>SignUp</b></string>
+    <string name="signup_">Already a Member? &#032;<b>Login</b></string>
+    <string name="signup_term_candition">"I Accept <u><b><font color="#0b2a45">Terms &amp; Condition</font></b></u> of the Immigration</string>
+
+</resources>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer"
+    android:background="@color/colorPrimary"
+    app:contentScaleClosed="1.0"
+    app:contentScaleOpen="0.7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <nl.psdcompany.duonavigationdrawer.views.DuoMenuView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:tag="@string/tag_menu"
+        app:header="@layout/drawer_menu_layout"/>
+
+
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:tag="@string/tag_content">
+
+        <android.support.design.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_content"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme" />
+
+            <LinearLayout
+                android:background="@android:color/white"
+                android:layout_below="@+id/toolbar"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_1"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_2"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_3"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_3"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_4"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_4"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_5"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_5"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                    <TextView
+                        android:background="#bcbcbc"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:id="@+id/btn_menu_option_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/menu_option_6"
+                        android:gravity="center"
+                        android:drawablePadding="20dp" />
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <ProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+    </LinearLayout>
+</nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>
