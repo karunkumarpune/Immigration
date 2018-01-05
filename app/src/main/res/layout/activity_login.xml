@@ -68,6 +68,7 @@
                     style="@style/button_custom_style" />
 
                 <TextView
+                    android:id="@+id/btn_forgot_pass"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="right"
                     android:textColor="@color/txt_white"
@@ -94,7 +95,6 @@
     </RelativeLayout>
 
     <ProgressBar
-        android:visibility="gone"
         android:layout_gravity="center"
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

@@ -8,6 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--All match_parent_Parent-->
+    <style name="all_match_parent_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!--All match_parent-->
+    <style name="alls_match_parent_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    
+   <!--Edit Text Box style--> 
     <style name="textView_custom_style">
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingLeft">15dp</item>
@@ -21,6 +36,22 @@
         <item name="android:background">@drawable/rounded_edittext</item>
     </style>
 
+    <!--Edit Text Box style-->
+    <style name="textView_edit_style">
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:textColorHint">@color/txt_hint_gray</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/rounded_edittext_forgot</item>
+    </style>
+
+
+    <!--Button style-->
     <style name="button_custom_style">
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:padding">0dp</item>
@@ -29,5 +60,68 @@
         <item name="android:textColor">@color/txt_white</item>
         <item name="android:background">@drawable/rounded_button</item>
     </style>
+
+    <!--Forgot Password-->
+
+    <!--Edit Text Box style-->
+    <style name="textView_forgot_style">
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:textColorHint">@color/txt_hint_gray</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/rounded_edittext_forgot</item>
+    </style>
+
+<!--Enter OTP style-->
+    <style name="otp_style">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:textColorHint">@color/txt_hint_gray</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/rounded_edittext_forgot</item>
+    </style>
+
+    <!--Menu text_Style-->
+    <style name="home_text_style">
+        <item name="android:background">#bcbcbc</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:drawableTop">@drawable/calculater</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">20dp</item>
+    </style>
+
+
+    <!--Silde Menu text_Style-->
+    <style name="side_txt_custom_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/txt_white</item>
+    </style>
+
+    <!--Silde Menu view_Style-->
+    <style name="side_view_custom_style" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:background">@color/txt_white</item>
+    </style>
+
+
 
 </resources>

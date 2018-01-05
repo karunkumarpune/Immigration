@@ -6,25 +6,55 @@
 <string name="txt_stattistics_report">Stattistics Report</string>
 <string name="txt_notification">Notification</string>
 <string name="txt_change_pass">Change Password</string>
-<string name="txt_faq">FAQ \t s</string>
+<string name="txt_faq">FAQ\'s</string>
 <string name="txt_privacy">Privacy Policy</string>
 <string name="txt_support">Support</string>
 <string name="txt_logout">Logout</string>
 
 
+    <!--Side menu content-->
     <string name="menu_option_1">Express Entry Point Calculator</string>
     <string name="menu_option_2">BCPNP Point Calculator</string>
     <string name="menu_option_3">Manitoba Point Calculator</string>
     <string name="menu_option_4">Alberta Point Calculator</string>
-    <string name="menu_option_5">PEI Point &#032; &#032; &#032; &#032;Calculator</string>
+    <string name="menu_option_5">PEI Point \n Calculator</string>
     <string name="menu_option_6">Saskatchewan Point Calculator</string>
 
+    <!--ask Close app-->
     <string name="txt_close_app">Do you want to close app !!</string>
     <string name="txt_yes">yes</string>
     <string name="txt_No">No</string>
 
+
     <string name="create_login">Create an account? &#032;<b>SignUp</b></string>
     <string name="signup_">Already a Member? &#032;<b>Login</b></string>
     <string name="signup_term_candition">"I Accept <u><b><font color="#0b2a45">Terms &amp; Condition</font></b></u> of the Immigration</string>
+
+    <string name="txt_forgot_pass">Please enter your registered Mobile Number</string>
+    <string name="txt_otp">Please enter OTP received on </string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="otp">OTP</string>
+    <string name="enter_otp">Enter otp</string>
+    <string name="btn_submit">Submit</string>
+
+
+
+    <string name="reset_password">Reset Password</string>
+    <string name="txt_reset_pass">Please enter a new password</string>
+    <string name="change_password">Change Password</string>
+
+
+    <!--Siginup or EditProfile-->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="enter_email_id">Enter Email ID</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="password">Password</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="sign_up">Sign Up</string>
+
 
 </resources>

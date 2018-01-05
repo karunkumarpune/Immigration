@@ -1,5 +1,6 @@
 package com.immigration
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
@@ -15,6 +16,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.immigration.connectvity_check.ConnectivityReceiver
 import com.immigration.connectvity_check.MyApplication
+import com.immigration.login_info.LoginActivity
 import com.immigration.retrofit.ApiUtils
 import com.immigration.retrofit.model.Example
 import com.newyear.retrofit.ApiInterface
@@ -96,84 +98,53 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
 
-/*//--------------------------------btn_1--------------------
-        mViewHolder!!.btn_1.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+//--------------------------------btn_1--------------------
+        mViewHolder!!.btn_menu_option_1.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 1)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
 
         //--------------------------------btn_2--------------------
-        mViewHolder!!.btn_2.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+        mViewHolder!!.btn_menu_option_2.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 2)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
 
         //--------------------------------btn_3--------------------
-        mViewHolder!!.btn_3.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+        mViewHolder!!.btn_menu_option_3.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 3)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
 
         //--------------------------------btn_4--------------------
-        mViewHolder!!.btn_4.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+        mViewHolder!!.btn_menu_option_4.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 4)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
 
         //--------------------------------btn_5--------------------
-        mViewHolder!!.btn_5.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+        mViewHolder!!.btn_menu_option_5.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 5)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
 
         //--------------------------------btn_6--------------------
-        mViewHolder!!.btn_6.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
+        mViewHolder!!.btn_menu_option_6.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
                     .putExtra("option", 6)
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
-        //--------------------------------btn_7--------------------
-        mViewHolder!!.btn_7.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
-                    .putExtra("option", 7)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-        //--------------------------------btn_8--------------------
-        mViewHolder!!.btn_8.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
-                    .putExtra("option", 8)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-        //--------------------------------btn_9--------------------
-        mViewHolder!!.btn_9.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
-                    .putExtra("option", 9)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-//--------------------------------btn_10--------------------
-        mViewHolder!!.btn_10.setOnClickListener { _ ->
-            startActivity(Intent(this@MainActivity, ChristmasActivity::class.java)
-                    .putExtra("option", 10)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }*/
-
-
-
 
 
 
@@ -189,16 +160,12 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout = findViewById(R.id.drawer)
         val mToolbar: Toolbar = findViewById(R.id.toolbar)
-/*        val btn_1: TextView = findViewById(R.id.btn_1)
-        val btn_2: TextView = findViewById(R.id.btn_2)
-        val btn_3: TextView = findViewById(R.id.btn_3)
-        val btn_4: TextView = findViewById(R.id.btn_4)
-        val btn_5: TextView = findViewById(R.id.btn_5)
-        val btn_6: TextView = findViewById(R.id.btn_6)
-        val btn_7: TextView = findViewById(R.id.btn_7)
-        val btn_8: TextView = findViewById(R.id.btn_8)
-        val btn_9: TextView = findViewById(R.id.btn_9)
-        val btn_10: TextView = findViewById(R.id.btn_10)*/
+        val btn_menu_option_1: TextView = findViewById(R.id.btn_menu_option_1)
+        val btn_menu_option_2: TextView = findViewById(R.id.btn_menu_option_2)
+        val btn_menu_option_3: TextView = findViewById(R.id.btn_menu_option_3)
+        val btn_menu_option_4: TextView = findViewById(R.id.btn_menu_option_4)
+        val btn_menu_option_5: TextView = findViewById(R.id.btn_menu_option_5)
+        val btn_menu_option_6: TextView = findViewById(R.id.btn_menu_option_6)
 
     }
 

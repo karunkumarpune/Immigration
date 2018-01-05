@@ -64,30 +64,22 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_1"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_2"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                 </LinearLayout>
 
@@ -99,30 +91,22 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_3"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_3"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_4"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_4"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                 </LinearLayout>
 
@@ -134,34 +118,24 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_5"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_5"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                     <TextView
-                        android:background="#bcbcbc"
-                        android:layout_margin="5dp"
-                        android:padding="20dp"
                         android:id="@+id/btn_menu_option_6"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="@string/menu_option_6"
-                        android:gravity="center"
-                        android:drawablePadding="20dp" />
+                        style="@style/home_text_style"
+                        />
 
                 </LinearLayout>
-
-
 
 
 
