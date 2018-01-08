@@ -1,15 +1,15 @@
 <resources>
-<string name="app_name">Immigration</string>
+    <string name="app_name">Immigration</string>
 
-<string name="txt_subscription">Subscription</string>
-<string name="txt_generate_report">Generate Report</string>
-<string name="txt_stattistics_report">Stattistics Report</string>
-<string name="txt_notification">Notification</string>
-<string name="txt_change_pass">Change Password</string>
-<string name="txt_faq">FAQ\'s</string>
-<string name="txt_privacy">Privacy Policy</string>
-<string name="txt_support">Support</string>
-<string name="txt_logout">Logout</string>
+    <string name="txt_subscription">Subscription</string>
+    <string name="txt_generate_report">Generate Report</string>
+    <string name="txt_stattistics_report">Statistic Report</string>
+    <string name="txt_notification">Notification</string>
+    <string name="txt_change_pass">Change Password</string>
+    <string name="txt_faq">FAQ\'s</string>
+    <string name="txt_privacy">Privacy Policy</string>
+    <string name="txt_support">Support</string>
+    <string name="txt_logout">Logout</string>
 
 
     <!--Side menu content-->
@@ -31,12 +31,13 @@
     <string name="signup_term_candition">"I Accept <u><b><font color="#0b2a45">Terms &amp; Condition</font></b></u> of the Immigration</string>
 
     <string name="txt_forgot_pass">Please enter your registered Mobile Number</string>
+    <string name="txt_generate_reports">Please enter your Email ID for Generate Report</string>
+
     <string name="txt_otp">Please enter OTP received on </string>
     <string name="resend_otp">Resend OTP</string>
     <string name="otp">OTP</string>
     <string name="enter_otp">Enter otp</string>
     <string name="btn_submit">Submit</string>
-
 
 
     <string name="reset_password">Reset Password</string>
@@ -55,6 +56,19 @@
     <string name="confirm_password">Confirm password</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="sign_up">Sign Up</string>
+
+    <string name="txt_description">This page discusses how to activate (and deactivate) Nuclide packages. General Guidelines. Export activate and deactivate functions from lib/main.</string>
+    <string name="txt_title">Package Activation</string>
+
+    <!---->
+    <string name="txt_subscription_1">You\'ve been qualified for Immigration with canada</string>
+    <string name="txt_subscription_2">You have earned</string>
+    <string name="txt_subscription_3">Subscribe to know  the Immigration Process</string>
+    <string name="txt_subscribe">Subscribe</string>
+    <string name="txt_subscribe_1">If you have score points more than or equal to margin criteria in the test, please click below to get the further knowledge of the process.
+Qualified Subscription</string>
+    <string name="txt_subscribe_2">f you have scored less than margin critera in the test, please click below to get the full knowledge for the qualification of the test.
+Un-qualified Subscription</string>
 
 
 </resources>

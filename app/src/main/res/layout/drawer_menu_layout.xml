@@ -13,7 +13,8 @@
         android:layout_marginTop="10dp"
         android:gravity="center">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+
+        <com.immigration.utils.CircleImageView
             android:id="@+id/profile_pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -23,7 +24,9 @@
             android:src="@drawable/logo"
             app:civ_border_color="@color/txt_white"
             app:civ_border_width="3dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@mipmap/ic_launcher"
+            />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -66,10 +69,31 @@
             android:text="@string/txt_stattistics_report" />
         <View style="@style/side_view_custom_style" />
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/txt_option_4"
-            style="@style/side_txt_custom_style"
+             style="@style/side_txt_custom_style"
             android:text="@string/txt_notification" />
+        <TextView
+            android:text="5"
+            android:textColor="@color/txt_white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_option"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:background="@drawable/ic_notification" />
+        </LinearLayout>
+
+
         <View style="@style/side_view_custom_style" />
 
 

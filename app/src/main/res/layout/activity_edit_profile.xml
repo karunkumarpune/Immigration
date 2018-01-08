@@ -46,7 +46,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+
+                <com.immigration.utils.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="120dp"
                     android:layout_centerInParent="true"
@@ -55,6 +56,8 @@
                     android:src="@drawable/logo"
                     app:civ_border_width="3dp"
                     app:civ_border_color="@color/colorPrimaryDark"/>
+
+
 
                 <ImageView
                     android:id="@+id/iv_camera"
@@ -121,12 +124,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <ProgressBar
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </android.support.design.widget.CoordinatorLayout>
