@@ -1,25 +1,20 @@
-package com.immigration.controller.generateReport
+package com.immigration.controller.faq
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.immigration.R
-import kotlinx.android.synthetic.main.activity_generate_report.*
+import kotlinx.android.synthetic.main.activity_faq.*
 
-class GenerateReport : AppCompatActivity() {
+class FAQActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        setContentView(R.layout.activity_generate_report)
+        setContentView(R.layout.activity_faq)
 
-        report_btn_click_back.setOnClickListener {
+        faq_btn_click_back.setOnClickListener {
             onBackPressed()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-
-        submit_btn.setOnClickListener {
-         //   onBackPressed()
-        }
-
     }
 }

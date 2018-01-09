@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.immigration.R
-import com.immigration.controller.home.NavigationActivity
+import com.immigration.controller.login.LoginActivity
 import com.immigration.utils.CustomProgressBar
 
 class SplashActivity : AppCompatActivity() {
@@ -17,8 +17,11 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            startActivity(Intent(this, NavigationActivity::class.java))
-        }, 100)
+            startActivity(Intent(this, LoginActivity::class.java)
+                  /*  .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)*/
+            )
+        }, 2000)
 
     }
 }

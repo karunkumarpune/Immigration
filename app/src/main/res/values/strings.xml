@@ -6,7 +6,7 @@
     <string name="txt_stattistics_report">Statistic Report</string>
     <string name="txt_notification">Notification</string>
     <string name="txt_change_pass">Change Password</string>
-    <string name="txt_faq">FAQ\'s</string>
+    <string name="txt_faq">FAQ\'S</string>
     <string name="txt_privacy">Privacy Policy</string>
     <string name="txt_support">Support</string>
     <string name="txt_logout">Logout</string>
@@ -19,6 +19,16 @@
     <string name="menu_option_4">Alberta Point Calculator</string>
     <string name="menu_option_5">PEI Point \n Calculator</string>
     <string name="menu_option_6">Saskatchewan Point Calculator</string>
+
+
+    <!--Side menu send Intent content-->
+    <string name="send_intent_1">Express Entry</string>
+    <string name="send_intent_2">BCPNP</string>
+    <string name="send_intent_3">Manitoba</string>
+    <string name="send_intent_4">Alberta</string>
+    <string name="send_intent_5">PEI</string>
+    <string name="send_intent_6">Saskatchewan</string>
+
 
     <!--ask Close app-->
     <string name="txt_close_app">Do you want to close app !!</string>
@@ -69,6 +79,30 @@
 Qualified Subscription</string>
     <string name="txt_subscribe_2">f you have scored less than margin critera in the test, please click below to get the full knowledge for the qualification of the test.
 Un-qualified Subscription</string>
+    <string name="skip">Skip</string>
+    <string name="support_ask_question">Ask your Question here...</string>
+
+
+    <!--FAQ-->
+
+    <string name="faq_">Question 1- What is Canadian Express Entry program and how does it work?
+Answer:
+Express Entry is a newly introduced method of managing applications for the existing immigration programs, which are The Federal Skilled Workers Program (FSWP), The Federal Skilled Trade Program (FSTP) and The Canadian Experience Class Program (CEC).
+
+
+Question 2- What is Canadian Express Entry program and how does it work?
+Answer:
+Express Entry is a newly introduced method of managing applications for the existing immigration programs, which are The Federal Skilled Workers Program (FSWP), The Federal Skilled Trade Program (FSTP) and The Canadian Experience Class Program (CEC).
+
+
+Question 3- Which immigration programs will be covered in the Express Entry Schemes?
+Answer:
+The three programs that will be covered under this scheme will be:
+
+The Federal Skilled Worker Program;
+The Federal Skilled Trades Program;
+The Canadian Experience Class Program.
+The Canadian Provincial Program</string>
 
 
 </resources>

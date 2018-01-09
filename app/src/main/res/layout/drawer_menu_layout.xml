@@ -27,6 +27,15 @@
             app:srcCompat="@mipmap/ic_launcher"
             />
 
+        <ImageButton
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_edit" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +47,7 @@
             android:textSize="20dp"
             android:textStyle="bold"
 
-            />
+            android:id="@+id/textView" />
 
     </RelativeLayout>
 

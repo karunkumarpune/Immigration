@@ -78,6 +78,7 @@
 
 
                 <Button
+                    android:id="@+id/btn_submit_otp"
                     style="@style/button_custom_style"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

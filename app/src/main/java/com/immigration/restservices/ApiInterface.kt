@@ -16,7 +16,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("/")
-    fun Save(@Field("name") name:String,
+    fun Save(@Field("answer") name:String,
              @Field("Date") Date:String):Call<JSONObject>
 
 

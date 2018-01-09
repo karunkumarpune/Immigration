@@ -11,11 +11,18 @@ import kotlinx.android.synthetic.main.activity_notification.*
 
 class NotificationActivity : AppCompatActivity() {
 
-
     lateinit var list:ArrayList<Notification>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_notification)
+
+
+        noti_btn_click_back.setOnClickListener {
+            onBackPressed()
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+        }
 
         list= ArrayList()
         recy_notification.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)

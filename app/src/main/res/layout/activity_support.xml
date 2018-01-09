@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize">
             <ImageButton
-                android:id="@+id/forgot_btn_click_back"
+                android:id="@+id/support_btn_click_back"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forgot Password"
+                android:text="@string/txt_support"
                 android:textColor="@color/txt_white"
                 android:textStyle="bold"
                 android:textSize="15sp"
@@ -48,31 +48,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:padding="5dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_forgot_pass"
-                    />
 
                 <EditText
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:gravity="top|left"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/phone"
-                    android:hint="Mobile number"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    style="@style/textView_forgot_style" />
+                    android:layout_height="260dp"
+                    android:hint="@string/support_ask_question"
+                    android:textSize="15sp"
+                    android:maxLines="7"
+                    android:background="@drawable/rounded_edittext_forgot" />
 
 
                 <Button
-                    android:id="@+id/btn_forgot_pass"
+                    android:id="@+id/btn_submit_support"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="@string/btn_submit"
+                    android:text="Submit"
                     style="@style/button_custom_style" />
 
             </LinearLayout>

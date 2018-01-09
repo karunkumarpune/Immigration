@@ -18,7 +18,7 @@
             android:background="@color/colorPrimary">
 
             <ImageButton
-                android:id="@+id/forgot_btn_click_back"
+                android:id="@+id/subs_li_btn_click_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -58,6 +58,7 @@
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/btn_subscribe1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     style="@style/button_custom_style"
@@ -91,6 +92,7 @@
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/btn_subscribe2"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     style="@style/button_custom_style"

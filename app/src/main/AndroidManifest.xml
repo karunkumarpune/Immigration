@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.immigration">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".controller.application.MyApplication"
         android:allowBackup="true"
@@ -30,7 +32,11 @@
         <activity android:name=".controller.statisticReport.StatisticReportActivity" />
         <activity android:name=".controller.generateReport.GenerateReport" />
         <activity android:name=".controller.subscription.SubscriptionActivity" />
-        <activity android:name=".controller.subscription.SubscriptionListActivity"></activity>
+        <activity android:name=".controller.subscription.SubscriptionListActivity" />
+        <activity android:name=".controller.questions.QuestionsActivity" />
+        <activity android:name=".controller.support.SupportActivitys" />
+        <activity android:name=".controller.faq.FAQActivity" />
+        <activity android:name=".controller.privecy.PrivecyPolicyActivity"></activity>
     </application>
 
 </manifest>

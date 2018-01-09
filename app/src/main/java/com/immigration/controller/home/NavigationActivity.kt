@@ -5,21 +5,26 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.view.GravityCompat
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.immigration.R
 import com.immigration.controller.application.MyApplication
+import com.immigration.controller.faq.FAQActivity
 import com.immigration.controller.generateReport.GenerateReport
 import com.immigration.controller.login.ChangePasswordActivity
+import com.immigration.controller.login.EditProfileActivity
 import com.immigration.controller.login.LoginActivity
 import com.immigration.controller.notification.NotificationActivity
+import com.immigration.controller.privecy.PrivecyPolicyActivity
+import com.immigration.controller.questions.QuestionsActivity
 import com.immigration.controller.statisticReport.StatisticReportActivity
 import com.immigration.controller.subscription.SubscriptionListActivity
+import com.immigration.controller.support.SupportActivitys
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.ConnectivityReceiver
 import com.immigration.utils.CustomProgressBar
@@ -43,6 +48,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_navigation)
+
         initView()
         apiInterface = ApiUtils.apiService
         pb = CustomProgressBar(this);
@@ -52,6 +58,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         mViewHolder = ViewHolder()
         profile_pic = findViewById<View>(R.id.profile_pic) as ImageView
         handleDrawer()
+
+
 
         if (ConnectivityReceiver.isConnected()) {
             try {
@@ -71,6 +79,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         },3000)
     }
 
+
+    /*init View */
+
     private fun initView() {
 
         val btn_menu_option_1: TextView = findViewById(R.id.btn_menu_option_1)
@@ -79,6 +90,42 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         val btn_menu_option_4: TextView = findViewById(R.id.btn_menu_option_4)
         val btn_menu_option_5: TextView = findViewById(R.id.btn_menu_option_5)
         val btn_menu_option_6: TextView = findViewById(R.id.btn_menu_option_6)
+
+        btn_menu_option_1.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_1) )
+            )
+        }
+
+        btn_menu_option_2.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_2) )
+            )
+        }
+
+        btn_menu_option_3.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_3) )
+            )
+        }
+
+       btn_menu_option_4.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_4) )
+            )
+        }
+
+        btn_menu_option_5.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_5) )
+            )
+        }
+
+        btn_menu_option_6.setOnClickListener {
+            startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
+                    .putExtra("option",resources.getString(R.string.send_intent_6) )
+            )
+        }
 
     }
 
@@ -98,7 +145,14 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
 
-//--------------------------------btn_1--------------------
+       //--------------------------------btn_Edit--------------------
+        mViewHolder!!.btn_edit.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,EditProfileActivity::class.java)
+
+            )
+            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+        }
+ //--------------------------------btn_1--------------------
         mViewHolder!!.txt_option_1.setOnClickListener { _ ->
             startActivity(Intent(this@NavigationActivity,SubscriptionListActivity::class.java)
                     .putExtra("option", 1)
@@ -140,8 +194,33 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         //--------------------------------btn_6--------------------
         mViewHolder!!.txt_option_6.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
+            startActivity(Intent(this@NavigationActivity,FAQActivity::class.java)
                     .putExtra("option", 6)
+            )
+            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+        }
+
+
+        //--------------------------------btn_7--------------------
+        mViewHolder!!.txt_option_7.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,PrivecyPolicyActivity::class.java)
+                    .putExtra("option", 4)
+            )
+            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+        }
+
+        //--------------------------------btn_8--------------------
+        mViewHolder!!.txt_option_8.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
+
+            )
+            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+        }
+
+        //--------------------------------btn_9--------------------
+        mViewHolder!!.txt_option_9.setOnClickListener { _ ->
+            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
+
             )
             mViewHolder!!.mDuoDrawerLayout.closeDrawer()
         }
@@ -160,12 +239,17 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout = findViewById(R.id.drawer)
         val mToolbar: Toolbar = findViewById(R.id.toolbar)
+        val btn_edit: ImageButton = findViewById(R.id.btn_edit)
+
         val txt_option_1: TextView = findViewById(R.id.txt_option_1)
         val txt_option_2: TextView = findViewById(R.id.txt_option_2)
         val txt_option_3: TextView = findViewById(R.id.txt_option_3)
         val txt_option_4: TextView = findViewById(R.id.txt_option_4)
         val txt_option_5: TextView = findViewById(R.id.txt_option_5)
         val txt_option_6: TextView = findViewById(R.id.txt_option_6)
+        val txt_option_7: TextView = findViewById(R.id.txt_option_7)
+        val txt_option_8: TextView = findViewById(R.id.txt_option_8)
+        val txt_option_9: TextView = findViewById(R.id.txt_option_9)
 
 
     }
@@ -176,13 +260,13 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (mViewHolder!!.mDuoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
-        AlertDialog.Builder(this)
+       /* AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("")
                 .setMessage(resources.getString(R.string.txt_close_app))
                 .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
                 .setNegativeButton(resources.getString(R.string.txt_No), null)
-                .show()
+                .show()*/
     }
 
 
@@ -228,7 +312,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             finishAndRemoveTask()
         } else {
-            finish()
+            this.moveTaskToBack(true);
+
         }
     }
 }
