@@ -80,24 +80,18 @@
 
                 <EditText
                     android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/user"
                     android:hint="@string/first_name"
                     android:inputType="text"
                     style="@style/textView_edit_style" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/user"
                     android:hint="@string/last_name"
                     android:inputType="text"
                     style="@style/textView_edit_style" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/phone"
                     android:hint="@string/mobile_number"
                     android:inputType="number"
@@ -105,8 +99,6 @@
                     style="@style/textView_edit_style" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/email"
                     android:hint="@string/enter_email_id"
                     android:inputType="textEmailAddress"
@@ -114,8 +106,6 @@
 
                 <Button
                     android:id="@+id/signup_btn_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
                     android:text="@string/btn_submit"
                     style="@style/button_custom_style" />
 

@@ -16,12 +16,16 @@ import java.util.*
 
 
 
+
+
 class ExpandListAdapter(private val context: Context, private val questions: ArrayList<Question>) : BaseExpandableListAdapter() {
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
         val chList = questions[groupPosition].items
         return chList!![childPosition]
     }
+
+
 
     override fun getChildId(groupPosition: Int, childPosition: Int): Long {
         return childPosition.toLong()
@@ -42,11 +46,27 @@ class ExpandListAdapter(private val context: Context, private val questions: Arr
        // for (i in 0 until childPosition) {
             val button = RadioButton(context)
            button.id = groupPosition+childPosition
-        button.setTextSize(context.resources.getDimension(R.dimen.textsize))
+        button.textSize = context.resources.getDimension(R.dimen.textsize)
         button.text = answer.answer!!.toString()
+        button.scaleX = .8f;
+        button.scaleY = .8f;
+
 
           //  button.isChecked = i == currentHours // Only select button with same index as currently selected number of hours
           //  button.setBackgroundResource(R.drawable.item_selector) // This is a custom button drawable, defined in XML
+
+
+
+
+/*
+        val activity = context as QuestionsActivity
+      activity.btn_sumit.setOnClickListener {
+          context.startActivity(Intent(context, SubscriptionActivity::class.java)
+                  .putExtra("session_sub","1")
+          )
+          context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+      }*/
             answer_.addView(button)
        // }
 
@@ -56,7 +76,7 @@ class ExpandListAdapter(private val context: Context, private val questions: Arr
 
     override fun getChildrenCount(groupPosition: Int): Int {
         val chList = questions[groupPosition].items
-        return chList!!.size
+        return 2
     }
 
     override fun getGroup(groupPosition: Int): Any {
@@ -82,6 +102,16 @@ class ExpandListAdapter(private val context: Context, private val questions: Arr
         val txt_questations = convertView!!.findViewById<View>(R.id.txt_questations) as TextView
         txt_questation_num.text = "Question ${groupPosition+1}"
         txt_questations.text = question.name
+
+
+   //  txt_questations.setOnClickListener {
+          // val activity = context as QuestionsActivity
+           //activity.isCheck=true
+
+       //  Toast.makeText(context,"hii",Toast.LENGTH_SHORT).show()
+        //}
+
+
         return convertView
     }
 
@@ -92,5 +122,6 @@ class ExpandListAdapter(private val context: Context, private val questions: Arr
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
         return true
     }
+
 
 }

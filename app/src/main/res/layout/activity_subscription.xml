@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize">
             <ImageButton
-                android:id="@+id/forgot_btn_click_back"
+                android:id="@+id/sub_btn_click_back"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,6 +37,7 @@
 
 
         <ImageView
+            android:id="@+id/subscribe_img"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -52,6 +53,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/sub_text"
                     android:gravity="center"
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
@@ -65,6 +67,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/sub_descriop"
                     android:gravity="center"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimary"
@@ -85,6 +88,7 @@
                     />
 
                 <TextView
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimary"
@@ -100,7 +104,7 @@
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="12sp"
+                    android:textSize="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_subscription_3"
@@ -108,9 +112,8 @@
 
 
                 <Button
+                    android:id="@+id/btn_sumit"
                     android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
                     android:text="@string/txt_subscription"
                     style="@style/button_custom_style" />
 

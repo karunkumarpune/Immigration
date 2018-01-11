@@ -27,7 +27,7 @@ class NotificationActivity : AppCompatActivity() {
         list= ArrayList()
         recy_notification.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)
 
-        list.add(Notification(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
+        list.add(Notification(getString(R.string.txt_title), getString(R.string.txt_description), "6:45 PM"))
         list.add(Notification(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
         list.add(Notification(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
         list.add(Notification(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))

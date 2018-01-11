@@ -54,16 +54,18 @@
 
 
             <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Q1"
-                />
+                android:text="@string/Q1" />
 
             <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
                 android:textSize="12sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
@@ -72,39 +74,19 @@
                 />
 
 
-
             <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="30dp"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Q1"
-                />
+                android:text="@string/Q1" />
 
             <TextView
-                android:padding="10dp"
-                android:textSize="12sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ans1"
-                />
-
-
-
-
-            <TextView
-                android:padding="10dp"
-                android:textSize="12sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Q1"
-                />
-
-            <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
                 android:textSize="12sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
@@ -113,39 +95,19 @@
                 />
 
 
-
-
             <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="30dp"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Q1"
-                />
+                android:text="@string/Q1" />
 
             <TextView
-                android:padding="10dp"
-                android:textSize="12sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ans1"
-                />
-
-
-
-            <TextView
-                android:padding="10dp"
-                android:textSize="12sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Q1"
-                />
-
-            <TextView
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
                 android:textSize="12sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
@@ -154,8 +116,46 @@
                 />
 
 
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingTop="30dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1" />
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
 
 
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingTop="30dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1" />
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
 
 
         </LinearLayout>

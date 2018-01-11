@@ -62,8 +62,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     style="@style/button_custom_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:text="@string/txt_subscribe" />
 
@@ -96,9 +94,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     style="@style/button_custom_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom"
+                   android:layout_gravity="bottom"
                     android:text="@string/txt_subscribe" />
 
             </LinearLayout>

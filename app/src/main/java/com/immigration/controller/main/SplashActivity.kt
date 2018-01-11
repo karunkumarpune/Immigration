@@ -15,12 +15,13 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
         Handler().postDelayed({
+
             startActivity(Intent(this, LoginActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }, 2000)
 
     }

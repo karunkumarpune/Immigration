@@ -31,8 +31,8 @@
                 android:layout_centerVertical="true"
                 android:text="@string/send_intent_1"
                 android:textColor="@color/txt_white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="15sp" />
 
             <TextView
 

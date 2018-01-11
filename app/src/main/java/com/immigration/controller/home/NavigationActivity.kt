@@ -152,7 +152,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             //--------------------------------btn_6--------------------
 
 
-
+            mViewHolder!!.txt_noti_count.visibility=View.GONE
+            mViewHolder!!.txt_option_4.visibility=View.GONE
 
             mViewHolder!!.profile_pic.visibility=View.VISIBLE
             mViewHolder!!.txt_profile_name.visibility=View.VISIBLE
@@ -327,8 +328,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                         .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
 
                             startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
-
-
+                     finish()
                         }
                         .setNegativeButton(resources.getString(R.string.txt_No), null)
                         .show()
@@ -356,8 +356,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         val profile_pic: ImageView = findViewById(R.id.profile_pic)
         val btn_edit: ImageButton = findViewById(R.id.btn_edit)
         val txt_profile_name: TextView = findViewById(R.id.txt_profile_name)
-
-
+        val noti_relative_click: LinearLayout = findViewById(R.id.noti_relative_click)
         val txt_noti_count: TextView = findViewById(R.id.txt_noti_count)
 
         val view_id_1: View = findViewById(R.id.view_id_1)
@@ -390,13 +389,26 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (mViewHolder!!.mDuoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
-        AlertDialog.Builder(this)
+       /* AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("")
                 .setMessage(resources.getString(R.string.txt_close_app))
                 .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
                 .setNegativeButton(resources.getString(R.string.txt_No), null)
+                .show()*/
+
+        AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("")
+                .setMessage(resources.getString(R.string.txt_close_app))
+                .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
+
+                    startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
+                    finish()
+                }
+                .setNegativeButton(resources.getString(R.string.txt_No), null)
                 .show()
+
     }
 
 

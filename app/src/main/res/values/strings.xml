@@ -8,7 +8,7 @@
     <string name="txt_stattistics_report">Statistic Reports</string>
     <string name="txt_notification">Notification</string>
     <string name="txt_change_pass">Change Password</string>
-    <string name="txt_faq">FAQ\'S</string>
+    <string name="txt_faq">FAQ\'s</string>
     <string name="txt_privacy">Privacy Policy</string>
     <string name="txt_support">Support</string>
     <string name="txt_logout">Logout</string>
@@ -19,7 +19,7 @@
     <string name="menu_option_2">BCPNP Point Calculator</string>
     <string name="menu_option_3">Manitoba Point Calculator</string>
     <string name="menu_option_4">Alberta Point Calculator</string>
-    <string name="menu_option_5">PEI Point \n Calculator</string>
+    <string name="menu_option_5">PEI Point Calculator</string>
     <string name="menu_option_6">Saskatchewan Point Calculator</string>
 
 
@@ -33,7 +33,7 @@
 
 
     <!--ask Close app-->
-    <string name="txt_close_app">Do you want to close app !!</string>
+    <string name="txt_close_app">Are you sure you want to Logout?</string>
     <string name="txt_yes">yes</string>
     <string name="txt_No">No</string>
 
@@ -63,9 +63,9 @@
     <string name="enter_email_id">Email ID</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="password">Password</string>
-    <string name="current_password">Current password</string>
-    <string name="new_password">New password</string>
-    <string name="confirm_password">Confirm password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
@@ -74,13 +74,16 @@
     <string name="txt_title">Package Activation</string>
 
     <!---->
+
     <string name="txt_subscription_1">You\'ve been qualified for Immigration with canada</string>
+    <string name="txt_subscription_sorray">You\'ve been Disqualified for Immigration with canada</string>
+
     <string name="txt_subscription_2">You have earned</string>
     <string name="txt_subscription_3">Subscribe to know  the Immigration Process</string>
     <string name="txt_subscribe">Subscribe</string>
     <string name="txt_subscribe_1">If you have score points more than or equal to margin criteria in the test, please click below to get the further knowledge of the process.
 Qualified Subscription</string>
-    <string name="txt_subscribe_2">f you have scored less than margin critera in the test, please click below to get the full knowledge for the qualification of the test.
+    <string name="txt_subscribe_2">If you have scored less than margin critera in the test, please click below to get the full knowledge for the qualification of the test.
 Un-qualified Subscription</string>
     <string name="skip">Skip</string>
     <string name="support_ask_question">Ask your Question here...</string>
@@ -111,33 +114,23 @@ The Canadian Provincial Program</string>
     <string name="ans1">Answer:\n Express Entry is a newly introduced method of managing applications for the existing immigration programs, which are The Federal Skilled Workers Program (FSWP), The Federal Skilled Trade Program (FSTP) and The Canadian Experience Class Program (CEC).</string>
     <string name="save">Save</string>
 
-
-
     <string name="term_condition">About this Website
-There are disclaimers throughout our website stating that Iimmigration is an independent entity. \n
-
-Certifications
-Immigration has passed rigorous background checks that ensure the validity and the overall legitimacy of our business. \n
-
-Intellectual property rights
-Except where otherwise stated, Immigration is the copyright holder of all content, layout, design, data, graphics, trademarks and logos under the isaglobal.in domain. The content is protected by India and international copyright laws. Immigration Global will do our outmost to protect our rights, employees, customers, members and intellectual property. We will not hesitate to take legal action if necessary. \n \n
-
-Limitation of Liability
-Immigration shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the materials on this website or the performance of the products, even if Immigration has been advised of the possibility of such damages. Applicable law may not allow the limitation of exclusion of liability or incidental or consequential damages, so the above limitation or exclusion may not apply to you.\n
-
+There are disclaimers throughout our website stating that Iimmigration is an independent entity. \n \n
+Certifications Immigration has passed rigorous background checks that ensure the validity and the overall legitimacy of our business.\n \n
+Intellectual property rights Except where otherwise stated, Immigration is the copyright holder of all content, layout, design, data, graphics, trademarks and logos under the isaglobal.in domain.  \n
+The content is protected by India and international copyright laws. Immigration Global will do our outmost to protect our rights, employees, customers, members and intellectual property. We will not hesitate to take legal action if necessary. \n \n
+Limitation of Liability Immigration shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the materials on this website or the performance of the products, even if Immigration has been advised of the possibility of such damages. \n \n
+Applicable law may not allow the limitation of exclusion of liability or incidental or consequential damages, so the above limitation or exclusion may not apply to you.\n \n
 Legal Form and Choice of Law:By using our website, purchasing a products or service, you have entered into a legal contract with Immigration Overseas Careers. You agree that the prevailing party in a civil lawsuit may be awarded reasonable attorney's fees.</string>
 
 
     <string name="term_conditions">Terms &amp; Conditions</string>
-    <string name="term_privecy_police">immigration recognize the importance of preserving complete confidentiality. Any personal information and/or business proprietary material that you might disclose to us is treated with strict confidence.\n
-
-All information given to immigration by its prospective clients, is kept strictly confidential and on a need-to-know basis and is protected. We will only record your personal details if you send us a message. You can be assured that your personal information is used only by our trained staff for the purpose of the work you have engaged our office to do. \n \n
-
-We will not use your e-mail address for any other purpose, and will not disclose it, without your consent. Your information is never used for marketing or solicitation and is never sold or given to anyone for these purposes./n /n
-
-Immigration never supplies any other person or organization with your information except those government agencies involved in your immigration process (e.g. Australian Immigration Authorities, DIAC or the Homeoffice, UK, etc.). /n /n
-
-You can register with our website if you would like to receive our newsletter, catalog or updates on our new products and services. Information you submit on our website will not be used for this purpose unless you have given us your specific consent to do so.</string>
+    <string name="term_privecy_police">Immigration recognize the importance of preserving complete confidentiality. Any personal information and/or business proprietary material that you might disclose to us is treated with strict confidence.\n \n
+        All information given to immigration by its prospective clients, is kept strictly confidential and on a need-to-know basis and is protected. We will only record your personal details if you send us a message.
+        You can be assured that your personal information is used only by our trained staff for the purpose of the work you have engaged our office to do. \n \n
+        We will not use your e-mail address for any other purpose, and will not disclose it, without your consent. Your information is never used for marketing or solicitation and is never sold or given to anyone for these purposes.\n \n
+Immigration never supplies any other person or organization with your information except those government agencies involved in your immigration process (e.g. Australian Immigration Authorities, DIAC or the Homeoffice, UK, etc.).
+        \n \n You can register with our website if you would like to receive our newsletter, catalog or updates on our new products and services. Information you submit on our website will not be used for this purpose unless you have given us your specific consent to do so.</string>
 
 
 </resources>
