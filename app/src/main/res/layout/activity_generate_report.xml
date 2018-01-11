@@ -50,10 +50,10 @@
 
                 <TextView
                     android:gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/title_top_marg"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_size_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_generate_reports"

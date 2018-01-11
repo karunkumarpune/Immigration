@@ -32,8 +32,8 @@
 
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:src="@drawable/logo"
                 />
 
@@ -45,31 +45,28 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/phone"
-                    android:hint="Mobile number"
+                    android:hint="@string/mobile_number"
                     android:inputType="number"
                     android:maxLength="10"
-                    style="@style/textView_custom_style" />
+                    style="@style/textView_edit_style" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/password"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
-                    style="@style/textView_custom_style"
+                    style="@style/textView_edit_style"
                     />
 
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="Login"
+                    android:text="@string/login"
                     style="@style/button_custom_style" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/btn_forgot_pass"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="right"

@@ -17,13 +17,14 @@ class LoginActivity : AppCompatActivity() {
 
         btn_login_skip.setOnClickListener {
             startActivity(Intent(this,NavigationActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .putExtra("session","0")
             )
         }
 
         btn_login.setOnClickListener {
-            startActivity(Intent(this,NavigationActivity::class.java))
+            startActivity(Intent(this,NavigationActivity::class.java)
+                    .putExtra("session","1")
+            )
         }
 
         login_btn_signup.setOnClickListener {

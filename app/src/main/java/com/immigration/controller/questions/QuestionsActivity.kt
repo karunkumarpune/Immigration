@@ -1,5 +1,6 @@
 package com.immigration.controller.questions
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -11,6 +12,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.immigration.R
 import com.immigration.controller.questions.model.Answer
 import com.immigration.controller.questions.model.Question
+import com.immigration.controller.subscription.SubscriptionActivity
 import com.immigration.utils.CustomProgressBar
 import kotlinx.android.synthetic.main.activity_questions.*
 import org.json.JSONException
@@ -50,6 +52,14 @@ class QuestionsActivity : AppCompatActivity() {
             onBackPressed()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+
+        btn_submit_qus.setOnClickListener {
+            startActivity(Intent(this, SubscriptionActivity::class.java))
+
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+
 
         makejsonobjreq()
     }

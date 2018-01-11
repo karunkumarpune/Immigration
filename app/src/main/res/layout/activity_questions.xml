@@ -31,9 +31,35 @@
                 android:layout_centerVertical="true"
                 android:text="@string/send_intent_1"
                 android:textColor="@color/txt_white"
-                android:textSize="15sp"
-                android:textAllCaps="true"
+                android:textSize="12sp"
                 android:textStyle="bold" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Points"
+                android:textSize="12sp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:textColor="#fff"
+                android:text="20"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:background="@drawable/circle_text"
+                />
+
         </RelativeLayout>
 
 
@@ -43,15 +69,28 @@
             android:layout_below="@+id/toolbar">
 
             <ExpandableListView
+                android:background="#f2f0f0"
+                android:childDivider="@null"
+                android:divider="@null"
+                android:groupIndicator="@null"
                 android:id="@+id/simple_expandable_listview"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="0.5dp" />
+                 />
 
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_submit_qus"
+            android:textAllCaps="false"
+            android:textColor="@color/txt_white"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_submit"
+            />
 
     </RelativeLayout>
 

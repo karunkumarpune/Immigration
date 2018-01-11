@@ -42,7 +42,9 @@ class ExpandListAdapter(private val context: Context, private val questions: Arr
        // for (i in 0 until childPosition) {
             val button = RadioButton(context)
            button.id = groupPosition+childPosition
-            button.text = answer.answer!!.toString()
+        button.setTextSize(context.resources.getDimension(R.dimen.textsize))
+        button.text = answer.answer!!.toString()
+
           //  button.isChecked = i == currentHours // Only select button with same index as currently selected number of hours
           //  button.setBackgroundResource(R.drawable.item_selector) // This is a custom button drawable, defined in XML
             answer_.addView(button)

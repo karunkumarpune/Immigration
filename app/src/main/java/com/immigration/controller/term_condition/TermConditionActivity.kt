@@ -1,26 +1,20 @@
-package com.immigration.controller.support
+package com.immigration.controller.term_condition
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.immigration.R
-import kotlinx.android.synthetic.main.activity_support.*
+import kotlinx.android.synthetic.main.activity_term_condition.*
 
-class SupportActivitys : AppCompatActivity() {
+class TermConditionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        setContentView(R.layout.activity_support)
+        setContentView(R.layout.activity_term_condition)
 
-
-        support_btn_click_back.setOnClickListener {
+        term_condition_btn_click_back.setOnClickListener {
             onBackPressed()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
-        }
-
-        btn_submit_support.setOnClickListener {
-            //startActivity(Intent(this, NavigationActivity::class.java))
         }
     }
 }

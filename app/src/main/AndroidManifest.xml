@@ -36,7 +36,8 @@
         <activity android:name=".controller.questions.QuestionsActivity" />
         <activity android:name=".controller.support.SupportActivitys" />
         <activity android:name=".controller.faq.FAQActivity" />
-        <activity android:name=".controller.privecy.PrivecyPolicyActivity"></activity>
+        <activity android:name=".controller.privecy.PrivecyPolicyActivity" />
+        <activity android:name=".controller.term_condition.TermConditionActivity"></activity>
     </application>
 
 </manifest>

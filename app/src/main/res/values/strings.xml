@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Immigration</string>
+    <string name="app_names">Immigration</string>
+    <string name="app_namess">Karun Kumar</string>
 
     <string name="txt_subscription">Subscription</string>
     <string name="txt_generate_report">Generate Report</string>
-    <string name="txt_stattistics_report">Statistic Report</string>
+    <string name="txt_stattistics_report">Statistic Reports</string>
     <string name="txt_notification">Notification</string>
     <string name="txt_change_pass">Change Password</string>
     <string name="txt_faq">FAQ\'S</string>
@@ -22,12 +24,12 @@
 
 
     <!--Side menu send Intent content-->
-    <string name="send_intent_1">Express Entry</string>
-    <string name="send_intent_2">BCPNP</string>
-    <string name="send_intent_3">Manitoba</string>
-    <string name="send_intent_4">Alberta</string>
-    <string name="send_intent_5">PEI</string>
-    <string name="send_intent_6">Saskatchewan</string>
+    <string name="send_intent_1">Express Entry Point</string>
+    <string name="send_intent_2">BCPNP Point</string>
+    <string name="send_intent_3">Manitoba Point</string>
+    <string name="send_intent_4">Alberta Point</string>
+    <string name="send_intent_5">PEI Point</string>
+    <string name="send_intent_6">Saskatchewan Point</string>
 
 
     <!--ask Close app-->
@@ -36,17 +38,17 @@
     <string name="txt_No">No</string>
 
 
-    <string name="create_login">Create an account? &#032;<b>SignUp</b></string>
+    <string name="create_login">Create an account? &#032;<b>Sign Up</b></string>
     <string name="signup_">Already a Member? &#032;<b>Login</b></string>
-    <string name="signup_term_candition">"I Accept <u><b><font color="#0b2a45">Terms &amp; Condition</font></b></u> of the Immigration</string>
+    <string name="signup_term_candition">"I Accept <u><font color="#0b2a45">Terms &amp; Conditions</font></u> of the Immigration</string>
 
-    <string name="txt_forgot_pass">Please enter your registered Mobile Number</string>
-    <string name="txt_generate_reports">Please enter your Email ID for Generate Report</string>
+    <string name="txt_forgot_pass">Please enter your registered mobile mumber</string>
+    <string name="txt_generate_reports">Please enter your email id for generate report</string>
 
     <string name="txt_otp">Please enter OTP received on </string>
     <string name="resend_otp">Resend OTP</string>
     <string name="otp">OTP</string>
-    <string name="enter_otp">Enter otp</string>
+    <string name="enter_otp">XXXX</string>
     <string name="btn_submit">Submit</string>
 
 
@@ -58,14 +60,15 @@
     <!--Siginup or EditProfile-->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="enter_email_id">Enter Email ID</string>
-    <string name="mobile_number">Mobile number</string>
+    <string name="enter_email_id">Email ID</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="password">Password</string>
     <string name="current_password">Current password</string>
     <string name="new_password">New password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
 
     <string name="txt_description">This page discusses how to activate (and deactivate) Nuclide packages. General Guidelines. Export activate and deactivate functions from lib/main.</string>
     <string name="txt_title">Package Activation</string>
@@ -103,6 +106,38 @@ The Federal Skilled Worker Program;
 The Federal Skilled Trades Program;
 The Canadian Experience Class Program.
 The Canadian Provincial Program</string>
+
+    <string name="Q1">Question 1- What is Canadian Express Entry program and how does it work?</string>
+    <string name="ans1">Answer:\n Express Entry is a newly introduced method of managing applications for the existing immigration programs, which are The Federal Skilled Workers Program (FSWP), The Federal Skilled Trade Program (FSTP) and The Canadian Experience Class Program (CEC).</string>
+    <string name="save">Save</string>
+
+
+
+    <string name="term_condition">About this Website
+There are disclaimers throughout our website stating that Iimmigration is an independent entity. \n
+
+Certifications
+Immigration has passed rigorous background checks that ensure the validity and the overall legitimacy of our business. \n
+
+Intellectual property rights
+Except where otherwise stated, Immigration is the copyright holder of all content, layout, design, data, graphics, trademarks and logos under the isaglobal.in domain. The content is protected by India and international copyright laws. Immigration Global will do our outmost to protect our rights, employees, customers, members and intellectual property. We will not hesitate to take legal action if necessary. \n \n
+
+Limitation of Liability
+Immigration shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the materials on this website or the performance of the products, even if Immigration has been advised of the possibility of such damages. Applicable law may not allow the limitation of exclusion of liability or incidental or consequential damages, so the above limitation or exclusion may not apply to you.\n
+
+Legal Form and Choice of Law:By using our website, purchasing a products or service, you have entered into a legal contract with Immigration Overseas Careers. You agree that the prevailing party in a civil lawsuit may be awarded reasonable attorney's fees.</string>
+
+
+    <string name="term_conditions">Terms &amp; Conditions</string>
+    <string name="term_privecy_police">immigration recognize the importance of preserving complete confidentiality. Any personal information and/or business proprietary material that you might disclose to us is treated with strict confidence.\n
+
+All information given to immigration by its prospective clients, is kept strictly confidential and on a need-to-know basis and is protected. We will only record your personal details if you send us a message. You can be assured that your personal information is used only by our trained staff for the purpose of the work you have engaged our office to do. \n \n
+
+We will not use your e-mail address for any other purpose, and will not disclose it, without your consent. Your information is never used for marketing or solicitation and is never sold or given to anyone for these purposes./n /n
+
+Immigration never supplies any other person or organization with your information except those government agencies involved in your immigration process (e.g. Australian Immigration Authorities, DIAC or the Homeoffice, UK, etc.). /n /n
+
+You can register with our website if you would like to receive our newsletter, catalog or updates on our new products and services. Information you submit on our website will not be used for this purpose unless you have given us your specific consent to do so.</string>
 
 
 </resources>

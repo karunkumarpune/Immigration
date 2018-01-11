@@ -24,30 +24,28 @@
             android:src="@drawable/logo"
             app:civ_border_color="@color/txt_white"
             app:civ_border_width="3dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            />
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <ImageButton
             android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textView"
+            android:layout_above="@+id/txt_profile_name"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_edit"
+            android:visibility="gone" />
 
 
         <TextView
+            android:id="@+id/txt_profile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_pic"
             android:gravity="center"
             android:text="Karun Kumar"
             android:textColor="#ffffff"
-            android:textSize="20dp"
-            android:textStyle="bold"
-
-            android:id="@+id/textView" />
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
@@ -64,80 +62,107 @@
             style="@style/side_txt_custom_style"
             android:text="@string/txt_subscription" />
 
-        <View style="@style/side_view_custom_style" />
+        <View
+            android:id="@+id/view_id_1"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_2"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_generate_report" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_2"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_3"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_stattistics_report" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_3"
+            style="@style/side_view_custom_style" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_option_4"
-             style="@style/side_txt_custom_style"
-            android:text="@string/txt_notification" />
-        <TextView
-            android:text="5"
-            android:textColor="@color/txt_white"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_option"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:background="@drawable/ic_notification" />
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/txt_option_4"
+                style="@style/side_txt_custom_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_notification"
+                android:visibility="visible"
+                />
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/txt_noti_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_notification"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/txt_white"
+                android:textSize="12sp"
+                android:visibility="visible" />
         </LinearLayout>
 
 
-        <View style="@style/side_view_custom_style" />
+        <View
+            android:id="@+id/view_id_4"
+            style="@style/side_view_custom_style" />
 
 
         <TextView
             android:id="@+id/txt_option_5"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_change_pass" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_5"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_6"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_faq" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_6"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_7"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_privacy" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_7"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_8"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_support" />
-        <View style="@style/side_view_custom_style" />
+
+        <View
+            android:id="@+id/view_id_8"
+            style="@style/side_view_custom_style" />
 
         <TextView
             android:id="@+id/txt_option_9"
             style="@style/side_txt_custom_style"
             android:text="@string/txt_logout" />
-        <View style="@style/side_view_custom_style" />
 
-
-
+        <View
+            android:id="@+id/view_id_9"
+            style="@style/side_view_custom_style" />
 
 
     </LinearLayout>

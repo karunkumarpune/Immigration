@@ -21,8 +21,23 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    
-   <!--Edit Text Box style--> 
+
+    <!--Edit Text Box style-->
+    <style name="textView_custom_style1">
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:textColorHint">@color/txt_hint_gray</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:textSize">12sp</item>
+
+        <item name="android:background">@drawable/rounded_edittext</item>
+    </style>
+
+    <!--Edit Text Box style-->
     <style name="textView_custom_style">
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingLeft">15dp</item>
@@ -33,11 +48,14 @@
         <item name="android:singleLine">true</item>
         <item name="android:drawablePadding">15dp</item>
         <item name="android:textSize">12sp</item>
+
         <item name="android:background">@drawable/rounded_edittext</item>
     </style>
 
     <!--Edit Text Box style-->
     <style name="textView_edit_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingTop">9dp</item>
@@ -47,6 +65,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:drawablePadding">15dp</item>
         <item name="android:textSize">12sp</item>
+
         <item name="android:background">@drawable/rounded_edittext_forgot</item>
     </style>
 
@@ -77,8 +96,10 @@
         <item name="android:background">@drawable/rounded_edittext_forgot</item>
     </style>
 
-<!--Enter OTP style-->
+    <!--Enter OTP style-->
     <style name="otp_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingLeft">15dp</item>
@@ -91,37 +112,60 @@
         <item name="android:background">@drawable/rounded_edittext_forgot</item>
     </style>
 
+
+    <!--Menu Relative_Style-->
+    <style name="home_relative_style">
+        <item name="android:background">#d9d9d9</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!--Menu Image_Style-->
+    <style name="home_image_style">
+        <item name="android:background">#d9d9d9</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:src">@drawable/calculater</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+
     <!--Menu text_Style-->
     <style name="home_text_style">
-        <item name="android:background">#bcbcbc</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:padding">20dp</item>
-        <item name="android:drawableTop">@drawable/calculater</item>
         <item name="android:gravity">center</item>
-        <item name="android:drawablePadding">20dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 
     <!--Silde Menu text_Style-->
     <style name="side_txt_custom_style">
+        <item name="android:visibility">gone</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginLeft">30dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/txt_white</item>
+
     </style>
 
     <!--Silde Menu view_Style-->
-    <style name="side_view_custom_style" >
+    <style name="side_view_custom_style">
+        <item name="android:visibility">gone</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:background">@color/txt_white</item>
     </style>
-
 
 
 </resources>

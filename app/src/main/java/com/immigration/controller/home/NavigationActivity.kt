@@ -5,13 +5,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.view.GravityCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.immigration.R
 import com.immigration.controller.application.MyApplication
 import com.immigration.controller.faq.FAQActivity
@@ -37,17 +38,21 @@ import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
 
+
    override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showSnack(isConnected)
     }
+
+    private var session_id:String = ""
     private lateinit var pb: CustomProgressBar
     private var mViewHolder: ViewHolder? = null
     private var apiInterface: ApiInterface? = null
-    private lateinit var profile_pic: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_navigation)
+
+        session_id=intent.getStringExtra("session")
 
         initView()
         apiInterface = ApiUtils.apiService
@@ -56,10 +61,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         pb.show()
 
         mViewHolder = ViewHolder()
-        profile_pic = findViewById<View>(R.id.profile_pic) as ImageView
+
         handleDrawer()
-
-
 
         if (ConnectivityReceiver.isConnected()) {
             try {
@@ -76,7 +79,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         Handler().postDelayed({
             pb.dismiss()
-        },3000)
+        },1000)
     }
 
 
@@ -84,12 +87,12 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
     private fun initView() {
 
-        val btn_menu_option_1: TextView = findViewById(R.id.btn_menu_option_1)
-        val btn_menu_option_2: TextView = findViewById(R.id.btn_menu_option_2)
-        val btn_menu_option_3: TextView = findViewById(R.id.btn_menu_option_3)
-        val btn_menu_option_4: TextView = findViewById(R.id.btn_menu_option_4)
-        val btn_menu_option_5: TextView = findViewById(R.id.btn_menu_option_5)
-        val btn_menu_option_6: TextView = findViewById(R.id.btn_menu_option_6)
+        val btn_menu_option_1: LinearLayout = findViewById(R.id.btn_menu_option_1)
+        val btn_menu_option_2: LinearLayout = findViewById(R.id.btn_menu_option_2)
+        val btn_menu_option_3: LinearLayout = findViewById(R.id.btn_menu_option_3)
+        val btn_menu_option_4: LinearLayout = findViewById(R.id.btn_menu_option_4)
+        val btn_menu_option_5: LinearLayout = findViewById(R.id.btn_menu_option_5)
+        val btn_menu_option_6: LinearLayout = findViewById(R.id.btn_menu_option_6)
 
         btn_menu_option_1.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
@@ -145,86 +148,196 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
 
-       //--------------------------------btn_Edit--------------------
-        mViewHolder!!.btn_edit.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,EditProfileActivity::class.java)
+        if(session_id.equals("0")){
+            //--------------------------------btn_6--------------------
 
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+
+
+
+            mViewHolder!!.profile_pic.visibility=View.VISIBLE
+            mViewHolder!!.txt_profile_name.visibility=View.VISIBLE
+            mViewHolder!!.txt_profile_name.text=resources.getString(R.string.app_names)
+
+
+            mViewHolder!!.txt_option_6.visibility=View.VISIBLE
+            mViewHolder!!.view_id_6.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_6.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
+                        .putExtra("option", 6)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+
+            //--------------------------------btn_7--------------------
+            mViewHolder!!.txt_option_7.visibility=View.VISIBLE
+            mViewHolder!!.view_id_7.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_7.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
+                        .putExtra("option", 4)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_8--------------------
+            mViewHolder!!.txt_option_8.visibility=View.VISIBLE
+            mViewHolder!!.view_id_8.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_8.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
+
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_9--------------------
+
+            mViewHolder!!.txt_option_9.visibility=View.VISIBLE
+            mViewHolder!!.view_id_9.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_9.text="Login"
+            mViewHolder!!.txt_option_9.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, LoginActivity::class.java)
+
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+
+        }else {
+
+            //--------------------------------btn_Edit--------------------
+            mViewHolder!!.profile_pic.visibility=View.VISIBLE
+
+            mViewHolder!!.profile_pic.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, EditProfileActivity::class.java)
+                        .putExtra("session_edit_profile","1")
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            mViewHolder!!.txt_profile_name.visibility=View.VISIBLE
+            mViewHolder!!.txt_profile_name.text=resources.getString(R.string.app_namess)
+
+
+            //--------------------------------btn_Edit--------------------
+
+           // mViewHolder!!.btn_edit.visibility=View.VISIBLE
+            mViewHolder!!.btn_edit.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, EditProfileActivity::class.java))
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+            //--------------------------------btn_1--------------------
+
+
+            mViewHolder!!.txt_option_1.visibility=View.VISIBLE
+            mViewHolder!!.view_id_1.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_1.text=resources.getString(R.string.txt_subscription)
+            mViewHolder!!.txt_option_1.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, SubscriptionListActivity::class.java)
+                        .putExtra("option", 1)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_2--------------------
+            mViewHolder!!.txt_option_2.visibility=View.VISIBLE
+            mViewHolder!!.view_id_2.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_2.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, GenerateReport::class.java)
+                        .putExtra("option", 2)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_3--------------------
+            mViewHolder!!.txt_option_3.visibility=View.VISIBLE
+            mViewHolder!!.view_id_3.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_3.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, StatisticReportActivity::class.java)
+                        .putExtra("option", 3)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_4--------------------
+            mViewHolder!!.txt_option_4.visibility=View.VISIBLE
+            mViewHolder!!.txt_noti_count.visibility=View.VISIBLE
+            mViewHolder!!.view_id_4.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_4.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, NotificationActivity::class.java)
+                        .putExtra("option", 4)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_5--------------------
+            mViewHolder!!.txt_option_5.visibility=View.VISIBLE
+            mViewHolder!!.view_id_5.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_5.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, ChangePasswordActivity::class.java)
+                        .putExtra("option", 5)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_6--------------------
+            mViewHolder!!.txt_option_6.visibility=View.VISIBLE
+            mViewHolder!!.view_id_6.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_6.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
+                        .putExtra("option", 6)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+
+            //--------------------------------btn_7--------------------
+            mViewHolder!!.txt_option_7.visibility=View.VISIBLE
+            mViewHolder!!.view_id_7.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_7.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
+                        .putExtra("option", 4)
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_8--------------------
+            mViewHolder!!.txt_option_8.visibility=View.VISIBLE
+            mViewHolder!!.view_id_8.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_8.setOnClickListener { _ ->
+                startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
+
+                )
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
+            //--------------------------------btn_9--------------------
+            mViewHolder!!.txt_option_9.visibility=View.VISIBLE
+            mViewHolder!!.view_id_9.visibility=View.VISIBLE
+
+
+
+
+            mViewHolder!!.txt_option_9.setOnClickListener { _ ->
+
+
+                AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("")
+                        .setMessage(resources.getString(R.string.txt_close_app))
+                        .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
+
+                            startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
+
+
+                        }
+                        .setNegativeButton(resources.getString(R.string.txt_No), null)
+                        .show()
+
+
+                mViewHolder!!.mDuoDrawerLayout.closeDrawer()
+            }
+
         }
- //--------------------------------btn_1--------------------
-        mViewHolder!!.txt_option_1.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,SubscriptionListActivity::class.java)
-                    .putExtra("option", 1)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_2--------------------
-        mViewHolder!!.txt_option_2.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,GenerateReport::class.java)
-                    .putExtra("option", 2)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_3--------------------
-        mViewHolder!!.txt_option_3.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,StatisticReportActivity::class.java)
-                    .putExtra("option", 3)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_4--------------------
-        mViewHolder!!.txt_option_4.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,NotificationActivity::class.java)
-                    .putExtra("option", 4)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_5--------------------
-        mViewHolder!!.txt_option_5.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,ChangePasswordActivity::class.java)
-                    .putExtra("option", 5)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_6--------------------
-        mViewHolder!!.txt_option_6.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,FAQActivity::class.java)
-                    .putExtra("option", 6)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-
-        //--------------------------------btn_7--------------------
-        mViewHolder!!.txt_option_7.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,PrivecyPolicyActivity::class.java)
-                    .putExtra("option", 4)
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_8--------------------
-        mViewHolder!!.txt_option_8.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
-
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
-        //--------------------------------btn_9--------------------
-        mViewHolder!!.txt_option_9.setOnClickListener { _ ->
-            startActivity(Intent(this@NavigationActivity,LoginActivity::class.java)
-
-            )
-            mViewHolder!!.mDuoDrawerLayout.closeDrawer()
-        }
-
 
 
         mViewHolder!!.mDuoDrawerLayout.setDrawerListener(duoDrawerToggle)
@@ -239,7 +352,24 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout = findViewById(R.id.drawer)
         val mToolbar: Toolbar = findViewById(R.id.toolbar)
+
+        val profile_pic: ImageView = findViewById(R.id.profile_pic)
         val btn_edit: ImageButton = findViewById(R.id.btn_edit)
+        val txt_profile_name: TextView = findViewById(R.id.txt_profile_name)
+
+
+        val txt_noti_count: TextView = findViewById(R.id.txt_noti_count)
+
+        val view_id_1: View = findViewById(R.id.view_id_1)
+        val view_id_2: View = findViewById(R.id.view_id_2)
+        val view_id_3: View = findViewById(R.id.view_id_3)
+        val view_id_4: View = findViewById(R.id.view_id_4)
+        val view_id_5: View = findViewById(R.id.view_id_5)
+        val view_id_6: View = findViewById(R.id.view_id_6)
+        val view_id_7: View = findViewById(R.id.view_id_7)
+        val view_id_8: View = findViewById(R.id.view_id_8)
+        val view_id_9: View = findViewById(R.id.view_id_9)
+
 
         val txt_option_1: TextView = findViewById(R.id.txt_option_1)
         val txt_option_2: TextView = findViewById(R.id.txt_option_2)
@@ -260,13 +390,13 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (mViewHolder!!.mDuoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
-       /* AlertDialog.Builder(this)
+        AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("")
                 .setMessage(resources.getString(R.string.txt_close_app))
                 .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
                 .setNegativeButton(resources.getString(R.string.txt_No), null)
-                .show()*/
+                .show()
     }
 
 
@@ -291,7 +421,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
 
 
-    private fun ImageLoaders(url: String) {
+   /* private fun ImageLoaders(url: String) {
 
         try {
             Glide.with(baseContext)
@@ -304,7 +434,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             e.printStackTrace()
         }
 
-    }
+    }*/
 
     //------------------------------------0peration --------------------our------------
 

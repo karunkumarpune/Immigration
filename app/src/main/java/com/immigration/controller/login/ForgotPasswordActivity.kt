@@ -20,7 +20,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
 
         btn_forgot_pass.setOnClickListener {
-            startActivity(Intent(this, OTPActivity::class.java))
+            startActivity(Intent(this, OTPActivity::class.java)
+                    .putExtra("session_otp","1")
+            )
         }
 
 

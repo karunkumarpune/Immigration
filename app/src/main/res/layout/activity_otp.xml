@@ -49,13 +49,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/title_top_marg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="@string/txt_otp"
+                     android:text="@string/txt_otp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_size_title" />
 
                 <TextView
                     android:id="@+id/otp_txt_mobile"
@@ -64,17 +64,15 @@
                     android:gravity="center"
                     android:text="+918920828585"
                     android:textColor="@color/colorPrimary"
-                    android:textScaleX="1.5"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textScaleX="1.1"
+                    android:textSize="@dimen/text_size_title"
+                android:textStyle="bold" />
 
                 <EditText
                     style="@style/otp_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/enter_otp"
                     android:inputType="number"
-                    android:maxLength="10" />
+                    android:maxLength="4" />
 
 
                 <Button
@@ -92,7 +90,7 @@
                     android:gravity="center"
                     android:text="@string/resend_otp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/text_size_title"
                     android:textStyle="bold" />
 
 

@@ -20,7 +20,9 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         btn_submit.setOnClickListener {
-            startActivity(Intent(this, NavigationActivity::class.java))
+            startActivity(Intent(this, NavigationActivity::class.java)
+                    .putExtra("session","1")
+            )
         }
     }
 }

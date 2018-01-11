@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.immigration.R
 import com.immigration.controller.home.NavigationActivity
+import com.immigration.controller.term_condition.TermConditionActivity
 import com.mukesh.countrypicker.CountryPicker
 import kotlinx.android.synthetic.main.activity_signup.*
 
@@ -17,12 +18,21 @@ class SignupActivity : AppCompatActivity() {
 
 
         btn_signup_skip.setOnClickListener {
-            startActivity(Intent(this,NavigationActivity::class.java))
+            startActivity(Intent(this,NavigationActivity::class.java)
+                    .putExtra("session","0")
+            )
         }
 
 
         signup_btn.setOnClickListener {
-            startActivity(Intent(this,OTPActivity::class.java))
+            startActivity(Intent(this,OTPActivity::class.java)
+                    .putExtra("session_otp","0")
+            )
+        }
+
+
+        term_condition.setOnClickListener {
+           startActivity(Intent(this, TermConditionActivity::class.java))
         }
 
         signup_btn_login.setOnClickListener {

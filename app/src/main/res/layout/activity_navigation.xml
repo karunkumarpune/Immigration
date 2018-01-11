@@ -27,14 +27,6 @@
         android:orientation="vertical"
         android:tag="@string/tag_content">
 
-        <android.support.design.widget.CoordinatorLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/main_content"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
 
             <RelativeLayout
                 android:background="@color/colorPrimary"
@@ -47,100 +39,135 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/AppTheme" />
+                    app:popupTheme="@style/AppTheme">
+
+
+                    <RelativeLayout
+
+                        android:layout_marginLeft="90dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?actionBarSize"
+                        android:background="@color/colorPrimary">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/app_names"
+                            android:textColor="@color/txt_white"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+
+
+                </android.support.v7.widget.Toolbar>
 
             <LinearLayout
                 android:background="@android:color/white"
                 android:layout_below="@+id/toolbar"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="3">
 
                 <LinearLayout
                     android:layout_margin="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:weightSum="2"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_1"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_1"
-                        style="@style/home_text_style"
-                        />
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_2"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_2"
-                        style="@style/home_text_style"
-                        />
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_1" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_1" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_2" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_2" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_margin="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:weightSum="2"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_3"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_3"
-                        style="@style/home_text_style"
-                        />
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_4"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_4"
-                        style="@style/home_text_style"
-                        />
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_3" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_3" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_4" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_4" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_margin="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:weightSum="2"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_5"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_5"
-                        style="@style/home_text_style"
-                        />
 
-                    <TextView
-                        android:id="@+id/btn_menu_option_6"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/menu_option_6"
-                        style="@style/home_text_style"
-                        />
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_5" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_5" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/btn_menu_option_6" style="@style/home_relative_style">
+
+                        <ImageView style="@style/home_image_style" />
+
+                        <TextView style="@style/home_text_style" android:text="@string/menu_option_6" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
+
+
+
 
             </LinearLayout>
 
             </RelativeLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>
 </nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>

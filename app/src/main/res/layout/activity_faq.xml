@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,29 +46,126 @@
 
 
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
             <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/faq_"
+                android:text="@string/Q1"
+                />
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
                 />
 
 
 
-        </RelativeLayout>
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1"
+                />
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
+
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1"
+                />
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
+
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1"
+                />
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Q1"
+                />
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ans1"
+                />
+
+
+
+
+
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
+        </LinearLayout>
+
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
