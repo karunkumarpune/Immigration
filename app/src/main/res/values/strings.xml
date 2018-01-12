@@ -131,6 +131,16 @@ Legal Form and Choice of Law:By using our website, purchasing a products or serv
         We will not use your e-mail address for any other purpose, and will not disclose it, without your consent. Your information is never used for marketing or solicitation and is never sold or given to anyone for these purposes.\n \n
 Immigration never supplies any other person or organization with your information except those government agencies involved in your immigration process (e.g. Australian Immigration Authorities, DIAC or the Homeoffice, UK, etc.).
         \n \n You can register with our website if you would like to receive our newsletter, catalog or updates on our new products and services. Information you submit on our website will not be used for this purpose unless you have given us your specific consent to do so.</string>
+    <string name="question_validation">Please choose at least 1 question!!</string>
+
+    <string name="login_validation_1">Enter mobile number !!</string>
+    <string name="login_validation_2">Enter valid mobile number !!</string>
+    <string name="login_validation_3">Enter password !!</string>
+    <string name="otp_validation_1">Enter otp !!</string>
+    <string name="otp_validation_2">Enter valid otp !!</string>
+    <string name="permission_alert_dialog_title">sms_permisstion_1</string>
+    <string name="permission_dialog_message">sms_permisstion_2</string>
+    <string name="action_ok">OK</string>
 
 
 </resources>

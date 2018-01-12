@@ -1,4 +1,4 @@
-package com.newyear.connectvity_check
+package com.immigration.restservices
 
 object Config {
 

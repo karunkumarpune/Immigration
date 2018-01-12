@@ -1,35 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/linearLayout_bind_radio"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:background="@color/txt_white"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <RadioGroup
-            android:padding="5dp"
-            android:gravity="center|left"
-            android:id="@+id/radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="1sp"/>
-
-    </RelativeLayout>
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/round_rect_shape_expandable_dwon"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
 </LinearLayout>
-
-
-
-
-
-
-
-
-

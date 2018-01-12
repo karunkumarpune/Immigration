@@ -69,6 +69,7 @@
                 android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/et_otp"
                     style="@style/otp_style"
                     android:hint="@string/enter_otp"
                     android:inputType="number"

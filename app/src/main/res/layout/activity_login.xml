@@ -45,6 +45,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/login_et_mobile"
                     android:drawableLeft="@drawable/phone"
                     android:hint="@string/mobile_number"
                     android:inputType="number"
@@ -52,6 +53,7 @@
                     style="@style/textView_login_signup_style" />
 
                 <EditText
+                    android:id="@+id/login_et_pass"
                     android:drawableLeft="@drawable/password"
                     android:hint="@string/password"
                     android:inputType="textPassword"
