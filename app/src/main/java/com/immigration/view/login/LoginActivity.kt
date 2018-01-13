@@ -29,7 +29,8 @@ class LoginActivity : AppCompatActivity() {
     //OTP
     companion object {
 
-        private val permissionsRequired = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS)
+        private val permissionsRequired = arrayOf(Manifest.permission.READ_SMS)
+       // private val permissionsRequired = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS)
 
         private val REQUEST_PERMISSION_SETTING = 101
 
@@ -129,13 +130,15 @@ class LoginActivity : AppCompatActivity() {
 
     //OTP
     private fun ReadPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+       // if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED ) {
+          //  if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])) {
                 //Show Information about why you need the permission
                 val builder = AlertDialog.Builder(this)
                 builder.setCancelable(false)
-                builder.setTitle("Need Multiple Permissions")
-                builder.setMessage("This app needs Storage permissions.")
+                builder.setTitle("Need Permissions")
+                builder.setMessage("This app needs SMS permissions.")
                 builder.setPositiveButton("Grant") { dialog, which ->
                     dialog.cancel()
                     ActivityCompat.requestPermissions(this@LoginActivity, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
@@ -146,8 +149,8 @@ class LoginActivity : AppCompatActivity() {
                 //Previously Permission Request was cancelled with 'Dont Ask Again',
                 // Redirect to Settings after showing Information about why you need the permission
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Need Multiple Permissions")
-                builder.setMessage("This app needs Storage permissions.")
+                builder.setTitle("Need Permissions")
+                builder.setMessage("This app needs SMS permissions.")
                 builder.setPositiveButton("Grant") { dialog, which ->
                     dialog.cancel()
                     sentToSettings = true

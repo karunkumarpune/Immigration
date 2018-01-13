@@ -39,11 +39,11 @@ public class SmsReceiver extends BroadcastReceiver {
                     /*SignIn signIn = new SignIn();
                     signIn.recivedSms(send_otp);*/
                     try {
-                        if (message.contains("Shop4Hella")){
+                       // if (message.contains("Shop4Hella")){
                             Log.d("opt received ",send_otp+" ");
                             intent.putExtra("otp",send_otp);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }
+                      //  }
                     }catch (Exception e){
                         e.printStackTrace();
                     }

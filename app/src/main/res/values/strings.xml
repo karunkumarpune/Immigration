@@ -142,5 +142,7 @@ Immigration never supplies any other person or organization with your informatio
     <string name="permission_dialog_message">sms_permisstion_2</string>
     <string name="action_ok">OK</string>
 
+    <string name="action_sms">Enter valid otp !!</string>
+
 
 </resources>
