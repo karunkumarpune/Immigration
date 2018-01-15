@@ -7,7 +7,8 @@ public class LoginPrefences {
 
     private static LoginPrefences instance = null;
 
-    private LoginPrefences() {}
+    private LoginPrefences() {
+    }
 
 
     public static LoginPrefences getInstance() {
@@ -21,21 +22,29 @@ public class LoginPrefences {
 
     public static final String PRE_Mobile = "mobile";
     public static final String PRE_pass = "pass";
+    public static final String PRE_Email = "email";
+    public static final String PRE_Fname = "fname";
+    public static final String PRE_Lname = "lname";
+
 
     SharedPreferences preferences;
 
-    public void addData(Context context, String mobile, String password) {
+    public void addData(Context context, String mobile, String password, String email, String firstName, String lastName) {
         this.preferences = context.getSharedPreferences(PRE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString(PRE_Mobile, mobile.trim());
         editor.putString(PRE_pass, password.trim());
+        editor.putString(PRE_Email, email.trim());
+        editor.putString(PRE_Fname, firstName.trim());
+        editor.putString(PRE_Lname, lastName.trim());
+
+
         editor.commit();
     }
 
 
     public void removeData(SharedPreferences preferences) {
-
         SharedPreferences.Editor editor = preferences.edit().clear();
         editor.apply();
     }
@@ -56,12 +65,34 @@ public class LoginPrefences {
     }
 
 
-   /* public String getUID(SharedPreferences preferences) {
-        if (preferences.contains(PRE_USER_ID)) {
-            return preferences.getString(PRE_USER_ID, "");
+    public String getMobile(SharedPreferences preferences) {
+        if (preferences.contains(PRE_Mobile)) {
+            return preferences.getString(PRE_Mobile, "");
         } else {
             return null;
         }
-    }*/
+    }
+
+    public String getEmail(SharedPreferences preferences) {
+        if (preferences.contains(PRE_Email)) {
+            return preferences.getString(PRE_Email, "");
+        } else {
+            return null;
+        }
+    }
+    public String getFName(SharedPreferences preferences) {
+        if (preferences.contains(PRE_Fname)) {
+            return preferences.getString(PRE_Fname, "");
+        } else {
+            return null;
+        }
+    }
+    public String getLName(SharedPreferences preferences) {
+        if (preferences.contains(PRE_Lname)) {
+            return preferences.getString(PRE_Lname, "");
+        } else {
+            return null;
+        }
+    }
 
 }

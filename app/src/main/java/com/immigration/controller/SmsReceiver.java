@@ -11,8 +11,6 @@ import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver {
     private String send_otp;
-    public static SmsInterface smsInterface;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
@@ -53,8 +51,5 @@ public class SmsReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
 
-    }
-    public static void bindListener(SmsInterface listener) {
-        smsInterface = listener;
     }
 }

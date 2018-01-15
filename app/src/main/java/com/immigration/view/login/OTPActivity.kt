@@ -10,10 +10,12 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.immigration.R
+import com.immigration.controller.sharedpreferences.LoginPrefences
+import com.immigration.restservices.APIService
+import com.immigration.utils.CustomProgressBar
 import com.immigration.utils.Utils
 import kotlinx.android.synthetic.main.activity_otp.*
 
@@ -22,27 +24,28 @@ import kotlinx.android.synthetic.main.activity_otp.*
 
 class OTPActivity : AppCompatActivity() {
 
+    private var APIService: APIService? = null
+    private lateinit var pb: CustomProgressBar
+    private var loginPreference: LoginPrefences? = null
+    private val TAG = OTPActivity::class.java!!.getName()
+
 
     private var session_otp:String = ""
     private var message:String = ""
-
     private lateinit var et_otp:EditText
 
+    // Receiver Broadcast SMS
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == "android.provider.Telephony.SMS_RECEIVED") {
                 message = intent.getStringExtra("otp")
-                Log.d("OTPActivity", "OTPActivity " + message)
-                //  otp = message;
-                et_otp.setText(message.toString())
-
+                Utils.log(TAG!!, "OTP data : $message")
+                et_otp.setText(message)
                 try {
-
                     if(message=="2244"){
                         if(session_otp.equals("0")){
                             startActivity(Intent(this@OTPActivity, EditProfileActivity::class.java)
-                                    .putExtra("session_edit_profile","0")
-                            )
+                                    .putExtra("session_edit_profile","0"))
                         }else
                             startActivity(Intent(this@OTPActivity, ResetPasswordActivity::class.java))
                     }else{
@@ -74,7 +77,41 @@ class OTPActivity : AppCompatActivity() {
         et_otp=findViewById<EditText>(R.id.et_otp)
         session_otp = intent.getStringExtra("session_otp")
 
+        initView()
+        initViewEditTextListener()
+        initViewSubmitOTPListener()
 
+    }
+
+    private fun initView() {
+
+        // Click Back Button
+        otp_btn_click_back.setOnClickListener {
+            onBackPressed()
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+    }
+
+    private fun initViewSubmitOTPListener() {
+        btn_submit_otp.setOnClickListener {
+
+            val edit_otp=et_otp.text.toString()
+            if(edit_otp.isEmpty()){
+                Utils.showToast(this@OTPActivity,getString(R.string.otp_validation_1), Color.RED)
+                et_otp.requestFocus()
+            }else{
+                if(session_otp.equals("0")){
+                    startActivity(Intent(this, EditProfileActivity::class.java)
+                            .putExtra("session_edit_profile","0")
+                    )
+                }else
+                    startActivity(Intent(this, ResetPasswordActivity::class.java))
+            }
+        }
+    }
+
+    private fun initViewEditTextListener() {
         et_otp.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             }
@@ -92,7 +129,7 @@ class OTPActivity : AppCompatActivity() {
                                 )
                             }else
                                 startActivity(Intent(this@OTPActivity, ResetPasswordActivity::class.java))
-                           }
+                        }
                         else{
                             val view1 = this@OTPActivity.getCurrentFocus()
                             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -106,43 +143,7 @@ class OTPActivity : AppCompatActivity() {
 
             }
         })
-
-
-
-        initView()
     }
-
-    private fun initView() {
-
-
-
-    // Click Back Button
-        otp_btn_click_back.setOnClickListener {
-            onBackPressed()
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
-        }
-
-        //Click OTP Button
-        btn_submit_otp.setOnClickListener {
-
-            val edit_otp=et_otp.text.toString()
-            if(edit_otp.isEmpty()){
-                Utils.showToast(this@OTPActivity,getString(R.string.otp_validation_1), Color.RED)
-                et_otp.requestFocus()
-            }else{
-
-            }
-            if(session_otp.equals("0")){
-                startActivity(Intent(this, EditProfileActivity::class.java)
-                        .putExtra("session_edit_profile","0")
-                )
-            }else
-            startActivity(Intent(this, ResetPasswordActivity::class.java))
-        }
-    }
-
-
 
 
 }

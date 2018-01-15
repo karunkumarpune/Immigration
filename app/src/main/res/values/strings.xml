@@ -40,7 +40,7 @@
 
     <string name="create_login">Create an account? &#032;<b>Sign Up</b></string>
     <string name="signup_">Already a Member? &#032;<b>Login</b></string>
-    <string name="signup_term_candition">"I Accept <u><font color="#0b2a45">Terms &amp; Conditions</font></u> of the Immigration</string>
+    <string name="term_conditionss"><![CDATA[<font color=#FFFFFF>I Accept </font> <font color=#0b3459><u>Terms & Conditions</u></font><font color=#FFFFFF> of the Immigration </font>]]></string>
 
     <string name="txt_forgot_pass">Please enter your registered mobile mumber</string>
     <string name="txt_generate_reports">Please enter your email id for generate report</string>
@@ -70,7 +70,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
 
-    <string name="txt_description">This page discusses how to activate (and deactivate) Nuclide packages. General Guidelines. Export activate and deactivate functions from lib/main.</string>
+    <string name="txt_description">http://www.tutorialspoint.com/java/java_tutorial.pdf</string>
     <string name="txt_title">Package Activation</string>
 
     <!---->
@@ -133,6 +133,8 @@ Immigration never supplies any other person or organization with your informatio
         \n \n You can register with our website if you would like to receive our newsletter, catalog or updates on our new products and services. Information you submit on our website will not be used for this purpose unless you have given us your specific consent to do so.</string>
     <string name="question_validation">Please choose at least 1 question!!</string>
 
+
+    <!--Login Validation-->
     <string name="login_validation_1">Enter mobile number !!</string>
     <string name="login_validation_2">Enter valid mobile number !!</string>
     <string name="login_validation_3">Enter password !!</string>
@@ -141,6 +143,23 @@ Immigration never supplies any other person or organization with your informatio
     <string name="permission_alert_dialog_title">sms_permisstion_1</string>
     <string name="permission_dialog_message">sms_permisstion_2</string>
     <string name="action_ok">OK</string>
+
+
+    <!--SignUp validation-->
+    <string name="signup_validation_2">Enter valid email id !!</string>
+    <string name="signup_validation_4">Enter confirm password !!</string>
+    <string name="signup_validation_5">Confirm password not match!!</string>
+    <string name="signup_validation_6">Please accept terms conditions</string>
+
+ <!--EditProfile validation-->
+    <string name="edit_profile_validation_1">Enter first name</string>
+    <string name="edit_profile_validation_2">Enter last name</string>
+    <string name="edit_profile_validation_3">Enter mobile number</string>
+    <string name="edit_profile_validation_4">Enter valid email id</string>
+    <string name="edit_profile_validation_5">Enter current password</string>
+
+    <string name="invitation_yes">Yes</string>
+    <string name="invitation_del_no">No</string>
 
     <string name="action_sms">Enter valid otp !!</string>
 

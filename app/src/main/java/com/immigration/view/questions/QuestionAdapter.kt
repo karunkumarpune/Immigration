@@ -36,7 +36,7 @@ class QuestionAdapter(val context: Context, val list: ArrayList<Result>) : Recyc
 
                 view = layoutInflater.inflate(R.layout.adapter_answer_layout, holder.llRootLayout, false)
                 val click_hide_show_ans = view!!.findViewById<View>(R.id.linearLayout_bind_radio) as LinearLayout
-                click_hide_show_ans!!.visibility = View.VISIBLE
+                click_hide_show_ans.visibility = View.VISIBLE
 
                 val rb = arrayOfNulls<RadioButton>(5)
                 val rg = RadioGroup(context)
@@ -75,7 +75,7 @@ class QuestionAdapter(val context: Context, val list: ArrayList<Result>) : Recyc
 
                 view = layoutInflater.inflate(R.layout.adapter_answer_layout, holder.llRootLayout, false)
                 val click_hide_show_ans = view!!.findViewById<View>(R.id.linearLayout_bind_radio) as LinearLayout
-                click_hide_show_ans!!.visibility = View.GONE
+                click_hide_show_ans.visibility = View.GONE
 
 
                 val rb = arrayOfNulls<RadioButton>(6)
@@ -98,7 +98,7 @@ class QuestionAdapter(val context: Context, val list: ArrayList<Result>) : Recyc
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return list.size
     }
 
 

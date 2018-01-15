@@ -83,7 +83,7 @@
 
                     <EditText
                         android:drawableLeft="@drawable/dashed_vertical_line"
-                        android:id="@+id/txt_mobile"
+                        android:id="@+id/txt_signup_mob"
                         android:background="@drawable/rounded_edittext_edit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -102,19 +102,21 @@
 
 
                 <EditText
+                    android:id="@+id/txt_signup_email"
                     style="@style/textView_login_signup_style"
                     android:drawableLeft="@drawable/email"
                     android:hint="@string/enter_email_id"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="10" />
+                    android:inputType="textEmailAddress" />
 
                 <EditText
+                    android:id="@+id/txt_signup_pass"
                     style="@style/textView_login_signup_style"
                     android:drawableLeft="@drawable/password"
                     android:hint="@string/password"
                     android:inputType="textPassword" />
 
                 <EditText
+                    android:id="@+id/txt_signup_conf_pass"
                     style="@style/textView_login_signup_style"
                     android:drawableLeft="@drawable/password"
                     android:hint="@string/confirm_password"
@@ -129,6 +131,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/txt_signup_check"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
@@ -142,7 +145,6 @@
                         android:id="@+id/term_condition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/signup_term_candition"
                         android:textColor="@color/txt_white"
                         android:textSize="11sp" />
 

@@ -14,7 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.immigration.R
-import com.immigration.controller.application.MyApplication
+import com.immigration.controller.application.AppController
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -44,11 +44,14 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         showSnack(isConnected)
     }
 
-    private var loginPreference: LoginPrefences? = null
     private var session_id:String = ""
-    private lateinit var pb: CustomProgressBar
     private var mViewHolder: ViewHolder? = null
+
     private var APIService: APIService? = null
+    private lateinit var pb: CustomProgressBar
+    private var loginPreference: LoginPrefences? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -67,7 +70,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         handleDrawer()
 
-        if (ConnectivityReceiver.isConnected()) {
+        if (ConnectivityReceiver.isConnected) {
             try {
                // jsonParse()
             } catch (e: Exception) { }
@@ -428,7 +431,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        MyApplication.getInstance().setConnectivityListener(this)
+        AppController.getInstance().setConnectivityListener(this)
     }
 
     //--------------------------------------------API---Work----------

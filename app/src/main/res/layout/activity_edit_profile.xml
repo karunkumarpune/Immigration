@@ -79,6 +79,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/et_profile_first"
                     android:layout_marginTop="20dp"
                     android:drawableLeft="@drawable/user"
                     android:hint="@string/first_name"
@@ -86,12 +87,14 @@
                     style="@style/textView_edit_style" />
 
                 <EditText
+                    android:id="@+id/et_profile_last"
                     android:drawableLeft="@drawable/user"
                     android:hint="@string/last_name"
                     android:inputType="text"
                     style="@style/textView_edit_style" />
 
                 <EditText
+                    android:id="@+id/et_profile_mobile"
                     android:drawableLeft="@drawable/phone"
                     android:hint="@string/mobile_number"
                     android:inputType="number"
@@ -99,13 +102,14 @@
                     style="@style/textView_edit_style" />
 
                 <EditText
+                    android:id="@+id/et_profile_email"
                     android:drawableLeft="@drawable/email"
                     android:hint="@string/enter_email_id"
                     android:inputType="textEmailAddress"
                     style="@style/textView_edit_style" />
 
                 <Button
-                    android:id="@+id/signup_btn_edit"
+                    android:id="@+id/edit_btn_edit"
                     android:text="@string/btn_submit"
                     style="@style/button_custom_style" />
 
