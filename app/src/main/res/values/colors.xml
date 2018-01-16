@@ -7,4 +7,11 @@
     <color name="txt_white">#FFFFFF</color>
     <color name="txt_black">#000000</color>
     <color name="txt_hint_gray">#696969</color>
+    <color name="txt_pdf_gray">#e2e2e2</color>
+
+    <color name="bg_doc_color">#0895fa</color>
+    <color name="bg_png_color">#9410da</color>
+    <color name="bg_jpg_color">#15b3b9</color>
+
+    <color name="score_color">#b92315</color>
 </resources>

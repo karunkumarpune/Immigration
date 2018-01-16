@@ -28,12 +28,13 @@ class StatisticReportActivity : AppCompatActivity() {
         list= ArrayList()
         recy_notification.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
 
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
-        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description1), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description2), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description3), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description4), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description5), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description6), "8/01/2018"))
+        list.add(StatisticReport(getString(R.string.txt_title), getString(R.string.txt_description7), "8/01/2018"))
 
         jsonParse()
     }

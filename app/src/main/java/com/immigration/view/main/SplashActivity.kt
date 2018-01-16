@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                      finish()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }, 2000)
+        }, 1000)
 
     }
 }

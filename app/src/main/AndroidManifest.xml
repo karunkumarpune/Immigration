@@ -3,23 +3,20 @@
     package="com.immigration">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
 
     <application
         android:name=".controller.application.AppController"
@@ -37,33 +34,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.immigration.view.login.LoginActivity" />
-        <activity android:name="com.immigration.view.login.ForgotPasswordActivity" />
-        <activity android:name="com.immigration.view.login.EditProfileActivity" />
-        <activity android:name="com.immigration.view.login.ResetPasswordActivity" />
-        <activity android:name="com.immigration.view.login.ChangePasswordActivity" />
-        <activity android:name="com.immigration.view.login.SignupActivity" />
-        <activity android:name="com.immigration.view.login.OTPActivity" />
-        <activity android:name="com.immigration.view.home.NavigationActivity" />
-        <activity android:name="com.immigration.view.notification.NotificationActivity" />
-        <activity android:name="com.immigration.view.statisticReport.StatisticReportActivity" />
-        <activity android:name="com.immigration.view.generateReport.GenerateReport" />
-        <activity android:name="com.immigration.view.subscription.SubscriptionActivity" />
-        <activity android:name="com.immigration.view.subscription.SubscriptionListActivity" />
-        <activity android:name="com.immigration.view.questions.QuestionsActivity" />
-        <activity android:name="com.immigration.view.support.SupportActivitys" />
-        <activity android:name="com.immigration.view.faq.FAQActivity" />
-        <activity android:name="com.immigration.view.privecy.PrivecyPolicyActivity" />
-        <activity android:name="com.immigration.view.term_condition.TermConditionActivity"></activity>
+        <activity android:name=".view.login.LoginActivity" />
+        <activity android:name=".view.login.ForgotPasswordActivity" />
+        <activity android:name=".view.login.EditProfileActivity" />
+        <activity android:name=".view.login.ResetPasswordActivity" />
+        <activity android:name=".view.login.ChangePasswordActivity" />
+        <activity android:name=".view.login.SignupActivity" />
+        <activity android:name=".view.login.OTPActivity" />
+        <activity android:name=".view.home.NavigationActivity" />
+        <activity android:name=".view.notification.NotificationActivity" />
+        <activity android:name=".view.statisticReport.StatisticReportActivity" />
+        <activity android:name=".view.generateReport.GenerateReport" />
+        <activity android:name=".view.subscription.ResultActivity" />
+        <activity android:name=".view.subscription.SubscriptionListActivity" />
+        <activity android:name=".view.questions.QuestionsActivity" />
+        <activity android:name=".view.support.SupportActivitys" />
+        <activity android:name=".view.faq.FAQActivity" />
+        <activity android:name=".view.privecy.PrivecyPolicyActivity" />
+        <activity android:name=".view.term_condition.TermConditionActivity" />
 
-<!--SMS OTP-->
+        <!-- SMS OTP -->
         <receiver android:name=".controller.SmsReceiver">
             <intent-filter android:priority="1">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-<!--Please Provide-->
+        <!-- Please Provide -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="dreamgo.corp.provider"
@@ -74,6 +71,7 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <activity android:name=".view.subscription.PDFViewerActivity"></activity>
     </application>
 
 </manifest>

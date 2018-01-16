@@ -72,7 +72,7 @@ class EditProfileActivity : AppCompatActivity() {
             edit_btn_click_back.visibility = View.VISIBLE
             profile_image.setImageResource(R.drawable.logo)
 
-
+            et_profile_email.isFocusable=false
             et_profile_first.setText(userFirstName.toString())
             et_profile_last.setText(userLastName.toString())
             et_profile_mobile.setText(userMobile.toString())

@@ -153,6 +153,8 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+
+
     <!--Menu Image_Style-->
     <style name="home_image_style">
         <item name="android:background">#d9d9d9</item>
@@ -163,6 +165,62 @@
         <item name="android:layout_width">70dp</item>
         <item name="android:layout_height">70dp</item>
     </style>
+
+
+
+    <!--Result Relative_Style-->
+    <style name="result_relative_style">
+        <item name="android:background">#ffffff</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!--Result Image_Style-->
+    <style name="result_pdf_style">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:src">@drawable/ic_pdf_icon</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!--Result View vertical -->
+    <style name="result_view_style_vertical">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/txt_black</item>
+    </style>
+
+    <!--Result View horizontal-->
+    <style name="result_view_style_horizontal">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/txt_black</item>
+    </style>
+
+    <!--Result text_Style-->
+    <style name="result_text_style">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+
+
 
     <!--Menu text_Style-->
     <style name="home_text_style">

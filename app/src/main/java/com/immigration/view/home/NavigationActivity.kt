@@ -39,12 +39,11 @@ import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
 
-
-   override fun onNetworkConnectionChanged(isConnected: Boolean) {
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showSnack(isConnected)
     }
 
-    private var session_id:String = ""
+    private var session_id: String = ""
     private var mViewHolder: ViewHolder? = null
 
     private var APIService: APIService? = null
@@ -57,7 +56,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_navigation)
 
-        session_id=intent.getStringExtra("session")
+        session_id = intent.getStringExtra("session")
         loginPreference = LoginPrefences.getInstance();
 
         initView()
@@ -72,20 +71,21 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         if (ConnectivityReceiver.isConnected) {
             try {
-               // jsonParse()
-            } catch (e: Exception) { }
+                // jsonParse()
+            } catch (e: Exception) {
+            }
 
             // showSnack(true);
         } else {
             try {
-               // jsonParse()
+                // jsonParse()
             } catch (e: Exception) {
             }
         }
 
         Handler().postDelayed({
             pb.dismiss()
-        },1000)
+        }, 1000)
     }
 
 
@@ -102,37 +102,37 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         btn_menu_option_1.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_1) )
+                    .putExtra("option", resources.getString(R.string.send_intent_1))
             )
         }
 
         btn_menu_option_2.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_2) )
+                    .putExtra("option", resources.getString(R.string.send_intent_2))
             )
         }
 
         btn_menu_option_3.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_3) )
+                    .putExtra("option", resources.getString(R.string.send_intent_3))
             )
         }
 
-       btn_menu_option_4.setOnClickListener {
+        btn_menu_option_4.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_4) )
+                    .putExtra("option", resources.getString(R.string.send_intent_4))
             )
         }
 
         btn_menu_option_5.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_5) )
+                    .putExtra("option", resources.getString(R.string.send_intent_5))
             )
         }
 
         btn_menu_option_6.setOnClickListener {
             startActivity(Intent(this@NavigationActivity, QuestionsActivity::class.java)
-                    .putExtra("option",resources.getString(R.string.send_intent_6) )
+                    .putExtra("option", resources.getString(R.string.send_intent_6))
             )
         }
 
@@ -141,9 +141,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
     private fun showSnack(isConnected: Boolean) {
         if (isConnected)
-            Utils.showToast(this,"Good! Connected to Internet",Color.GREEN)
-         else
-            Utils.showToast(this,"Good! Connected to Internet",Color.RED)
+            Utils.showToast(this, "Good! Connected to Internet", Color.GREEN)
+        else
+            Utils.showToast(this, "Sorry!No internet available", Color.RED)
     }
 
     //----------------------------------------------------Open Menu Intent
@@ -154,20 +154,20 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
 
-        if(session_id.equals("0")){
+        if (session_id.equals("0")) {
             //--------------------------------btn_6--------------------
 
 
-            mViewHolder!!.txt_noti_count.visibility=View.GONE
-            mViewHolder!!.txt_option_4.visibility=View.GONE
+            mViewHolder!!.txt_noti_count.visibility = View.GONE
+            mViewHolder!!.txt_option_4.visibility = View.GONE
 
-            mViewHolder!!.profile_pic.visibility=View.VISIBLE
-            mViewHolder!!.txt_profile_name.visibility=View.VISIBLE
-            mViewHolder!!.txt_profile_name.text=resources.getString(R.string.app_names)
+            mViewHolder!!.profile_pic.visibility = View.VISIBLE
+            mViewHolder!!.txt_profile_name.visibility = View.VISIBLE
+            mViewHolder!!.txt_profile_name.text = resources.getString(R.string.app_names)
 
 
-            mViewHolder!!.txt_option_6.visibility=View.VISIBLE
-            mViewHolder!!.view_id_6.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_6.visibility = View.VISIBLE
+            mViewHolder!!.view_id_6.visibility = View.VISIBLE
             mViewHolder!!.txt_option_6.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
                         .putExtra("option", 6)
@@ -177,8 +177,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
 
             //--------------------------------btn_7--------------------
-            mViewHolder!!.txt_option_7.visibility=View.VISIBLE
-            mViewHolder!!.view_id_7.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_7.visibility = View.VISIBLE
+            mViewHolder!!.view_id_7.visibility = View.VISIBLE
             mViewHolder!!.txt_option_7.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
                         .putExtra("option", 4)
@@ -187,8 +187,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_8--------------------
-            mViewHolder!!.txt_option_8.visibility=View.VISIBLE
-            mViewHolder!!.view_id_8.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_8.visibility = View.VISIBLE
+            mViewHolder!!.view_id_8.visibility = View.VISIBLE
             mViewHolder!!.txt_option_8.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
 
@@ -198,36 +198,36 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
             //--------------------------------btn_9--------------------
 
-            mViewHolder!!.txt_option_9.visibility=View.VISIBLE
-            mViewHolder!!.view_id_9.visibility=View.VISIBLE
-            mViewHolder!!.txt_option_9.text="Login"
+            mViewHolder!!.txt_option_9.visibility = View.VISIBLE
+            mViewHolder!!.view_id_9.visibility = View.VISIBLE
+            mViewHolder!!.txt_option_9.text = "Login"
             mViewHolder!!.txt_option_9.setOnClickListener { _ ->
-                startActivity(Intent(this@NavigationActivity, LoginActivity::class.java)
-
-                )
+                startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
+                loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@NavigationActivity));
+                finish()
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
 
 
-        }else {
+        } else {
 
             //--------------------------------btn_Edit--------------------
-            mViewHolder!!.profile_pic.visibility=View.VISIBLE
+            mViewHolder!!.profile_pic.visibility = View.VISIBLE
 
             mViewHolder!!.profile_pic.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, EditProfileActivity::class.java)
-                        .putExtra("session_edit_profile","1")
+                        .putExtra("session_edit_profile", "1")
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
 
-            mViewHolder!!.txt_profile_name.visibility=View.VISIBLE
-            mViewHolder!!.txt_profile_name.text=resources.getString(R.string.app_namess)
+            mViewHolder!!.txt_profile_name.visibility = View.VISIBLE
+            mViewHolder!!.txt_profile_name.text = resources.getString(R.string.app_namess)
 
 
             //--------------------------------btn_Edit--------------------
 
-           // mViewHolder!!.btn_edit.visibility=View.VISIBLE
+            // mViewHolder!!.btn_edit.visibility=View.VISIBLE
             mViewHolder!!.btn_edit.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, EditProfileActivity::class.java))
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
@@ -235,9 +235,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             //--------------------------------btn_1--------------------
 
 
-            mViewHolder!!.txt_option_1.visibility=View.VISIBLE
-            mViewHolder!!.view_id_1.visibility=View.VISIBLE
-            mViewHolder!!.txt_option_1.text=resources.getString(R.string.txt_subscription)
+            mViewHolder!!.txt_option_1.visibility = View.VISIBLE
+            mViewHolder!!.view_id_1.visibility = View.VISIBLE
+            mViewHolder!!.txt_option_1.text = resources.getString(R.string.txt_subscription)
             mViewHolder!!.txt_option_1.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, SubscriptionListActivity::class.java)
                         .putExtra("option", 1)
@@ -246,8 +246,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_2--------------------
-            mViewHolder!!.txt_option_2.visibility=View.VISIBLE
-            mViewHolder!!.view_id_2.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_2.visibility = View.VISIBLE
+            mViewHolder!!.view_id_2.visibility = View.VISIBLE
             mViewHolder!!.txt_option_2.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, GenerateReport::class.java)
                         .putExtra("option", 2)
@@ -256,8 +256,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_3--------------------
-            mViewHolder!!.txt_option_3.visibility=View.VISIBLE
-            mViewHolder!!.view_id_3.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_3.visibility = View.VISIBLE
+            mViewHolder!!.view_id_3.visibility = View.VISIBLE
             mViewHolder!!.txt_option_3.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, StatisticReportActivity::class.java)
                         .putExtra("option", 3)
@@ -266,9 +266,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_4--------------------
-            mViewHolder!!.txt_option_4.visibility=View.VISIBLE
-            mViewHolder!!.txt_noti_count.visibility=View.VISIBLE
-            mViewHolder!!.view_id_4.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_4.visibility = View.VISIBLE
+            mViewHolder!!.txt_noti_count.visibility = View.VISIBLE
+            mViewHolder!!.view_id_4.visibility = View.VISIBLE
             mViewHolder!!.noti_relative_click.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, NotificationActivity::class.java)
                         .putExtra("option", 4)
@@ -277,8 +277,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_5--------------------
-            mViewHolder!!.txt_option_5.visibility=View.VISIBLE
-            mViewHolder!!.view_id_5.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_5.visibility = View.VISIBLE
+            mViewHolder!!.view_id_5.visibility = View.VISIBLE
             mViewHolder!!.txt_option_5.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, ChangePasswordActivity::class.java)
                         .putExtra("option", 5)
@@ -287,8 +287,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_6--------------------
-            mViewHolder!!.txt_option_6.visibility=View.VISIBLE
-            mViewHolder!!.view_id_6.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_6.visibility = View.VISIBLE
+            mViewHolder!!.view_id_6.visibility = View.VISIBLE
             mViewHolder!!.txt_option_6.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
                         .putExtra("option", 6)
@@ -298,8 +298,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
 
             //--------------------------------btn_7--------------------
-            mViewHolder!!.txt_option_7.visibility=View.VISIBLE
-            mViewHolder!!.view_id_7.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_7.visibility = View.VISIBLE
+            mViewHolder!!.view_id_7.visibility = View.VISIBLE
             mViewHolder!!.txt_option_7.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
                         .putExtra("option", 4)
@@ -308,8 +308,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_8--------------------
-            mViewHolder!!.txt_option_8.visibility=View.VISIBLE
-            mViewHolder!!.view_id_8.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_8.visibility = View.VISIBLE
+            mViewHolder!!.view_id_8.visibility = View.VISIBLE
             mViewHolder!!.txt_option_8.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, SupportActivitys::class.java)
 
@@ -318,8 +318,8 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             //--------------------------------btn_9--------------------
-            mViewHolder!!.txt_option_9.visibility=View.VISIBLE
-            mViewHolder!!.view_id_9.visibility=View.VISIBLE
+            mViewHolder!!.txt_option_9.visibility = View.VISIBLE
+            mViewHolder!!.view_id_9.visibility = View.VISIBLE
 
 
 
@@ -395,13 +395,13 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (mViewHolder!!.mDuoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
-       /* AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("")
-                .setMessage(resources.getString(R.string.txt_close_app))
-                .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
-                .setNegativeButton(resources.getString(R.string.txt_No), null)
-                .show()*/
+        /* AlertDialog.Builder(this)
+                 .setIcon(android.R.drawable.ic_dialog_alert)
+                 .setTitle("")
+                 .setMessage(resources.getString(R.string.txt_close_app))
+                 .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
+                 .setNegativeButton(resources.getString(R.string.txt_No), null)
+                 .show()*/
 
         AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -437,21 +437,20 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     //--------------------------------------------API---Work----------
 
 
+    /* private fun ImageLoaders(url: String) {
 
-   /* private fun ImageLoaders(url: String) {
+         try {
+             Glide.with(baseContext)
+                     .load(url)
+                     .asGif()
+                     .error(R.drawable.progress_animation)
+                     .placeholder(R.drawable.progress_animation)
+                     .into(profile_pic)
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
 
-        try {
-            Glide.with(baseContext)
-                    .load(url)
-                    .asGif()
-                    .error(R.drawable.progress_animation)
-                    .placeholder(R.drawable.progress_animation)
-                    .into(profile_pic)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-    }*/
+     }*/
 
     //------------------------------------0peration --------------------our------------
 

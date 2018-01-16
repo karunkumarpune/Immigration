@@ -3,6 +3,7 @@
     <string name="app_names">Immigration</string>
     <string name="app_namess">Karun Kumar</string>
 
+    <string name="txt_result">Results</string>
     <string name="txt_subscription">Subscription</string>
     <string name="txt_generate_report">Generate Report</string>
     <string name="txt_stattistics_report">Statistic Reports</string>
@@ -21,6 +22,17 @@
     <string name="menu_option_4">Alberta Point Calculator</string>
     <string name="menu_option_5">PEI Point Calculator</string>
     <string name="menu_option_6">Saskatchewan Point Calculator</string>
+
+
+    <!--Result pdf content-->
+    <string name="pdf_option_1">Noc code simplified</string>
+    <string name="pdf_option_2">How to prepare your documents</string>
+    <string name="pdf_option_3">How to improve your Scores</string>
+    <string name="pdf_option_4">What are other options</string>
+    <string name="pdf_option_5">Top 100 Jobs in canada</string>
+    <string name="pdf_option_6">Tips &amp; Tricks</string>
+
+    <string name="pdf_option_des">Please subscribe the subscription plan to proceed further.</string>
 
 
     <!--Side menu send Intent content-->
@@ -70,7 +82,14 @@
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
 
-    <string name="txt_description">http://www.tutorialspoint.com/java/java_tutorial.pdf</string>
+    <string name="txt_description">Central Board of Excise and Customs (CBEC) is a part of the Department of Revenue under the Ministry of Finance, Government of India.</string>
+    <string name="txt_description1">http://www.tutorialspoint.com/java/java_tutorial.pdf</string>
+    <string name="txt_description2">http://enos.itcollege.ee/~jpoial/allalaadimised/lugemist/Android-Programming-Cookbook.pdf</string>
+    <string name="txt_description3">https://www.cs.cmu.edu/~bam/uicourse/830spring09/BFeiginMobileApplicationDevelopment.pdf</string>
+    <string name="txt_description4">https://commonsware.com/Android/Android-1_0-CC.docx</string>
+    <string name="txt_description5">http://www.kmvportal.co.in/Course/MAD/Android%20Book.docx</string>
+    <string name="txt_description6">http://cdn.wonderfulengineering.com/wp-content/uploads/2016/02/Rose-Wallpaper-16-610x343.jpg</string>
+    <string name="txt_description7">https://www.onlinecharttool.com/pics/logo.png</string>
     <string name="txt_title">Package Activation</string>
 
     <!---->
@@ -151,7 +170,7 @@ Immigration never supplies any other person or organization with your informatio
     <string name="signup_validation_5">Confirm password not match!!</string>
     <string name="signup_validation_6">Please accept terms conditions</string>
 
- <!--EditProfile validation-->
+    <!--EditProfile validation-->
     <string name="edit_profile_validation_1">Enter first name</string>
     <string name="edit_profile_validation_2">Enter last name</string>
     <string name="edit_profile_validation_3">Enter mobile number</string>
@@ -162,6 +181,7 @@ Immigration never supplies any other person or organization with your informatio
     <string name="invitation_del_no">No</string>
 
     <string name="action_sms">Enter valid otp !!</string>
+    <string name="result_3">Candidates that are invited to apply for \n PR Score Above</string>
 
 
 </resources>

@@ -9,13 +9,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.immigration.R
-import com.immigration.view.subscription.SubscriptionActivity
 import com.immigration.model.question_model.Result
 import com.immigration.model.question_model.Status
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
 import com.immigration.utils.Utils
+import com.immigration.view.subscription.ResultActivity
 import kotlinx.android.synthetic.main.activity_questions.*
 import retrofit2.Call
 import retrofit2.Response
@@ -75,7 +75,7 @@ class QuestionsActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Status>?, response: Response<Status>?) {
                 pb.dismiss()
-                if (response!!.isSuccessful()) {
+                if (response!!.isSuccessful) {
                     val list = response.body().result
                     try {
                         rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result>)
@@ -91,13 +91,15 @@ class QuestionsActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Status>?, t: Throwable?) {
                 pb.dismiss()
+                Utils.showToast(this@QuestionsActivity,"Sorry!No internet available",Color.RED)
+
             }
         })
 
 
         btn_submit_qus.setOnClickListener {
             if (isChecks) {
-                startActivity(Intent(this@QuestionsActivity, SubscriptionActivity::class.java)
+                startActivity(Intent(this@QuestionsActivity, ResultActivity::class.java)
                         .putExtra("session_sub", "1")
                 )
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
