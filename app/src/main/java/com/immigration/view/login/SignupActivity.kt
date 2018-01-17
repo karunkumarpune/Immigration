@@ -54,7 +54,7 @@ class SignupActivity : AppCompatActivity() {
 
         //Term condition
         val s = getString(R.string.term_conditionss)
-        term_condition.text= Html.fromHtml(s,Html.FROM_HTML_MODE_LEGACY)
+        term_condition.text= Html.fromHtml(s)//,Html.FROM_HTML_MODE_LEGACY)
         term_condition.setOnClickListener {
            startActivity(Intent(this, TermConditionActivity::class.java)) }
 
