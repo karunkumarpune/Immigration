@@ -3,7 +3,7 @@ package com.immigration.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Result {
+class Result_mo {
 
     @SerializedName("main_avatar")
     @Expose

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
@@ -13,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.immigration.R
 import com.immigration.controller.sharedpreferences.LoginPrefences
+import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
@@ -21,6 +21,11 @@ import com.immigration.view.home.NavigationActivity
 import com.immigration.view.term_condition.TermConditionActivity
 import com.mukesh.countrypicker.CountryPicker
 import kotlinx.android.synthetic.main.activity_signup.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
+
 
 class SignupActivity : AppCompatActivity() {
 
@@ -39,28 +44,32 @@ class SignupActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_signup)
 
-        countryCode="+1"
+        countryCode = "+1"
         loginPreference = LoginPrefences.getInstance()
         APIService = ApiUtils.apiService
 
 
         //skip condition
         btn_signup_skip.setOnClickListener {
-            startActivity(Intent(this,NavigationActivity::class.java)
-                    .putExtra("session","0")) }
+            startActivity(Intent(this, NavigationActivity::class.java)
+                    .putExtra("session", "0"))
+        }
 
 
         initViewSubmit()
 
         //Term condition
         val s = getString(R.string.term_conditionss)
-        term_condition.text= Html.fromHtml(s)//,Html.FROM_HTML_MODE_LEGACY)
+        term_condition.text = Html.fromHtml(s)//,Html.FROM_HTML_MODE_LEGACY)
         term_condition.setOnClickListener {
-           startActivity(Intent(this, TermConditionActivity::class.java)) }
+            startActivity(Intent(this, TermConditionActivity::class.java))
+        }
 
         //again login
-        signup_btn_login.setOnClickListener { startActivity(Intent(this,LoginActivity::class.java))
-            finish() }
+        signup_btn_login.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
         //click country_code
         country_code.setOnClickListener { openCountryCodeDialog() }
@@ -70,66 +79,122 @@ class SignupActivity : AppCompatActivity() {
         val picker = CountryPicker.newInstance("Select Country")  // dialog title
         picker.setListener { name, code, dialCode, _ ->
             picker.dismiss()
-            country_code.text=dialCode.toString()
+            country_code.text = dialCode.toString()
             countryCode = dialCode.toString()
         }
         picker.show(this.supportFragmentManager, "COUNTRY_PICKER")
 
     }
+
     private fun hideSoftKeyboad(v: View) {
         val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(v.windowToken, 0)
 
     }
+
     private fun initViewSubmit() {
 
         signup_btn.setOnClickListener { v ->
 
-            val mobile=txt_signup_mob.text.toString()
-            val email=txt_signup_email.text.toString()
-            val pass=txt_signup_pass.text.toString()
-            val conf_pass=txt_signup_conf_pass.text.toString()
+            val mobile = txt_signup_mob.text.toString()
+            val email = txt_signup_email.text.toString()
+            val pass = txt_signup_pass.text.toString()
+            val conf_pass = txt_signup_conf_pass.text.toString()
 
-            if(mobile.isEmpty()){
+           /* if (mobile.isEmpty()) {
                 Utils.showToast(this@SignupActivity, getString(R.string.login_validation_1), Color.RED)
                 txt_signup_mob.requestFocus()
                 hideSoftKeyboad(v)
-            }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_2), Color.RED)
                 txt_signup_email.requestFocus()
                 hideSoftKeyboad(v)
-            }else if(pass.isEmpty()){
+            } else if (pass.isEmpty()) {
                 Utils.showToast(this@SignupActivity, getString(R.string.login_validation_3), Color.RED)
                 txt_signup_pass.requestFocus()
                 hideSoftKeyboad(v)
-            }else if(conf_pass.isEmpty()){
+            } else if (conf_pass.isEmpty()) {
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_4), Color.RED)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
-            }else if(pass !=conf_pass){
+            } else if (pass != conf_pass) {
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.RED)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
-            }else if(!txt_signup_check.isChecked){
+            } else if (!txt_signup_check.isChecked) {
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_6), Color.RED)
-            }else{
-                initJsonOperation(countryCode!!,mobile,email,conf_pass)
-            }
+            } else {*/
+
+             initJsonOperation(countryCode!!, mobile, email, conf_pass)
+             //  initJsonOperation("+91","8860961980","yuuu@g.c","12345678")
+
+
+               /* startActivity(Intent(this@SignupActivity,OTPActivity::class.java)
+                        .putExtra("session_otp","0")
+                        .putExtra("userId","21")
+                )*/
+
+          //  }
         }
 
     }
 
-    private fun initJsonOperation(code:String,mob:String,email:String,pass:String) {
-        Utils.log(TAG!!,"signup data : $code,$mob,$email,$pass ")
+    private fun initJsonOperation(code: String, mob: String, email: String, pass: String) {
+        //  Utils.log(TAG!!, "signup data : $code,$mob,$email,$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
-        Handler().postDelayed({pb.dismiss()
-            LoginPrefences.getInstance().addData(this@SignupActivity, mob, pass,email,"","")
-            startActivity(Intent(this,OTPActivity::class.java)
-                    .putExtra("session_otp","0")
-            )
-        },2000)
 
+        val requestBody = HashMap<String, String>()
+        requestBody.put("email", email)
+        requestBody.put("contact", mob)
+        requestBody.put("countryCode",code)
+        requestBody.put("password", pass)
+        APIService!!.getUser(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
+            override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
+                pb.dismiss()
+                Utils.log(TAG!!, "signup onResponse  code: ${response!!.raw()}")
+                val status = response!!.code()
+
+                if (status != 200) {
+                    when (status) {
+                        201 -> {
+                            val mess = response!!.body().message.toString()
+                            val userId = response!!.body().result.userId
+                            Utils.log(TAG!!, "signup onResponse  body: $mess   $userId")
+                            Utils.showToast(this@SignupActivity, mess, Color.YELLOW)
+
+                            startActivity(Intent(this@SignupActivity,OTPActivity::class.java)
+                                     .putExtra("session_otp","0")
+                                     .putExtra("user_id",userId.toString())
+                             )
+                        }
+                        204 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        409 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        400 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        401 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        403 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        404 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
+                        500 -> Utils.showToast(this@SignupActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                           else -> Utils.showToast(this@SignupActivity,resources.getString(R.string.error_status_1), Color.RED)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
+                pb.dismiss()
+                Utils.log(TAG!!, "signup Throwable : $t")
+                Utils.showToast(this@SignupActivity, "Sorry!No internet available", Color.RED)
+            }
+        })
+    }
+
+
+    private fun errorHandler(response: Response<ResponseModel>?):String{
+        return try {
+            val jObjError = JSONObject(response!!.errorBody().string())
+            jObjError.getString("message")
+        } catch (e: Exception) {
+            e.message!!
+        }
     }
 }

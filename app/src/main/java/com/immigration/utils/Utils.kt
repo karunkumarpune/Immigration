@@ -16,7 +16,7 @@ object Utils {
 
     //Custom Toast
     fun showToast(context: Context, message: String,color: Int): Snackbar {
-        val sb = Snackbar.make((context as Activity).findViewById<View>(android.R.id.content), message, Snackbar.LENGTH_SHORT)
+        val sb = Snackbar.make((context as Activity).findViewById<View>(android.R.id.content), message, Snackbar.LENGTH_LONG)
         sb.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
         val textView = sb.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
         textView.setTextColor(color)

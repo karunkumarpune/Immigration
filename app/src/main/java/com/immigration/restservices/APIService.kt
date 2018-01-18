@@ -1,8 +1,10 @@
 package com.immigration.restservices
 
+import com.immigration.model.ResponseModel
 import retrofit2.Call
-import retrofit2.http.GET
-import com.immigration.model.question_model.Status
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
 
 interface APIService {
@@ -14,8 +16,20 @@ interface APIService {
 
     // http://www.androidhub4you.com/p/blog-page_27.html
 
-    @GET("/karunkumarpune/Expandeble/master/question_test.json")
-    fun getQuestion(): Call<Status>
+    /*@GET("/karunkumarpune/Expandeble/master/question_test.json")
+      fun getQuestion(): Call<Status>
+  */
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/signup")
+    fun getUser(@Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/verifyOtp")
+    fun verifyOtp(@Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/resendOtp")
+    fun resendOtp(@Body body: Map<String, String>): Call<ResponseModel>
 
 
 /*
@@ -28,7 +42,6 @@ interface APIService {
     fun Save(@Field("answer") name:String,
              @Field("Date") Date:String):Call<JSONObject>
 */
-
 
 
 }

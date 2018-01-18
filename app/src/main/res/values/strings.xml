@@ -24,7 +24,7 @@
     <string name="menu_option_6">Saskatchewan Point Calculator</string>
 
 
-    <!--Result pdf content-->
+    Result_mosult pdf content-->
     <string name="pdf_option_1">Noc code simplified</string>
     <string name="pdf_option_2">How to prepare your documents</string>
     <string name="pdf_option_3">How to improve your Scores</string>
@@ -138,7 +138,7 @@ There are disclaimers throughout our website stating that Iimmigration is an ind
 Certifications Immigration has passed rigorous background checks that ensure the validity and the overall legitimacy of our business.\n \n
 Intellectual property rights Except where otherwise stated, Immigration is the copyright holder of all content, layout, design, data, graphics, trademarks and logos under the isaglobal.in domain.  \n
 The content is protected by India and international copyright laws. Immigration Global will do our outmost to protect our rights, employees, customers, members and intellectual property. We will not hesitate to take legal action if necessary. \n \n
-Limitation of Liability Immigration shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the materials on this website or the performance of the products, even if Immigration has been advised of the possibility of such damages. \n \n
+Limitation of Liability Immigration shall not be liable for any special or consequential damages that resultMo from the use of, or the inability to use, the materials on this website or the performance of the products, even if Immigration has been advised of the possibility of such damages. \n \n
 Applicable law may not allow the limitation of exclusion of liability or incidental or consequential damages, so the above limitation or exclusion may not apply to you.\n \n
 Legal Form and Choice of Law:By using our website, purchasing a products or service, you have entered into a legal contract with Immigration Overseas Careers. You agree that the prevailing party in a civil lawsuit may be awarded reasonable attorney's fees.</string>
 
@@ -182,6 +182,7 @@ Immigration never supplies any other person or organization with your informatio
 
     <string name="action_sms">Enter valid otp !!</string>
     <string name="result_3">Candidates that are invited to apply for \n PR Score Above</string>
+    <string name="error_status_1">Please try again!!</string>
 
 
 </resources>

@@ -1,7 +1,5 @@
 package com.immigration.view.questions
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
@@ -9,17 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.immigration.R
-import com.immigration.model.question_model.Result
-import com.immigration.model.question_model.Status
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
-import com.immigration.utils.Utils
-import com.immigration.view.subscription.ResultActivity
 import kotlinx.android.synthetic.main.activity_questions.*
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
 
 
 class QuestionsActivity : AppCompatActivity() {
@@ -66,10 +57,10 @@ class QuestionsActivity : AppCompatActivity() {
 
 
 
-        initJsonPareses()
+      //  initJsonPareses()
     }
 
-    private fun initJsonPareses() {
+   /* private fun initJsonPareses() {
 
         mAPIService!!.getQuestion().enqueue(object : Callback, retrofit2.Callback<Status> {
 
@@ -78,7 +69,7 @@ class QuestionsActivity : AppCompatActivity() {
                 if (response!!.isSuccessful) {
                     val list = response.body().result
                     try {
-                        rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result>)
+                        rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result_mo>)
                         recyclerView!!.adapter = rideAdapter
                         rideAdapter!!.notifyDataSetChanged()
 
@@ -109,7 +100,7 @@ class QuestionsActivity : AppCompatActivity() {
         }
 
 
-    }
+    }*/
 
     override fun onStop() {
         super.onStop()

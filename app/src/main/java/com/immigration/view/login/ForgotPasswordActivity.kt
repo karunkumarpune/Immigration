@@ -57,6 +57,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         Handler().postDelayed({pb.dismiss()
             startActivity(Intent(this, OTPActivity::class.java)
                     .putExtra("session_otp","1")
+                    .putExtra("user_id","58")
             )
         },2000)
 
