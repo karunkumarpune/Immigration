@@ -1,10 +1,9 @@
 package com.immigration.restservices
 
 import com.immigration.model.ResponseModel
+import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface APIService {
@@ -30,6 +29,20 @@ interface APIService {
     @Headers("Content-Type: application/json")
     @POST("/immigration/api/resendOtp")
     fun resendOtp(@Body body: Map<String, String>): Call<ResponseModel>
+
+
+    @Multipart
+    @POST("/immigration/api/updateProfile")
+    fun postImage(@Header ("accessToken") accessToken:String,
+                  @Part image: MultipartBody.Part,
+                  @Part("firstName") firstName: String,
+                  @Part("lastName") lastName: String,
+                  @Part("contact") contact: String,
+                  @Part("countryCode") countryCode: String
+                 ): Call<ResponseModel>
+
+
+
 
 
 /*

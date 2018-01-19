@@ -80,7 +80,7 @@
 
                 <EditText
                     android:id="@+id/et_profile_first"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/user"
                     android:hint="@string/first_name"
                     android:inputType="text"
