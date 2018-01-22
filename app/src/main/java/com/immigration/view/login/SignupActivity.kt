@@ -11,7 +11,6 @@ import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.immigration.R
-import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -30,13 +29,13 @@ import javax.security.auth.callback.Callback
 class SignupActivity : AppCompatActivity() {
 
     private var countryCode: String? = null
-
-
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
-    private var loginPreference: LoginPrefences? = null
     private val TAG = SignupActivity::class.java!!.getName()
 
+    companion object {
+        var passwords_signup:String = ""
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +44,6 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         countryCode = "+1"
-        loginPreference = LoginPrefences.getInstance()
         APIService = ApiUtils.apiService
 
 
@@ -101,46 +99,54 @@ class SignupActivity : AppCompatActivity() {
             val pass = txt_signup_pass.text.toString()
             val conf_pass = txt_signup_conf_pass.text.toString()
 
-           /* if (mobile.isEmpty()) {
+            if (mobile.isEmpty()) {
+                hideSoftKeyboad(v)
                 Utils.showToast(this@SignupActivity, getString(R.string.login_validation_1), Color.RED)
                 txt_signup_mob.requestFocus()
+            } else if (mobile.length <5) {
                 hideSoftKeyboad(v)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_2), Color.RED)
+                txt_signup_mob.requestFocus()
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                hideSoftKeyboad(v)
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_2), Color.RED)
                 txt_signup_email.requestFocus()
-                hideSoftKeyboad(v)
+
             } else if (pass.isEmpty()) {
+                hideSoftKeyboad(v)
                 Utils.showToast(this@SignupActivity, getString(R.string.login_validation_3), Color.RED)
                 txt_signup_pass.requestFocus()
+            }else if (pass.length <8) {
                 hideSoftKeyboad(v)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.RED)
+                txt_signup_pass.requestFocus()
             } else if (conf_pass.isEmpty()) {
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_4), Color.RED)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
-            } else if (pass != conf_pass) {
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.RED)
+            } else if (conf_pass.length <8) {
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.RED)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
+            } else if (pass != conf_pass) {
+                hideSoftKeyboad(v)
+                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.RED)
+                txt_signup_conf_pass.requestFocus()
             } else if (!txt_signup_check.isChecked) {
+                hideSoftKeyboad(v)
                 Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_6), Color.RED)
-            } else {*/
-
+            } else {
+                hideSoftKeyboad(v)
              initJsonOperation(countryCode!!, mobile, email, conf_pass)
+          //   initJsonOperation("+91", mobile, email, conf_pass)
              //  initJsonOperation("+91","8860961980","yuuu@g.c","12345678")
-
-
-               /* startActivity(Intent(this@SignupActivity,OTPActivity::class.java)
-                        .putExtra("session_otp","0")
-                        .putExtra("userId","21")
-                )*/
-
-          //  }
+         }
         }
 
     }
 
     private fun initJsonOperation(code: String, mob: String, email: String, pass: String) {
-        //  Utils.log(TAG!!, "signup data : $code,$mob,$email,$pass ")
+        Utils.log(TAG!!, "signup data : $code,$mob,$email,$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
@@ -150,6 +156,7 @@ class SignupActivity : AppCompatActivity() {
         requestBody.put("contact", mob)
         requestBody.put("countryCode",code)
         requestBody.put("password", pass)
+        passwords_signup =pass
         APIService!!.getUser(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
@@ -167,6 +174,7 @@ class SignupActivity : AppCompatActivity() {
                             startActivity(Intent(this@SignupActivity,OTPActivity::class.java)
                                      .putExtra("session_otp","0")
                                      .putExtra("user_id",userId.toString())
+                                     .putExtra("contact",mob)
                              )
                         }
                         204 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)

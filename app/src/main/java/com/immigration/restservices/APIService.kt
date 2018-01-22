@@ -2,6 +2,7 @@ package com.immigration.restservices
 
 import com.immigration.model.ResponseModel
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -34,21 +35,40 @@ interface APIService {
     @Multipart
     @POST("/immigration/api/updateProfile")
     fun postImage(@Header ("accessToken") accessToken:String,
-                  @Part image: MultipartBody.Part,
-                  @Part("firstName") firstName: String,
-                  @Part("lastName") lastName: String,
-                  @Part("contact") contact: String,
-                  @Part("countryCode") countryCode: String
+                  @Part image: MultipartBody.Part?,
+                  @Part("firstName") firstName: RequestBody,
+                  @Part("lastName") lastName: RequestBody,
+                  @Part("contact") contact: RequestBody,
+                  @Part("countryCode") countryCode: RequestBody
                  ): Call<ResponseModel>
 
 
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/login")
+    fun login(@Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/forgotPassword")
+    fun forgotPassword(@Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/setPassword")
+    fun setPassword(@Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("/immigration/api/changePassword")
+    fun changePasswords(@Header ("accessToken") accessToken:String,
+                       @Body body: Map<String, String>): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @GET("/immigration/api/logout")
+    fun logout(@Header ("accessToken") accessToken:String): Call<ResponseModel>
 
 
 
 /*
 
-    @get:GET("/avatar_1.json")
-    val avatar1: Call<JSONObject>
+
 
     @FormUrlEncoded
     @POST("/")

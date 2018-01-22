@@ -156,6 +156,7 @@ Immigration never supplies any other person or organization with your informatio
     <!--Login Validation-->
     <string name="login_validation_1">Enter mobile number !!</string>
     <string name="login_validation_2">Enter valid mobile number !!</string>
+    <string name="login_validation_valid">password that should accept only 8 characters</string>
     <string name="login_validation_3">Enter password !!</string>
     <string name="otp_validation_1">Enter otp !!</string>
     <string name="otp_validation_2">Enter valid otp !!</string>

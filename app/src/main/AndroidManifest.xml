@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
+      <!--  <activity
             android:name=".view.login.EditProfileActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -35,9 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+-->
 
-
-        <!--  <activity
+          <activity
             android:name=".view.main.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -47,12 +47,11 @@
             </intent-filter>
         </activity>
 
-        -->
 
 
         <activity android:name=".view.login.LoginActivity" />
         <activity android:name=".view.login.ForgotPasswordActivity" />
-     <!--   <activity android:name=".view.login.EditProfileActivity" />-->
+        <activity android:name=".view.login.EditProfileActivity" />
         <activity android:name=".view.login.ResetPasswordActivity" />
         <activity android:name=".view.login.ChangePasswordActivity" />
         <activity android:name=".view.login.SignupActivity" />

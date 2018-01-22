@@ -58,7 +58,7 @@
                     android:textSize="@dimen/text_size_title" />
 
                 <TextView
-                    android:id="@+id/otp_txt_mobile"
+                    android:id="@+id/otp_txt_mobiles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

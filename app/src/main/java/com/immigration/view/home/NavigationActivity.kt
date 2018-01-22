@@ -13,9 +13,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.immigration.R
 import com.immigration.controller.application.AppController
 import com.immigration.controller.sharedpreferences.LoginPrefences
+import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.ConnectivityReceiver
@@ -34,6 +36,10 @@ import com.immigration.view.subscription.SubscriptionListActivity
 import com.immigration.view.support.SupportActivitys
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
@@ -42,7 +48,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showSnack(isConnected)
     }
-
+    private val TAG = NavigationActivity::class.java!!.name
     private var session_id: String = ""
     private var mViewHolder: ViewHolder? = null
 
@@ -51,13 +57,31 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private var loginPreference: LoginPrefences? = null
 
 
+    private lateinit var accessToken: String
+    private lateinit var userId: String
+    private lateinit var email: String
+    private lateinit var countryCode: String
+    private lateinit var contact: String
+    private lateinit var profilePic: String
+    private lateinit var firstName: String
+    private lateinit var lastName: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_navigation)
 
         session_id = intent.getStringExtra("session")
-        loginPreference = LoginPrefences.getInstance();
+        loginPreference = LoginPrefences.getInstance()
+
+        if(session_id=="1") {
+            accessToken = loginPreference!!.getAccessToken(LoginPrefences.getInstance().getLoginPreferences(this))
+            firstName = loginPreference!!.getFName(LoginPrefences.getInstance().getLoginPreferences(this))
+            lastName = loginPreference!!.getLName(LoginPrefences.getInstance().getLoginPreferences(this))
+            contact = loginPreference!!.getMobile(LoginPrefences.getInstance().getLoginPreferences(this))
+            profilePic = loginPreference!!.getProfilePic(LoginPrefences.getInstance().getLoginPreferences(this))
+        }
 
         initView()
         APIService = ApiUtils.apiService
@@ -154,7 +178,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
 
-        if (session_id.equals("0")) {
+        if (session_id == "0") {
             //--------------------------------btn_6--------------------
 
 
@@ -211,8 +235,22 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
         } else {
 
-            //--------------------------------btn_Edit--------------------
+
+
             mViewHolder!!.profile_pic.visibility = View.VISIBLE
+            try {
+                Glide.with(baseContext)
+                        .load(profilePic)
+                        .asBitmap()
+                        .error(R.drawable.progress_animation)
+                        .placeholder(R.drawable.progress_animation)
+                        .into(mViewHolder!!.profile_pic)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            //--------------------------------btn_Edit--------------------
 
             mViewHolder!!.profile_pic.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, EditProfileActivity::class.java)
@@ -222,7 +260,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             }
 
             mViewHolder!!.txt_profile_name.visibility = View.VISIBLE
-            mViewHolder!!.txt_profile_name.text = resources.getString(R.string.app_namess)
+            mViewHolder!!.txt_profile_name.text =firstName +" "+ lastName
 
 
             //--------------------------------btn_Edit--------------------
@@ -280,9 +318,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.txt_option_5.visibility = View.VISIBLE
             mViewHolder!!.view_id_5.visibility = View.VISIBLE
             mViewHolder!!.txt_option_5.setOnClickListener { _ ->
-                startActivity(Intent(this@NavigationActivity, ChangePasswordActivity::class.java)
-                        .putExtra("option", 5)
-                )
+                startActivity(Intent(this@NavigationActivity, ChangePasswordActivity::class.java))
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
 
@@ -332,6 +368,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                         .setTitle("")
                         .setMessage(resources.getString(R.string.txt_close_app))
                         .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
+                            Logout(accessToken)
                             startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
                             loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@NavigationActivity));
                             finish()
@@ -434,24 +471,6 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         AppController.getInstance().setConnectivityListener(this)
     }
 
-    //--------------------------------------------API---Work----------
-
-
-    /* private fun ImageLoaders(url: String) {
-
-         try {
-             Glide.with(baseContext)
-                     .load(url)
-                     .asGif()
-                     .error(R.drawable.progress_animation)
-                     .placeholder(R.drawable.progress_animation)
-                     .into(profile_pic)
-         } catch (e: Exception) {
-             e.printStackTrace()
-         }
-
-     }*/
-
     //------------------------------------0peration --------------------our------------
 
     private fun callFinish() {
@@ -460,6 +479,56 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         } else {
             this.moveTaskToBack(true);
 
+        }
+    }
+
+
+
+    private fun Logout(accessToken:String){
+
+        APIService!!.logout(accessToken)
+                .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
+                    override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
+                        pb.dismiss()
+                        Utils.log(TAG!!, "Login onResponse  code: ${response!!.raw()}")
+                        val status = response!!.code()
+
+                        if(response.isSuccessful){
+                            Utils.showToast(this@NavigationActivity,response.body().message, Color.WHITE)
+
+                        }
+
+                        if (status != 200) {
+                            when (status) {
+                                201 -> {
+                                    val mess = response!!.body().message.toString()
+                                    Utils.showToast(this@NavigationActivity, mess, Color.YELLOW) }
+                                204 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                409 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                400 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                401 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                403 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                404 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
+                                500 -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                                else -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.RED)
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
+                        pb.dismiss()
+                        Utils.log(TAG!!, "Login Throwable : $t")
+                        Utils.showToast(this@NavigationActivity, "Sorry!No internet available", Color.RED)
+                    }
+                })
+
+    }
+
+    private fun errorHandler(response: Response<ResponseModel>?):String{
+        return try {
+            val jObjError = JSONObject(response!!.errorBody().string())
+            jObjError.getString("message")
+        } catch (e: Exception) {
+            e.message!!
         }
     }
 }

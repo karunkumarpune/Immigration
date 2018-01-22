@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
@@ -19,12 +18,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.immigration.R
 import com.immigration.controller.sharedpreferences.LoginPrefences
+import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
 import com.immigration.utils.Utils
 import com.immigration.view.home.NavigationActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 class LoginActivity : AppCompatActivity() {
@@ -102,15 +106,20 @@ class LoginActivity : AppCompatActivity() {
             val pass = login_et_pass.text.toString()
 
             if (mob.isEmpty()) {
+                hideSoftKeyboad(v)
                 Utils.showToast(this@LoginActivity, getString(R.string.login_validation_1), Color.RED)
                 login_et_mobile.requestFocus()
+            } else if (mob.length <5) {
                 hideSoftKeyboad(v)
-            }/* else if (mob.length < 5) {
                 Utils.showToast(this@LoginActivity, getString(R.string.login_validation_2), Color.RED)
                 login_et_mobile.requestFocus()
+            } else if (pass.isEmpty()) {
                 hideSoftKeyboad(v)
-            }*/ else if (pass.isEmpty()) {
                 Utils.showToast(this@LoginActivity, getString(R.string.login_validation_3), Color.RED)
+                login_et_pass.requestFocus()
+            }else if (pass.length <8) {
+                hideSoftKeyboad(v)
+                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_valid), Color.RED)
                 login_et_pass.requestFocus()
             } else {
                 hideSoftKeyboad(v)
@@ -130,18 +139,83 @@ class LoginActivity : AppCompatActivity() {
         pb.setCancelable(false)
         pb.show()
 
-        Handler().postDelayed({pb.dismiss()
 
-            LoginPrefences.getInstance().addData(this@LoginActivity, mob, pass,"","","")
-            startActivity(Intent(this@LoginActivity, NavigationActivity::class.java)
-                    .putExtra("session", "1")
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            finish()
+        val requestBody = HashMap<String, String>()
+        requestBody.put("contact",mob)
+        requestBody.put("password",pass)
 
-        },2000)
+        APIService!!.login(requestBody)
+                .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
+                    override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
+                        pb.dismiss()
+                        Utils.log(TAG!!, "Login onResponse  code: ${response!!.raw()}")
+                        val status = response!!.code()
+
+                        if(response.isSuccessful){
+                            var img = ""
+
+                            val accessToken=response.body().result.accessToken
+                            val userId=response.body().result.userId
+                            val email=response.body().result.email
+                            val countryCode=response.body().result.countryCode
+                            val contact=response.body().result.contact
+                            val firstName=response.body().result.firstName
+                            val lastName=response.body().result.lastName
 
 
+                            var profilePic = response.body().result.profilePic
+
+                            if (profilePic == null) {
+                                img = "https://oncopedia.pro/w/images/thumb/a/a5/UserPlaceholder.png/250px-UserPlaceholder.png"
+                            } else {
+                                img ="http://worklime.com/immigration/images/"+ profilePic
+                            }
+
+                            Utils.log(TAG!!, "Login onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+                            LoginPrefences.getInstance().addData(this@LoginActivity,
+                                    accessToken,
+                                    userId.toString(),
+                                    countryCode,
+                                    contact,pass,
+                                    email,firstName,lastName,img)
+                            startActivity(Intent(this@LoginActivity, NavigationActivity::class.java)
+                                    .putExtra("session", "1")
+                            )
+                        }
+
+                        if (status != 200) {
+                            when (status) {
+                                201 -> {
+                                    val mess = response!!.body().message.toString()
+                                    Utils.showToast(this@LoginActivity, mess, Color.YELLOW) }
+                                204 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                409 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                400 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                401 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                403 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                404 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
+                                500 -> Utils.showToast(this@LoginActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                                else -> Utils.showToast(this@LoginActivity,resources.getString(R.string.error_status_1), Color.RED)
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
+                        pb.dismiss()
+                        Utils.log(TAG!!, "Login Throwable : $t")
+                        Utils.showToast(this@LoginActivity, "Sorry!No internet available", Color.RED)
+                    }
+                })
+
+
+    }
+
+    private fun errorHandler(response: Response<ResponseModel>?):String{
+        return try {
+            val jObjError = JSONObject(response!!.errorBody().string())
+            jObjError.getString("message")
+        } catch (e: Exception) {
+            e.message!!
+        }
     }
 
 
