@@ -44,6 +44,7 @@
             android:layout_below="@+id/profile_pic"
             android:gravity="center"
             android:text="Karun Kumar"
+            android:maxLines="2"
             android:textColor="#ffffff"
             android:textSize="18sp" />
 

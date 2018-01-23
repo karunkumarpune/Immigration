@@ -1,10 +1,17 @@
 package com.immigration.restservices
 
+import com.immigration.appdata.Constant.BASE_URL
+import com.immigration.appdata.Constant.BASE_URL2
+
 object ApiUtils {
 
-    val BASE_URL = "http://worklime.com"
-  //  val BASE_URL = "https://raw.githubusercontent.com"
-    val apiService: APIService
+
+        val apiService: APIService
         get() = RetrofitClient.getClient(BASE_URL).create(APIService::class.java)
 
+        val apiService2: APIService
+        get() = RetrofitClient.getClient(BASE_URL2).create(APIService::class.java)
+
 }
+
+//https://raw.githubusercontent.com/karunkumarpune/Expandeble/master/question_test.json

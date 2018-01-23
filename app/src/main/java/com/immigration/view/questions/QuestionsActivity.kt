@@ -1,5 +1,7 @@
 package com.immigration.view.questions
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
@@ -7,11 +9,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.immigration.R
-import com.immigration.restservices.APIService
-import com.immigration.restservices.ApiUtils
+import com.immigration.model.question_model.Result
+import com.immigration.model.question_model.Status
+import com.immigration.restservices.APIService2
+import com.immigration.restservices.ApiUtils2
 import com.immigration.utils.CustomProgressBar
+import com.immigration.utils.Utils
+import com.immigration.view.subscription.ResultActivity
 import kotlinx.android.synthetic.main.activity_questions.*
-
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 class QuestionsActivity : AppCompatActivity() {
 
@@ -19,7 +27,7 @@ class QuestionsActivity : AppCompatActivity() {
 
 
     private var rideAdapter: QuestionAdapter? = null
-    private var mAPIService: APIService? = null
+    private var mAPIService: APIService2? = null
     private lateinit var pb: CustomProgressBar
 
     companion object {
@@ -32,9 +40,9 @@ class QuestionsActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_questions)
 
-        mAPIService = ApiUtils.apiService;
+        mAPIService = ApiUtils2.apiService2;
         pb = CustomProgressBar(this);
-        pb.setCancelable(false)
+        pb.setCancelable(true)
         pb.show()
 
         txt_title.text = intent.getStringExtra("option")
@@ -57,10 +65,10 @@ class QuestionsActivity : AppCompatActivity() {
 
 
 
-      //  initJsonPareses()
+        initJsonPareses()
     }
 
-   /* private fun initJsonPareses() {
+   private fun initJsonPareses() {
 
         mAPIService!!.getQuestion().enqueue(object : Callback, retrofit2.Callback<Status> {
 
@@ -69,7 +77,7 @@ class QuestionsActivity : AppCompatActivity() {
                 if (response!!.isSuccessful) {
                     val list = response.body().result
                     try {
-                        rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result_mo>)
+                        rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result>)
                         recyclerView!!.adapter = rideAdapter
                         rideAdapter!!.notifyDataSetChanged()
 
@@ -100,7 +108,7 @@ class QuestionsActivity : AppCompatActivity() {
         }
 
 
-    }*/
+    }
 
     override fun onStop() {
         super.onStop()

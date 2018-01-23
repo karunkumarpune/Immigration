@@ -154,34 +154,36 @@ Immigration never supplies any other person or organization with your informatio
 
 
     <!--Login Validation-->
-    <string name="login_validation_1">Enter mobile number !!</string>
-    <string name="login_validation_2">Enter valid mobile number !!</string>
-    <string name="login_validation_valid">password that should accept only 8 characters</string>
-    <string name="login_validation_3">Enter password !!</string>
-    <string name="otp_validation_1">Enter otp !!</string>
-    <string name="otp_validation_2">Enter valid otp !!</string>
+    <string name="login_validation_1">Please enter mobile number.</string>
+    <string name="login_validation_2">Please enter valid mobile number.</string>
+    <string name="login_validation_valid">The password must be at least 8 characters long.</string>
+    <string name="login_validation_email">Please enter Email Id.</string>
+    <string name="login_validation_3">Please enter password.</string>
+    <string name="login_validation_reset">Please enter new password.</string>
+    <string name="otp_validation_1">Please enter OTP.</string>
+    <string name="otp_validation_2">Please enter valid OTP.</string>
     <string name="permission_alert_dialog_title">sms_permisstion_1</string>
     <string name="permission_dialog_message">sms_permisstion_2</string>
     <string name="action_ok">OK</string>
 
 
     <!--SignUp validation-->
-    <string name="signup_validation_2">Enter valid email id !!</string>
-    <string name="signup_validation_4">Enter confirm password !!</string>
-    <string name="signup_validation_5">Confirm password not match!!</string>
-    <string name="signup_validation_6">Please accept terms conditions</string>
+    <string name="signup_validation_2">Please enter valid email id.</string>
+    <string name="signup_validation_4">Please enter confirm password.</string>
+    <string name="signup_validation_5">Confirm password does not match.</string>
+    <string name="signup_validation_6">Please accept the terms and conditions.</string>
 
     <!--EditProfile validation-->
-    <string name="edit_profile_validation_1">Enter first name</string>
-    <string name="edit_profile_validation_2">Enter last name</string>
-    <string name="edit_profile_validation_3">Enter mobile number</string>
-    <string name="edit_profile_validation_4">Enter valid email id</string>
-    <string name="edit_profile_validation_5">Enter current password</string>
+    <string name="edit_profile_validation_1">Please enter first name.</string>
+    <string name="edit_profile_validation_2">Please enter last name.</string>
+    <string name="edit_profile_validation_3">Please enter mobile number.</string>
+    <string name="edit_profile_validation_4">Please enter valid email id.</string>
+    <string name="edit_profile_validation_5">Please enter current password.</string>
 
     <string name="invitation_yes">Yes</string>
     <string name="invitation_del_no">No</string>
 
-    <string name="action_sms">Enter valid otp !!</string>
+    <string name="action_sms">Please enter valid OTP.</string>
     <string name="result_3">Candidates that are invited to apply for \n PR Score Above</string>
     <string name="error_status_1">Please try again!!</string>
 

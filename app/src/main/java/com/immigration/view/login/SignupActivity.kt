@@ -11,6 +11,11 @@ import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.immigration.R
+import com.immigration.appdata.Constant.countryCodeValues
+import com.immigration.appdata.Constant.key_contact
+import com.immigration.appdata.Constant.key_countryCode
+import com.immigration.appdata.Constant.key_email
+import com.immigration.appdata.Constant.key_password
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -28,13 +33,13 @@ import javax.security.auth.callback.Callback
 
 class SignupActivity : AppCompatActivity() {
 
-    private var countryCode: String? = null
+    private var countryCodeS: String? = null
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
     private val TAG = SignupActivity::class.java!!.getName()
 
     companion object {
-        var passwords_signup:String = ""
+        var passwords_signup: String = ""
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -43,7 +48,7 @@ class SignupActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_signup)
 
-        countryCode = "+1"
+        countryCodeS = "+1"
         APIService = ApiUtils.apiService
 
 
@@ -78,7 +83,8 @@ class SignupActivity : AppCompatActivity() {
         picker.setListener { name, code, dialCode, _ ->
             picker.dismiss()
             country_code.text = dialCode.toString()
-            countryCode = dialCode.toString()
+            countryCodeS = dialCode.toString()
+            countryCodeValues=dialCode.toString()
         }
         picker.show(this.supportFragmentManager, "COUNTRY_PICKER")
 
@@ -101,46 +107,48 @@ class SignupActivity : AppCompatActivity() {
 
             if (mobile.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_1), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_1), Color.WHITE)
                 txt_signup_mob.requestFocus()
-            } else if (mobile.length <5) {
+            } else if (mobile.length < 5) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_2), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_2), Color.WHITE)
                 txt_signup_mob.requestFocus()
+            } else if (email.isEmpty()) {
+                hideSoftKeyboad(v)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_email), Color.WHITE)
+                txt_signup_email.requestFocus()
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_2), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_2), Color.WHITE)
                 txt_signup_email.requestFocus()
-
             } else if (pass.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_3), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_3), Color.WHITE)
                 txt_signup_pass.requestFocus()
-            }else if (pass.length <8) {
+            } else if (pass.length < 8) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_signup_pass.requestFocus()
             } else if (conf_pass.isEmpty()) {
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_4), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_4), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
-            } else if (conf_pass.length <8) {
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.RED)
+            } /*else if (conf_pass.length <8) {
+                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
-            } else if (pass != conf_pass) {
+            }*/ else if (pass != conf_pass) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
             } else if (!txt_signup_check.isChecked) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_6), Color.RED)
+                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_6), Color.WHITE)
             } else {
                 hideSoftKeyboad(v)
-             initJsonOperation(countryCode!!, mobile, email, conf_pass)
-          //   initJsonOperation("+91", mobile, email, conf_pass)
-             //  initJsonOperation("+91","8860961980","yuuu@g.c","12345678")
-         }
+                initJsonOperation(countryCodeS.toString(), mobile, email, conf_pass)
+
+            }
         }
 
     }
@@ -152,11 +160,11 @@ class SignupActivity : AppCompatActivity() {
         pb.show()
 
         val requestBody = HashMap<String, String>()
-        requestBody.put("email", email)
-        requestBody.put("contact", mob)
-        requestBody.put("countryCode",code)
-        requestBody.put("password", pass)
-        passwords_signup =pass
+        requestBody.put(key_email, email)
+        requestBody.put(key_contact, mob)
+        requestBody.put(key_countryCode, code)
+        requestBody.put(key_password, pass)
+        passwords_signup = pass
         APIService!!.getUser(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
@@ -169,25 +177,25 @@ class SignupActivity : AppCompatActivity() {
                             val mess = response!!.body().message.toString()
                             val userId = response!!.body().result.userId
                             Utils.log(TAG!!, "signup onResponse  body: $mess   $userId")
-                            Utils.showToast(this@SignupActivity, mess, Color.YELLOW)
 
-                            startActivity(Intent(this@SignupActivity,OTPActivity::class.java)
-                                     .putExtra("session_otp","0")
-                                     .putExtra("user_id",userId.toString())
-                                     .putExtra("contact",mob)
-                             )
+                            startActivity(Intent(this@SignupActivity, OTPActivity::class.java)
+                                    .putExtra("session_otp", "0")
+                                    .putExtra("user_id", userId.toString())
+                                    .putExtra("contact", mob)
+                            )
                         }
-                        204 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        409 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        400 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        401 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        403 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        404 -> Utils.showToast(this@SignupActivity,errorHandler(response), Color.YELLOW)
-                        500 -> Utils.showToast(this@SignupActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
-                           else -> Utils.showToast(this@SignupActivity,resources.getString(R.string.error_status_1), Color.RED)
+                        204 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToast(this@SignupActivity, resources.getString(R.string.error_status_1), Color.WHITE)
+                        else -> Utils.showToast(this@SignupActivity, resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }
             }
+
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
                 Utils.log(TAG!!, "signup Throwable : $t")
@@ -197,7 +205,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
 
-    private fun errorHandler(response: Response<ResponseModel>?):String{
+    private fun errorHandler(response: Response<ResponseModel>?): String {
         return try {
             val jObjError = JSONObject(response!!.errorBody().string())
             jObjError.getString("message")

@@ -21,6 +21,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.immigration.R
+import com.immigration.appdata.Constant
+import com.immigration.appdata.Constant.accessTokenValues
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
@@ -72,9 +74,6 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private var otp_email: String? = null
-    private var otp_contact: String? = null
-    private var accessToken: String? = null
-    private var countryCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,9 +85,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         session_edit_profile = intent.getStringExtra("session_edit_profile")
         otp_email = intent.getStringExtra("otp_email")
-        otp_contact = intent.getStringExtra("otp_contact")
-        accessToken = intent.getStringExtra("accessToken")
-        countryCode = intent.getStringExtra("countryCode")
 
         userAccessToken = loginPreference!!.getAccessToken(LoginPrefences.getInstance().getLoginPreferences(this))
         userCountryCode = loginPreference!!.getCountryCode(LoginPrefences.getInstance().getLoginPreferences(this))
@@ -99,35 +95,38 @@ class EditProfileActivity : AppCompatActivity() {
         userprofilePic = loginPreference!!.getProfilePic(LoginPrefences.getInstance().getLoginPreferences(this))
 
 
-
-        if (session_edit_profile.equals("0")) {
+        if (session_edit_profile == "0") {
 
             txt_profile.text = "Create Profile"
             profile_image.setImageResource(R.drawable.ic_person)
 
-            et_profile_mobile.setText(otp_contact)
-            et_profile_email.setText(otp_email)
-            et_profile_mobile.isFocusable = false
+            linearLayout_visable_mob.isFocusable=false
             et_profile_email.isFocusable = false
+            et_profile_mobile.isFocusable = false
 
+            et_profile_mobile.setText(Constant.contactValues)
+            et_profile_email.setText(otp_email)
             initViewCropPicPost()
-            initViewSubmitPost(otp_contact.toString(), otp_email.toString())
+            initViewSubmitPost(Constant.contactValues, otp_email.toString())
+            tv_country_code.text = Constant.countryCodeValues
 
 
         } else {
             txt_profile.text = "Edit Profile"
             edit_btn_click_back.visibility = View.VISIBLE
+            tv_country_code.text =userCountryCode
 
             try {
                 Glide.with(baseContext)
                         .load(userprofilePic)
                         .asBitmap()
-                        .error(R.drawable.progress_animation)
-                        .placeholder(R.drawable.progress_animation)
+                        .error(R.drawable.user_holder)
+                        .placeholder(R.drawable.user_holder)
                         .into(profile_image)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            linearLayout_visable_mob.isFocusable=false
             et_profile_email.isFocusable = false
             et_profile_mobile.isFocusable = false
             et_profile_first.setText(userFirstName.toString())
@@ -137,30 +136,17 @@ class EditProfileActivity : AppCompatActivity() {
 
             initViewCropPicPost()
             initViewSubmitPost(userMobile.toString(), userEmail.toString())
-
         }
-
-
 
         edit_btn_click_back.setOnClickListener {
             onBackPressed()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-
     }
 
     private fun initViewCropPicPost() {
         iv_camera.setOnClickListener {
             AskPermissions()
-            // Utils.log(TAG!!, "Create Profile Post data : ${FileUtil.getInstance(this).createImageUri()}")
-
-
-        }
-    }
-
-    private fun initViewCropUpdate() {
-        iv_camera.setOnClickListener {
-
         }
     }
 
@@ -179,14 +165,14 @@ class EditProfileActivity : AppCompatActivity() {
             val last_name_ = et_profile_last.text.toString().trim()
 
             if (first_name_.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_1), Color.RED)
+                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_1), Color.WHITE)
                 et_profile_first.requestFocus()
                 hideSoftKeyboad(v)
-            } else if (last_name_.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_2), Color.RED)
+            } /*else if (last_name_.isEmpty()) {
+                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_2), Color.WHITE)
                 et_profile_last.requestFocus()
                 hideSoftKeyboad(v)
-            } else {
+            }*/ else {
                 try {
                     initJsonOperationPost(first_name_, last_name_, mob_, email_)
                 } catch (e: Exception) {
@@ -411,14 +397,13 @@ class EditProfileActivity : AppCompatActivity() {
     //API Parse
     private fun initJsonOperationPost(firstName: String, lastName: String, mob: String, email: String) {
         pb = CustomProgressBar(this)
-        pb.setCancelable(false)
+        pb.setCancelable(true)
         pb.show()
 
-        //firstName.replace("\"","")
         val fname = RequestBody.create(MediaType.parse("text/plain"), firstName)
         val lname = RequestBody.create(MediaType.parse("text/plain"), lastName)
-        val cnt_code = RequestBody.create(MediaType.parse("text/plain"), countryCode.toString())
-        val mobile = RequestBody.create(MediaType.parse("text/plain"), mob)
+        val cnt_code = RequestBody.create(MediaType.parse("text/plain"), Constant.countryCodeValues )
+        val mobile = RequestBody.create(MediaType.parse("text/plain"), Constant.contactValues )
         if (!this!!.isCheckImage!!) {
 
             if (session_edit_profile.equals("1")) {
@@ -431,52 +416,65 @@ class EditProfileActivity : AppCompatActivity() {
                                 val status = response!!.code()
 
                                 if (response.isSuccessful) {
-
-                                    var img = ""
-
+                                    Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
                                     val accessToken = response.body().result.accessToken
                                     val userId = response.body().result.userId
-                                    val email = response.body().result.email
-                                    val countryCode = response.body().result.countryCode
-                                    val contact = response.body().result.contact
+                                    var email = response.body().result.email
+                                    var countryCode = response.body().result.countryCode
+                                    var contact = response.body().result.contact
+                                    var firstName = response.body().result.firstName
+                                    var lastName = response.body().result.lastName
 
                                     var profilePic = response.body().result.profilePic
-
                                     if (profilePic == null) {
-                                        img = "https://oncopedia.pro/w/images/thumb/a/a5/UserPlaceholder.png/250px-UserPlaceholder.png"
+                                        profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
                                     } else {
-                                        img ="http://worklime.com/immigration/images/"+ profilePic
+                                        profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                    }
+                                    if(firstName==null){
+                                        firstName=""
+                                    }
+                                    if(lastName==null){
+                                        lastName=""
+                                    }
+                                    if(email==null){
+                                        email=""
+                                    }
+                                    if(countryCode==null){
+                                        countryCode="+91"
+                                    }
+                                    if(contact==null){
+                                        contact="9599834735"
                                     }
 
-                                    val firstName = response.body().result.firstName
-                                    val lastName = response.body().result.lastName
-
-
-                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $img ")
+                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                     LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                             accessToken,
                                             userId.toString(),
                                             countryCode,
                                             contact, SignupActivity.passwords_signup,
-                                            email, firstName, lastName, img)
+                                            email, firstName, lastName, profilePic)
                                     startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
                                             .putExtra("session", "1")
-                                    )
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                    finish()
+
                                 }
 
                                 if (status != 200) {
                                     when (status) {
                                         201 -> {
                                             val mess = response!!.body().message.toString()
-                                            Utils.showToast(this@EditProfileActivity, mess, Color.YELLOW)
+                                            Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
                                         }
-                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.YELLOW)
+                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
                                         else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
                                     }
                                 }
@@ -492,7 +490,7 @@ class EditProfileActivity : AppCompatActivity() {
 
             }else {
 
-                APIService!!.postImage(this!!.accessToken!!, null, fname, lname, mobile, cnt_code)
+                APIService!!.postImage(accessTokenValues, null, fname, lname, mobile, cnt_code)
                         .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                                 pb.dismiss()
@@ -500,52 +498,66 @@ class EditProfileActivity : AppCompatActivity() {
                                 val status = response!!.code()
 
                                 if (response.isSuccessful) {
-
-                                    var img = ""
-
+                                    Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
                                     val accessToken = response.body().result.accessToken
                                     val userId = response.body().result.userId
-                                    val email = response.body().result.email
-                                    val countryCode = response.body().result.countryCode
-                                    val contact = response.body().result.contact
+                                    var email = response.body().result.email
+                                    var countryCode = response.body().result.countryCode
+                                    var contact = response.body().result.contact
+                                    var firstName = response.body().result.firstName
+                                    var lastName = response.body().result.lastName
 
                                     var profilePic = response.body().result.profilePic
-
                                     if (profilePic == null) {
-                                        img = "https://oncopedia.pro/w/images/thumb/a/a5/UserPlaceholder.png/250px-UserPlaceholder.png"
+                                        profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
                                     } else {
-                                        img ="http://worklime.com/immigration/images/"+ profilePic
+                                        profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                    }
+                                    if(firstName==null){
+                                        firstName="karun"
+                                    }
+                                    if(lastName==null){
+                                        lastName="kumar"
+                                    }
+                                    if(email==null){
+                                        email="karunkumar@gmail.com"
+                                    }
+                                    if(countryCode==null){
+                                        countryCode="+91"
+                                    }
+                                    if(contact==null){
+                                        contact="9599834735"
                                     }
 
-                                    val firstName = response.body().result.firstName
-                                    val lastName = response.body().result.lastName
 
-
-                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $img ")
+                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                     LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                             accessToken,
                                             userId.toString(),
                                             countryCode,
                                             contact, SignupActivity.passwords_signup,
-                                            email, firstName, lastName, img)
+                                            email, firstName, lastName, profilePic)
                                     startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
                                             .putExtra("session", "1")
-                                    )
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                            finish()
+
                                 }
 
                                 if (status != 200) {
                                     when (status) {
                                         201 -> {
                                             val mess = response!!.body().message.toString()
-                                            Utils.showToast(this@EditProfileActivity, mess, Color.YELLOW)
+                                            Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
                                         }
-                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.YELLOW)
+                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
                                         else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
                                     }
                                 }
@@ -561,9 +573,9 @@ class EditProfileActivity : AppCompatActivity() {
 
         } else {
 
-            val cnt_codes = RequestBody.create(MediaType.parse("text/plain"), userCountryCode)
+            val cnt_codes = RequestBody.create(MediaType.parse("text/plain"),Constant.countryCodeValues )
             val imageBody = prepareFilePart("profilePic", this!!.resultUri!!)
-            APIService!!.postImage(this!!.userAccessToken!!, imageBody, fname, lname, mobile, cnt_codes)
+            APIService!!.postImage(accessTokenValues, imageBody, fname, lname, mobile, cnt_codes)
                     .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                         override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                             pb.dismiss()
@@ -571,52 +583,65 @@ class EditProfileActivity : AppCompatActivity() {
                             val status = response!!.code()
 
                             if (response.isSuccessful) {
-
-                                var img = ""
-
+                                Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
                                 val accessToken = response.body().result.accessToken
                                 val userId = response.body().result.userId
-                                val email = response.body().result.email
-                                val countryCode = response.body().result.countryCode
-                                val contact = response.body().result.contact
+                                var email = response.body().result.email
+                                var countryCode = response.body().result.countryCode
+                                var contact = response.body().result.contact
+                                var firstName = response.body().result.firstName
+                                var lastName = response.body().result.lastName
 
                                 var profilePic = response.body().result.profilePic
-
                                 if (profilePic == null) {
-                                    img = "https://oncopedia.pro/w/images/thumb/a/a5/UserPlaceholder.png/250px-UserPlaceholder.png"
+                                    profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
                                 } else {
-                                    img ="http://worklime.com/immigration/images/"+ profilePic
+                                    profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                }
+                                if(firstName==null){
+                                    firstName=""
+                                }
+                                if(lastName==null){
+                                    lastName=""
+                                }
+                                if(email==null){
+                                    email=""
+                                }
+                                if(countryCode==null){
+                                    countryCode=""
+                                }
+                                if(contact==null){
+                                    contact=""
                                 }
 
-                                val firstName = response.body().result.firstName
-                                val lastName = response.body().result.lastName
-
-
-                                Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $img ")
+                                Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                 LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                         accessToken,
                                         userId.toString(),
                                         countryCode,
                                         contact, SignupActivity.passwords_signup,
-                                        email, firstName, lastName, img)
+                                        email, firstName, lastName, profilePic)
                                 startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
                                         .putExtra("session", "1")
-                                )
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                finish()
+
                             }
 
                             if (status != 200) {
                                 when (status) {
                                     201 -> {
                                         val mess = response!!.body().message.toString()
-                                        Utils.showToast(this@EditProfileActivity, mess, Color.YELLOW)
+                                        Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
                                     }
-                                    204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.YELLOW)
-                                    500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.YELLOW)
+                                    204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
                                     else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
                                 }
                             }
@@ -642,10 +667,20 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if (session_edit_profile == "0") {
+            finish()
+        }else{
+
+        }
+    }
+
     /*private fun initJsonOperationUpdate(firstName: String, lastName: String, mob: String, email: String) {
         Utils.log(TAG!!, "Edit Profile Update data : $firstName,$lastName,$mob,$email")
         pb = CustomProgressBar(this)
-        pb.setCancelable(false)
+        pb.setCancelable(true)
         pb.show()
         Handler().postDelayed({
             pb.dismiss()

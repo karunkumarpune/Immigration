@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import com.immigration.R
+import com.immigration.appdata.Constant.countryCodeValues
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -39,10 +40,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
         btn_forgot_pass.setOnClickListener {
             val mob = forgot_et.text.toString()
             if (mob.isEmpty()) {
-                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_1), Color.RED)
+                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_1), Color.WHITE)
                 forgot_et.requestFocus()
             }else if (mob.length <5) {
-                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_2), Color.RED)
+                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_2), Color.WHITE)
                 forgot_et.requestFocus()
             }else {
                 val view1 = this@ForgotPasswordActivity.currentFocus
@@ -71,12 +72,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val mess = response!!.body().message.toString()
                     val userId = response!!.body().result.userId
+                    countryCodeValues=response!!.body().result.countryCode.toString()
                     Utils.log(TAG!!, "Forgot Password onResponse  body: $mess   $userId")
-                    Utils.showToast(this@ForgotPasswordActivity, mess, Color.YELLOW)
+                    Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
 
                     startActivity(Intent(this@ForgotPasswordActivity,OTPActivity::class.java)
                             .putExtra("session_otp","1")
                             .putExtra("user_id",userId.toString())
+                                    .putExtra("contact",mob)
                     )
                 }
 
@@ -86,15 +89,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     when (status) {
                         201 -> {
                             val mess = response!!.body().message.toString()
-                            Utils.showToast(this@ForgotPasswordActivity, mess, Color.YELLOW)
+                            Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
                         }
-                        204 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        409 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        400 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        401 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        403 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        404 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.YELLOW)
-                        500 -> Utils.showToast(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                        204 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToast(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.WHITE)
                         else -> Utils.showToast(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }

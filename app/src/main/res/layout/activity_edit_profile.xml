@@ -93,13 +93,64 @@
                     android:inputType="text"
                     style="@style/textView_edit_style" />
 
-                <EditText
-                    android:id="@+id/et_profile_mobile"
-                    android:drawableLeft="@drawable/phone"
-                    android:hint="@string/mobile_number"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    style="@style/textView_edit_style" />
+                <LinearLayout
+                    android:id="@+id/linearLayout_visable_mob"
+                    style="@style/textView_edit_style"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:drawableLeft="@drawable/phone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/phone" />
+
+
+
+                    <TextView
+                        android:id="@+id/tv_country_code"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.3"
+                        android:text="+1"
+                        android:textSize="12sp"
+                        android:textColor="@color/txt_black"
+                        />
+
+                    <View
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.01"
+                        android:layout_height="match_parent"
+                        android:background="#8b8b8b"/>
+
+
+                    <EditText
+                        android:drawableLeft="@drawable/dashed_vertical_line"
+                        android:id="@+id/et_profile_mobile"
+                        android:background="@drawable/rounded_edittext_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="2"
+                        android:hint="@string/mobile_number"
+                        android:inputType="number"
+                        android:textColor="@color/txt_black"
+                        android:textColorHint="@color/txt_hint_gray"
+                        android:maxLength="10"
+                        android:textSize="12sp"
+                        android:paddingLeft="0dp" />
+
+                </LinearLayout>
+
+
 
                 <EditText
                     android:id="@+id/et_profile_email"

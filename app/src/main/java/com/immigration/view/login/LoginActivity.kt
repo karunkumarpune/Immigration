@@ -17,6 +17,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.immigration.R
+import com.immigration.appdata.Constant
+import com.immigration.appdata.Constant.key_contact
+import com.immigration.appdata.Constant.key_password
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
@@ -67,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                     .putExtra("session", "1")
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                 finish()
+                     finish()
         }
 
         setContentView(R.layout.activity_login)
@@ -107,19 +110,19 @@ class LoginActivity : AppCompatActivity() {
 
             if (mob.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_1), Color.RED)
+                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_1), Color.WHITE)
                 login_et_mobile.requestFocus()
             } else if (mob.length <5) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_2), Color.RED)
+                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_2), Color.WHITE)
                 login_et_mobile.requestFocus()
             } else if (pass.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_3), Color.RED)
+                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_3), Color.WHITE)
                 login_et_pass.requestFocus()
             }else if (pass.length <8) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_valid), Color.RED)
+                Utils.showToast(this@LoginActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 login_et_pass.requestFocus()
             } else {
                 hideSoftKeyboad(v)
@@ -141,8 +144,8 @@ class LoginActivity : AppCompatActivity() {
 
 
         val requestBody = HashMap<String, String>()
-        requestBody.put("contact",mob)
-        requestBody.put("password",pass)
+        requestBody.put(key_contact,mob)
+        requestBody.put(key_password,pass)
 
         APIService!!.login(requestBody)
                 .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
@@ -151,50 +154,91 @@ class LoginActivity : AppCompatActivity() {
                         Utils.log(TAG!!, "Login onResponse  code: ${response!!.raw()}")
                         val status = response!!.code()
 
-                        if(response.isSuccessful){
-                            var img = ""
+                        if(response.isSuccessful) {
 
-                            val accessToken=response.body().result.accessToken
-                            val userId=response.body().result.userId
-                            val email=response.body().result.email
-                            val countryCode=response.body().result.countryCode
-                            val contact=response.body().result.contact
-                            val firstName=response.body().result.firstName
-                            val lastName=response.body().result.lastName
+                            val accessToken = response.body().result.accessToken
 
-
+                            val userId = response.body().result.userId
+                            var email = response.body().result.email
+                            var countryCode = response.body().result.countryCode
+                            var contact = response.body().result.contact
+                            var firstName = response.body().result.firstName
+                            var lastName = response.body().result.lastName
                             var profilePic = response.body().result.profilePic
 
+                            Constant.accessTokenValues =accessToken
+                            Constant.countryCodeValues =countryCode
+                            Constant.contactValues =contact
+
+
                             if (profilePic == null) {
-                                img = "https://oncopedia.pro/w/images/thumb/a/a5/UserPlaceholder.png/250px-UserPlaceholder.png"
+                                profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
                             } else {
-                                img ="http://worklime.com/immigration/images/"+ profilePic
+                                profilePic = "http://worklime.com/immigration/images/" + profilePic
+                            }
+                            if (firstName == null) {
+                                firstName = ""
+                            }
+                            if (lastName == null) {
+                                lastName = ""
+                            }
+                            if (email == null) {
+                                email = ""
+                            }
+                            if (countryCode == null) {
+                                countryCode = ""
+                            }
+                            if (contact == null) {
+                                contact = ""
                             }
 
-                            Utils.log(TAG!!, "Login onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
-                            LoginPrefences.getInstance().addData(this@LoginActivity,
-                                    accessToken,
-                                    userId.toString(),
-                                    countryCode,
-                                    contact,pass,
-                                    email,firstName,lastName,img)
-                            startActivity(Intent(this@LoginActivity, NavigationActivity::class.java)
-                                    .putExtra("session", "1")
-                            )
-                        }
+                            val isProfileCreated = response.body().result.isProfileCreated
+                            val isVerified = response.body().result.isVerified
 
+                            if (isVerified == "0") {
+                                startActivity(Intent(this@LoginActivity, OTPActivity::class.java)
+                                        .putExtra("session_otp", "0")
+                                        .putExtra("user_id", userId.toString())
+                                        .putExtra("contact", mob))
+
+
+
+                            } else if (isProfileCreated == "0") {
+                                startActivity(Intent(this@LoginActivity, EditProfileActivity::class.java)
+                                        .putExtra("session_edit_profile", "0")
+                                        .putExtra("otp_email", email))
+                                         finish()
+
+
+
+                            } else {
+                                Utils.log(TAG!!, "Login onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+                                LoginPrefences.getInstance().addData(this@LoginActivity,
+                                        accessToken,
+                                        userId.toString(),
+                                        countryCode,
+                                        contact, pass,
+                                        email, firstName, lastName, profilePic)
+                                startActivity(Intent(this@LoginActivity, NavigationActivity::class.java)
+                                        .putExtra("session", "1")
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                         finish()
+
+                            }
+                        }
                         if (status != 200) {
                             when (status) {
                                 201 -> {
                                     val mess = response!!.body().message.toString()
-                                    Utils.showToast(this@LoginActivity, mess, Color.YELLOW) }
-                                204 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                409 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                400 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                401 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                403 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                404 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.YELLOW)
-                                500 -> Utils.showToast(this@LoginActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                                    Utils.showToast(this@LoginActivity, mess, Color.WHITE) }
+                                204 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                409 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                400 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                401 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                403 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                404 -> Utils.showToast(this@LoginActivity,errorHandler(response), Color.WHITE)
+                                500 -> Utils.showToast(this@LoginActivity,resources.getString(R.string.error_status_1), Color.WHITE)
                                 else -> Utils.showToast(this@LoginActivity,resources.getString(R.string.error_status_1), Color.RED)
                             }
                         }

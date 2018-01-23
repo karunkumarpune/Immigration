@@ -9,10 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.immigration.R
 import com.immigration.controller.application.AppController
@@ -48,6 +45,10 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showSnack(isConnected)
     }
+
+    private val TIME_DELAY = 2000
+    private var back_pressed: Long = 0
+
     private val TAG = NavigationActivity::class.java!!.name
     private var session_id: String = ""
     private var mViewHolder: ViewHolder? = null
@@ -236,14 +237,13 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         } else {
 
 
-
             mViewHolder!!.profile_pic.visibility = View.VISIBLE
             try {
                 Glide.with(baseContext)
                         .load(profilePic)
                         .asBitmap()
-                        .error(R.drawable.progress_animation)
-                        .placeholder(R.drawable.progress_animation)
+                        .error(R.drawable.user_holder)
+                        .placeholder(R.drawable.user_holder)
                         .into(mViewHolder!!.profile_pic)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -432,25 +432,12 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (mViewHolder!!.mDuoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewHolder!!.mDuoDrawerLayout.closeDrawer(GravityCompat.START)
         }
-        /* AlertDialog.Builder(this)
-                 .setIcon(android.R.drawable.ic_dialog_alert)
-                 .setTitle("")
-                 .setMessage(resources.getString(R.string.txt_close_app))
-                 .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ -> callFinish() }
-                 .setNegativeButton(resources.getString(R.string.txt_No), null)
-                 .show()*/
 
-        AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("")
-                .setMessage(resources.getString(R.string.txt_close_app))
-                .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
-                    startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
-                    loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@NavigationActivity));
-                    finish()
-                }
-                .setNegativeButton(resources.getString(R.string.txt_No), null)
-                .show()
+        if (back_pressed + TIME_DELAY > System.currentTimeMillis()) {
+            super.onBackPressed()
+        } else {
+            Toast.makeText(baseContext, "Press once again to exit!", Toast.LENGTH_SHORT).show() }
+        back_pressed = System.currentTimeMillis()
     }
 
 
@@ -495,21 +482,20 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
                         if(response.isSuccessful){
                             Utils.showToast(this@NavigationActivity,response.body().message, Color.WHITE)
-
                         }
 
                         if (status != 200) {
                             when (status) {
                                 201 -> {
                                     val mess = response!!.body().message.toString()
-                                    Utils.showToast(this@NavigationActivity, mess, Color.YELLOW) }
-                                204 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                409 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                400 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                401 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                403 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                404 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.YELLOW)
-                                500 -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                                    Utils.showToast(this@NavigationActivity, mess, Color.WHITE) }
+                                204 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                409 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                400 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                401 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                403 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                404 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
+                                500 -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.WHITE)
                                 else -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.RED)
                             }
                         }

@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.immigration.R
+import com.immigration.appdata.Constant
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -84,8 +85,9 @@ class OTPActivity : AppCompatActivity() {
         APIService = ApiUtils.apiService
         session_otp = intent.getStringExtra("session_otp")
         userId = intent.getStringExtra("user_id")
+        contact = intent.getStringExtra("contact")
         Utils.log(TAG!!, "OTP data  : session_otp $session_otp , $userId")
-        otp_txt_mobile.text=contact
+        otp_txt_mobile.text= Constant.countryCodeValues+"-"+contact
         initView()
         initViewEditTextListener()
         initViewSubmitOTPListener()
@@ -111,7 +113,7 @@ class OTPActivity : AppCompatActivity() {
 
             val edit_otp = et_otp.text.toString().trim()
             if (edit_otp.isEmpty()) {
-                Utils.showToast(this@OTPActivity, getString(R.string.otp_validation_1), Color.RED)
+                Utils.showToast(this@OTPActivity, getString(R.string.otp_validation_1), Color.WHITE)
                 et_otp.requestFocus()
             } else {
                 if (session_otp == "0") {
@@ -187,28 +189,32 @@ class OTPActivity : AppCompatActivity() {
                         val countryCode = response.body().result.countryCode
                         val contact = response.body().result.contact
                         val accessToken = response.body().result.accessToken
-                        Utils.log(TAG!!, "OTP onResponse : $userId ,$email ,$countryCode ,$userId ,$contact , $accessToken")
 
+                        Constant.accessTokenValues =accessToken
+                        Constant.countryCodeValues =countryCode
+                        Constant.contactValues =contact
+
+
+                        Utils.log(TAG!!, "OTP onResponse : $userId ,$email ,$countryCode ,$userId ,$contact , $accessToken")
                         startActivity(Intent(this@OTPActivity, EditProfileActivity::class.java)
                                 .putExtra("session_edit_profile", "0")
-                                .putExtra("otp_email", email)
-                                .putExtra("otp_contact", contact)
-                                .putExtra("accessToken", accessToken)
-                                .putExtra("countryCode", countryCode))
+                                .putExtra("otp_email", email))
+                                 finish()
+
                     }
                     if (status != 200) {
                         when (status) {
                             201 -> {
                                 val mess = response!!.body().message.toString()
-                                Utils.showToast(this@OTPActivity, mess, Color.YELLOW)
+                                Utils.showToast(this@OTPActivity, mess, Color.WHITE)
                             }
-                            204 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            409 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            400 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            401 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            403 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            404 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            500 -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.YELLOW)
+                            204 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            409 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            400 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            401 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            403 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            404 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            500 -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.WHITE)
                             else -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.RED)
                         }
                     }
@@ -244,15 +250,15 @@ class OTPActivity : AppCompatActivity() {
                         when (status) {
                             201 -> {
                                 val mess = response!!.body().message.toString()
-                                Utils.showToast(this@OTPActivity, mess, Color.YELLOW)
+                                Utils.showToast(this@OTPActivity, mess, Color.WHITE)
                             }
-                            204 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            409 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            400 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            401 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            403 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            404 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.YELLOW)
-                            500 -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.YELLOW)
+                            204 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            409 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            400 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            401 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            403 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            404 -> Utils.showToast(this@OTPActivity, errorHandler(response), Color.WHITE)
+                            500 -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.WHITE)
                             else -> Utils.showToast(this@OTPActivity, resources.getString(R.string.error_status_1), Color.RED)
                         }
                     }
@@ -286,14 +292,14 @@ class OTPActivity : AppCompatActivity() {
                     when (status) {
                         201 -> {
                             val mess = response!!.body().message.toString()
-                            Utils.showToast(this@OTPActivity, mess, Color.YELLOW) }
-                        204 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        409 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        400 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        401 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        403 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        404 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.YELLOW)
-                        500 -> Utils.showToast(this@OTPActivity,resources.getString(R.string.error_status_1), Color.YELLOW)
+                            Utils.showToast(this@OTPActivity, mess, Color.WHITE) }
+                        204 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToast(this@OTPActivity,errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToast(this@OTPActivity,resources.getString(R.string.error_status_1), Color.WHITE)
                         else -> Utils.showToast(this@OTPActivity,resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }
