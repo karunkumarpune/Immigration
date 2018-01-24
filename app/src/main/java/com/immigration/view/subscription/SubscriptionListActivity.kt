@@ -69,7 +69,7 @@ class SubscriptionListActivity : AppCompatActivity() {
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK",
-                        DialogInterface.OnClickListener { dialog, id ->
+                        DialogInterface.OnClickListener { _, _ ->
                             // get user input and set it to result
                             // edit text
                             // result.setText(userInput.text)

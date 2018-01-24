@@ -137,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initJsonOperation(mob:String,pass:String) {
-        Utils.log(TAG!!, "Login data : $mob,$pass ")
+        Utils.log(TAG, "Login data : $mob,$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
                 .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                         pb.dismiss()
-                        Utils.log(TAG!!, "Login onResponse  code: ${response!!.raw()}")
+                        Utils.log(TAG, "Login onResponse  code: ${response!!.raw()}")
                         val status = response!!.code()
 
                         if(response.isSuccessful) {
@@ -172,9 +172,9 @@ class LoginActivity : AppCompatActivity() {
 
 
                             if (profilePic == null) {
-                                profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
+                                profilePic = Constant.DefaultImage
                             } else {
-                                profilePic = "http://worklime.com/immigration/images/" + profilePic
+                                profilePic = Constant.BASE_URL_Image +profilePic
                             }
                             if (firstName == null) {
                                 firstName = ""
@@ -212,13 +212,9 @@ class LoginActivity : AppCompatActivity() {
 
 
                             } else {
-                                Utils.log(TAG!!, "Login onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+                                Utils.log(TAG, "Login onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                 LoginPrefences.getInstance().addData(this@LoginActivity,
-                                        accessToken,
-                                        userId.toString(),
-                                        countryCode,
-                                        contact, pass,
-                                        email, firstName, lastName, profilePic)
+                                        accessToken, userId.toString(), countryCode, contact, pass, email, firstName, lastName, profilePic)
                                 startActivity(Intent(this@LoginActivity, NavigationActivity::class.java)
                                         .putExtra("session", "1")
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -245,7 +241,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                         pb.dismiss()
-                        Utils.log(TAG!!, "Login Throwable : $t")
+                        Utils.log(TAG, "Login Throwable : $t")
                         Utils.showToast(this@LoginActivity, "Sorry!No internet available", Color.RED)
                     }
                 })
@@ -261,7 +257,6 @@ class LoginActivity : AppCompatActivity() {
             e.message!!
         }
     }
-
 
     //OTP ReadPermissions
     private fun ReadPermissions() {

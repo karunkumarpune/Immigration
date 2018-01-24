@@ -1,41 +1,28 @@
 package com.immigration.restservices
 
-import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
-
-
-object RetrofitClient {
-
+class RetrofitClient {
 
     private var retrofit: Retrofit? = null
 
-    fun getClient(baseUrl: String): Retrofit {
-        if (retrofit ==  null) {
+    fun getClient(baseUrl: String): Retrofit? {
+        if (retrofit == null) {
 
-            val client = OkHttpClient.Builder()
-            val okHttpClient = OkHttpClient().newBuilder()
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .build()
-
-
-            val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            client.addInterceptor(loggingInterceptor);
-
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
+            val httpClient = OkHttpClient.Builder()
+            httpClient.addInterceptor(logging)
 
             retrofit = Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(client.build())
-                  //  .client(okHttpClient)
+                    .client(httpClient.build())
                     .build()
         }
-        return this!!.retrofit!!
+        return this.retrofit
     }
 }

@@ -154,7 +154,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun initJsonOperation(code: String, mob: String, email: String, pass: String) {
-        Utils.log(TAG!!, "signup data : $code,$mob,$email,$pass ")
+        Utils.log(TAG, "signup data : $code,$mob,$email,$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
@@ -168,7 +168,7 @@ class SignupActivity : AppCompatActivity() {
         APIService!!.getUser(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "signup onResponse  code: ${response!!.raw()}")
+                Utils.log(TAG, "signup onResponse  code: ${response!!.raw()}")
                 val status = response!!.code()
 
                 if (status != 200) {
@@ -176,13 +176,15 @@ class SignupActivity : AppCompatActivity() {
                         201 -> {
                             val mess = response!!.body().message.toString()
                             val userId = response!!.body().result.userId
-                            Utils.log(TAG!!, "signup onResponse  body: $mess   $userId")
+                            Utils.log(TAG, "signup onResponse  body: $mess   $userId")
 
                             startActivity(Intent(this@SignupActivity, OTPActivity::class.java)
                                     .putExtra("session_otp", "0")
                                     .putExtra("user_id", userId.toString())
                                     .putExtra("contact", mob)
-                            )
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                            finish()
+
                         }
                         204 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
                         409 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
@@ -198,7 +200,7 @@ class SignupActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "signup Throwable : $t")
+                Utils.log(TAG, "signup Throwable : $t")
                 Utils.showToast(this@SignupActivity, "Sorry!No internet available", Color.RED)
             }
         })

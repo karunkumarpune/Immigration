@@ -7,8 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,9 +21,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 import com.immigration.R
 import com.immigration.appdata.Constant
+import com.immigration.appdata.Constant.BASE_URL_Image
+import com.immigration.appdata.Constant.DefaultImage
 import com.immigration.appdata.Constant.accessTokenValues
+import com.immigration.appdata.Constant.key_profilePic
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
@@ -39,11 +44,16 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import java.io.File
-import java.net.URI
+import java.io.IOException
 import java.net.URISyntaxException
+import java.util.*
 import javax.security.auth.callback.Callback
 
 class EditProfileActivity : AppCompatActivity() {
+
+    private var file: Uri? = null
+    private var fileStored:String?=null
+    private var mCurrentPhotoPath: String? = null
 
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
@@ -52,12 +62,15 @@ class EditProfileActivity : AppCompatActivity() {
     var userImage: ByteArray? = null
 
     private val SELECT_PICTURE = 170
-    private var TAKE_PIC = 291
+    private var REQUEST_IMAGE_CAPTURE = 291
     private val REQUEST_CODE_STORAGE_PERMS = 501
     private var outPutfileUri: Uri? = null
-    private var bitImg: Bitmap? = null
-    private var file: File? = null
     private var resultUri: Uri? = null
+    private var croupresultUri: Uri? = null
+    private var camera_file: File? = null
+    private var uriString: String? = null
+
+
     private var isCheckImage: Boolean? = null
 
 
@@ -100,7 +113,7 @@ class EditProfileActivity : AppCompatActivity() {
             txt_profile.text = "Create Profile"
             profile_image.setImageResource(R.drawable.ic_person)
 
-            linearLayout_visable_mob.isFocusable=false
+            linearLayout_visable_mob.isFocusable = false
             et_profile_email.isFocusable = false
             et_profile_mobile.isFocusable = false
 
@@ -114,7 +127,7 @@ class EditProfileActivity : AppCompatActivity() {
         } else {
             txt_profile.text = "Edit Profile"
             edit_btn_click_back.visibility = View.VISIBLE
-            tv_country_code.text =userCountryCode
+            tv_country_code.text = userCountryCode
 
             try {
                 Glide.with(baseContext)
@@ -126,7 +139,7 @@ class EditProfileActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            linearLayout_visable_mob.isFocusable=false
+            linearLayout_visable_mob.isFocusable = false
             et_profile_email.isFocusable = false
             et_profile_mobile.isFocusable = false
             et_profile_first.setText(userFirstName.toString())
@@ -182,41 +195,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
-
-
-    private fun initViewSubmitUpdate() {
-
-        edit_btn_edit.setOnClickListener { v ->
-
-            val first_name = et_profile_first.text.toString()
-            val last_name = et_profile_last.text.toString()
-            val mobile = et_profile_mobile.text.toString()
-            val email = et_profile_email.text.toString()
-
-
-            if (first_name.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_1), Color.RED)
-                et_profile_first.requestFocus()
-                hideSoftKeyboad(v)
-            } else if (last_name.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_2), Color.RED)
-                et_profile_last.requestFocus()
-                hideSoftKeyboad(v)
-            } else if (mobile.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_3), Color.RED)
-                et_profile_mobile.requestFocus()
-                hideSoftKeyboad(v)
-            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_4), Color.RED)
-                et_profile_email.requestFocus()
-                hideSoftKeyboad(v)
-            } else {
-                // initJsonOperationUpdate(first_name, last_name, mobile, email)
-            }
-        }
-
-    }
-    //Camera
 
     //ASK Runtime permisstion camera open
     private fun AskPermissions() {
@@ -281,10 +259,10 @@ class EditProfileActivity : AppCompatActivity() {
         builder.setItems(options) { dialog, item ->
             if (options[item] == "Take Photo") {
                 dialog.dismiss()
-                takeImageFromCamera()
+                openCamera()
             } else if (options[item] == "Choose From Gallery") {
                 dialog.dismiss()
-                choosefromgallery()
+                chooseFromGallery()
 
             } else if (options[item] == "Cancel") {
                 dialog.dismiss()
@@ -294,27 +272,75 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun takeImageFromCamera() {
+
+  /*  private fun openCamera() {
+
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val file = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
-        outPutfileUri = Uri.fromFile(file)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri)
-        startActivityForResult(intent, TAKE_PIC)
+        file = Uri.fromFile(getFile())
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, file)
+
+        if (intent.resolveActivity(activity!!.packageManager) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+        }
+
+      //  val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+      //  startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+        // camera_file = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
+        //  outPutfileUri = Uri.fromFile(camera_file)
+        //  uriString = outPutfileUri.toString()
+        //  val myFile = File(uriString)
+        //  val path = myFile.absolutePath
+        // this method is used to get pic name
+        // getPicName(path, outPutfileUri, myFile);
+
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri)
+        // startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+
+    }*/
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val file_temp:File
+        file_temp = getFile()
+        file = Uri.fromFile(file_temp)
+        //fileStored = file_temp.absolutePath
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, file)
+
+        if (intent.resolveActivity(this.packageManager) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+        }
     }
 
-    private fun choosefromgallery() {
+
+    private fun chooseFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, SELECT_PICTURE)
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == TAKE_PIC && resultCode == Activity.RESULT_OK) {
-            if (null != outPutfileUri) {
-                crop_Method(outPutfileUri!!)
-            }
-        }
+         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {;
+             try {
+                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, file)
+                 val ei = ExifInterface(file!!.path)
+                 val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+                 var rotatedBitmap: Bitmap?
+                 rotatedBitmap = when (orientation) {
+                     ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90)
+                     ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap, 180)
+                     ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270)
+                     ExifInterface.ORIENTATION_NORMAL -> bitmap
+                     else -> bitmap
+                 }
+
+                 //profile_image.setImageBitmap(getResizedBitmap(rotatedBitmap,400))
+               // val uri=  getImageContentUri(this,getFile())
+                if (null != file) {
+                     crop_Method(file!!)
+                } } catch (e: Exception) { }
+         }
+
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 val selectedImageUri = data!!.data
@@ -323,22 +349,17 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
         }
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 resultUri = result.uri
-                val path = resultUri.toString()
                 var bitmap: Bitmap? = null
                 try {
-                    file = File(URI(path))
                     isCheckImage = true
-                    profile_image.setImageURI(resultUri)
+                    //  profile_image.setImageURI(resultUri)
                     //  this.path = file.getPath();
                     // this method is used to get pic name
                     //  getPicName(path, resultUri, file);
-                    Log.d(" profilePicPath", "file " + file!!.path)
-
                 } catch (e: URISyntaxException) {
                     e.printStackTrace()
                 }
@@ -346,49 +367,126 @@ class EditProfileActivity : AppCompatActivity() {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
                     if (bitmap != null) {
-                        val d = BitmapDrawable(resources, bitmap)
-                        bitImg = bitmap
+                        profile_image.setImageURI(getImageUri1(this@EditProfileActivity, bitmap))
+                        croupresultUri = getImageUri1(this@EditProfileActivity, bitmap)
+                        deleteFiles()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.error
+                Utils.log(TAG, "EditProfile Crop Image error: ${result.error}")
             }
 
         }
 
     }
 
+
+    private fun getFile(): File {
+        val folder = Environment.getExternalStoragePublicDirectory("/From_camera/imagens")// the file path
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+        //val timeStamp = SimpleDateFormat("yyyyMMdd_HHmm").format(Date())
+       // val imageFileName = "JPEG_" + timeStamp
+        var image_file: File? = null
+        try {
+              image_file= File(folder,"pic"+".jpg")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        mCurrentPhotoPath = image_file!!.absolutePath
+        return image_file
+    }
+
+    private fun getImageUri1(inContext: Context, inImage: Bitmap): Uri? {
+        var uri: Uri? = null
+        try {
+            val options = BitmapFactory.Options()
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options, 400, 400)
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false
+            val newBitmap = Bitmap.createScaledBitmap(inImage, 400, 400, true)
+            val file = File(filesDir, "Image" + Random().nextInt() + ".jpeg")
+            val out = openFileOutput(file.name, MODE_PRIVATE)
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
+            out.close()
+            //get absolute path
+            val realPath = file.absolutePath
+            val f = File(realPath)
+            uri = Uri.fromFile(f)
+        } catch (e: Exception) {
+            Log.e("Your Error Message", e.message)
+        }
+        return uri
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
+            val widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
+            inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+        }
+        val totalPixels = (width * height).toFloat()
+        val totalReqPixelsCap = (reqWidth * reqHeight * 2).toFloat()
+        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+            inSampleSize++
+        }
+
+        return inSampleSize
+    }
+
+     private fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+         var width = image.width
+         var height = image.height
+
+         val bitmapRatio = width.toFloat() / height.toFloat()
+         if (bitmapRatio < 1 && width > maxSize) {
+
+             width = maxSize
+             height = (width / bitmapRatio).toInt()
+         } else if (height > maxSize) {
+             height = maxSize
+             width = (height * bitmapRatio).toInt()
+         }
+         return Bitmap.createScaledBitmap(image, width, height, true)
+     }
+
+
     private fun crop_Method(imageUri: Uri) {
         CropImage.activity(imageUri).start(this@EditProfileActivity)
     }
 
-    //Helper method.
+
+    //Helper method maltipart Image.
     private fun prepareFilePart(partName: String, fileUri: Uri?): MultipartBody.Part {
         // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
         // use the FileUtils to get the actual file by uri
         //FileUtils class is present inside com.app.siy.utils.FileUtils
 
         var part: MultipartBody.Part? = null
-        val file = FileUtils.getFile(this, fileUri)       //File file = new File(fileUri.getPath());  // will not work.
+        val file = FileUtils.getFile(this, fileUri)
+        //File file = new File(fileUri.getPath());  // will not work.
         var requestFile: RequestBody? = null
-
         try {
             if (file != null) {
-                // create RequestBody instance from file
-                requestFile = RequestBody.create(MediaType.parse("image/*"), file!!
-                )
-
-                part = MultipartBody.Part.createFormData(partName, file!!.getName(), requestFile!!)
+                requestFile = RequestBody.create(MediaType.parse("image/*"), file!!)
+                part = MultipartBody.Part.createFormData(partName, file.name, requestFile!!)
             } else {
                 //AppUtils.log("File is null");
             }
         } catch (e: Exception) {
             //AppUtils.log("Exception while creating Part " + e.getMessage());
         }
-
         // MultipartBody.Part is used to send also the actual file name
         return part!!
     }
@@ -402,17 +500,16 @@ class EditProfileActivity : AppCompatActivity() {
 
         val fname = RequestBody.create(MediaType.parse("text/plain"), firstName)
         val lname = RequestBody.create(MediaType.parse("text/plain"), lastName)
-        val cnt_code = RequestBody.create(MediaType.parse("text/plain"), Constant.countryCodeValues )
-        val mobile = RequestBody.create(MediaType.parse("text/plain"), Constant.contactValues )
-        if (!this!!.isCheckImage!!) {
-
+        val cnt_code = RequestBody.create(MediaType.parse("text/plain"), Constant.countryCodeValues)
+        val mobile = RequestBody.create(MediaType.parse("text/plain"), Constant.contactValues)
+        if (!this.isCheckImage!!) {
             if (session_edit_profile.equals("1")) {
                 val cnt_codes = RequestBody.create(MediaType.parse("text/plain"), userCountryCode)
-                APIService!!.postImage(this!!.userAccessToken!!, null, fname, lname, mobile, cnt_codes)
+                APIService!!.postImage(this.userAccessToken!!, null, fname, lname, mobile, cnt_codes)
                         .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                                 pb.dismiss()
-                                Utils.log(TAG!!, "EditProfile onResponse  code: ${response!!.raw()}")
+                                Utils.log(TAG, "EditProfile onResponse  code: ${response!!.raw()}")
                                 val status = response!!.code()
 
                                 if (response.isSuccessful) {
@@ -427,27 +524,27 @@ class EditProfileActivity : AppCompatActivity() {
 
                                     var profilePic = response.body().result.profilePic
                                     if (profilePic == null) {
-                                        profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
+                                        profilePic = DefaultImage
                                     } else {
-                                        profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                        profilePic = BASE_URL_Image + profilePic
                                     }
-                                    if(firstName==null){
-                                        firstName=""
+                                    if (firstName == null) {
+                                        firstName = ""
                                     }
-                                    if(lastName==null){
-                                        lastName=""
+                                    if (lastName == null) {
+                                        lastName = ""
                                     }
-                                    if(email==null){
-                                        email=""
+                                    if (email == null) {
+                                        email = ""
                                     }
-                                    if(countryCode==null){
-                                        countryCode="+91"
+                                    if (countryCode == null) {
+                                        countryCode = ""
                                     }
-                                    if(contact==null){
-                                        contact="9599834735"
+                                    if (contact == null) {
+                                        contact = ""
                                     }
 
-                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+                                    Utils.log(TAG, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                     LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                             accessToken,
                                             userId.toString(),
@@ -471,7 +568,11 @@ class EditProfileActivity : AppCompatActivity() {
                                         204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        401 -> {
+                                            Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+                                            finish()
+                                        }
                                         403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
@@ -482,20 +583,20 @@ class EditProfileActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                                 pb.dismiss()
-                                Utils.log(TAG!!, "EditProfile Throwable : $t")
+                                Utils.log(TAG, "EditProfile Throwable : $t")
                                 Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                             }
                         })
 
 
-            }else {
+            } else {
 
                 APIService!!.postImage(accessTokenValues, null, fname, lname, mobile, cnt_code)
                         .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                                 pb.dismiss()
-                                Utils.log(TAG!!, "EditProfile onResponse  code: ${response!!.raw()}")
-                                val status = response!!.code()
+                                Utils.log(TAG, "EditProfile onResponse  code: ${response!!.raw()}")
+                                val status = response.code()
 
                                 if (response.isSuccessful) {
                                     Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
@@ -509,39 +610,41 @@ class EditProfileActivity : AppCompatActivity() {
 
                                     var profilePic = response.body().result.profilePic
                                     if (profilePic == null) {
-                                        profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
+                                        profilePic = DefaultImage
                                     } else {
-                                        profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                        profilePic = BASE_URL_Image + profilePic
                                     }
-                                    if(firstName==null){
-                                        firstName="karun"
+                                    if (firstName == null) {
+                                        firstName = ""
                                     }
-                                    if(lastName==null){
-                                        lastName="kumar"
+                                    if (lastName == null) {
+                                        lastName = ""
                                     }
-                                    if(email==null){
-                                        email="karunkumar@gmail.com"
+                                    if (email == null) {
+                                        email = ""
                                     }
-                                    if(countryCode==null){
-                                        countryCode="+91"
+                                    if (countryCode == null) {
+                                        countryCode = ""
                                     }
-                                    if(contact==null){
-                                        contact="9599834735"
+                                    if (contact == null) {
+                                        contact = ""
                                     }
 
 
-                                    Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+                                    Utils.log(TAG, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                     LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                             accessToken,
                                             userId.toString(),
                                             countryCode,
                                             contact, SignupActivity.passwords_signup,
                                             email, firstName, lastName, profilePic)
-                                    startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
-                                            .putExtra("session", "1")
-                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                                            finish()
+
+
+                                        startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
+                                                .putExtra("session", "1")
+                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                        finish()
 
                                 }
 
@@ -554,7 +657,11 @@ class EditProfileActivity : AppCompatActivity() {
                                         204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        401 -> {
+                                            Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+                                            finish()
+                                        }
                                         403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
@@ -565,7 +672,7 @@ class EditProfileActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                                 pb.dismiss()
-                                Utils.log(TAG!!, "EditProfile Throwable : $t")
+                                Utils.log(TAG, "EditProfile Throwable : $t")
                                 Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                             }
                         })
@@ -573,14 +680,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         } else {
 
-            val cnt_codes = RequestBody.create(MediaType.parse("text/plain"),Constant.countryCodeValues )
-            val imageBody = prepareFilePart("profilePic", this!!.resultUri!!)
+            val cnt_codes = RequestBody.create(MediaType.parse("text/plain"), Constant.countryCodeValues)
+            val imageBody = prepareFilePart(key_profilePic, this.croupresultUri!!)
             APIService!!.postImage(accessTokenValues, imageBody, fname, lname, mobile, cnt_codes)
                     .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                         override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                             pb.dismiss()
-                            Utils.log(TAG!!, "EditProfile onResponse  code: ${response!!.raw()}")
-                            val status = response!!.code()
+                            Utils.log(TAG, "EditProfile onResponse  code: ${response!!.raw()}")
+                            val status = response.code()
 
                             if (response.isSuccessful) {
                                 Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
@@ -594,27 +701,28 @@ class EditProfileActivity : AppCompatActivity() {
 
                                 var profilePic = response.body().result.profilePic
                                 if (profilePic == null) {
-                                    profilePic = "https://s10.postimg.org/mmadoq6jd/user.png"
+                                    profilePic = DefaultImage
                                 } else {
-                                    profilePic ="http://worklime.com/immigration/images/"+ profilePic
+                                    profilePic = BASE_URL_Image + profilePic
                                 }
-                                if(firstName==null){
-                                    firstName=""
+                                if (firstName == null) {
+                                    firstName = ""
                                 }
-                                if(lastName==null){
-                                    lastName=""
+                                if (lastName == null) {
+                                    lastName = ""
                                 }
-                                if(email==null){
-                                    email=""
+                                if (email == null) {
+                                    email = ""
                                 }
-                                if(countryCode==null){
-                                    countryCode=""
+                                if (countryCode == null) {
+                                    countryCode = ""
                                 }
-                                if(contact==null){
-                                    contact=""
+                                if (contact == null) {
+                                    contact = ""
                                 }
 
-                                Utils.log(TAG!!, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
+
+                                Utils.log(TAG, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                 LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                         accessToken,
                                         userId.toString(),
@@ -638,7 +746,11 @@ class EditProfileActivity : AppCompatActivity() {
                                     204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                     409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                     400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                    401 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    401 -> {
+                                        Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
+                                        startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+                                        finish()
+                                    }
                                     403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                     404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                     500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
@@ -649,12 +761,36 @@ class EditProfileActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                             pb.dismiss()
-                            Utils.log(TAG!!, "EditProfile Throwable : $t")
+                            Utils.log(TAG, "EditProfile Throwable : $t")
                             Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                         }
                     })
 
         }
+    }
+
+    /*private fun FileImageDelete(){
+          if (camera_file!!.exists()) {
+              val imageUriLcl = FileProvider.getUriForFile(this,
+                      this.applicationContext.packageName + ".provider", camera_file!!)
+              val contentResolver =this.contentResolver
+              contentResolver.delete(imageUriLcl, null, null)
+
+          }
+      }*/
+
+
+    fun deleteFiles() {
+
+        val tempFile = File(mCurrentPhotoPath)
+        if(tempFile.exists())
+            tempFile.delete()
+
+
+        /*if(getFile().exists())
+           {
+               getFile().delete()
+        }*/
     }
 
     private fun errorHandler(response: Response<ResponseModel>?): String {
@@ -666,32 +802,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
-
         if (session_edit_profile == "0") {
             finish()
-        }else{
-
         }
     }
-
-    /*private fun initJsonOperationUpdate(firstName: String, lastName: String, mob: String, email: String) {
-        Utils.log(TAG!!, "Edit Profile Update data : $firstName,$lastName,$mob,$email")
-        pb = CustomProgressBar(this)
-        pb.setCancelable(true)
-        pb.show()
-        Handler().postDelayed({
-            pb.dismiss()
-           // LoginPrefences.getInstance().addData(this@EditProfileActivity, mob, "",email,firstName,lastName)
-            startActivity(Intent(this, NavigationActivity::class.java)
-                    .putExtra("session", "1")
-            )
-        }, 2000)
-
-    }
-*/
-
-
 }

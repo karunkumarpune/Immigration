@@ -4,6 +4,9 @@ package com.immigration.appdata
 object Constant {
 
     const val BASE_URL = "http://worklime.com"
+    const val BASE_URL_Image = "http://worklime.com/immigration/images/"
+    //const val BASE_URL_Image = "http://worklime.com/immigration/images/Image-863835754.jpeg"
+    const val DefaultImage = "https://s10.postimg.org/mmadoq6jd/user.png"
     const val BASE_URL2 = "https://raw.githubusercontent.com"
 
 
@@ -28,11 +31,21 @@ object Constant {
     const val key_contact ="contact"
     const val key_countryCode ="countryCode"
     const val key_password ="password"
+    const val key_oldPassword ="oldPassword"
+
+    //EditProfile key
+    var key_profilePic="profilePic"
+
+    //OTP key
+    var key_type="type"
+    var key_userId="userId"
+    var key_otp="otp"
 
     // access value anywhere
     var accessTokenValues=""
     var countryCodeValues=""
     var contactValues=""
+
 
 
 

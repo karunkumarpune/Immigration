@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import com.immigration.R
 import com.immigration.appdata.Constant.countryCodeValues
+import com.immigration.appdata.Constant.key_contact
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -55,25 +56,25 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun initJsonOperation(mob:String) {
-        Utils.log(TAG!!, "Forgot data : $mob ")
+        Utils.log(TAG, "Forgot data : $mob ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
 
         val requestBody = HashMap<String, String>()
-        requestBody.put("contact", mob)
+        requestBody.put(key_contact, mob)
 
         APIService!!.forgotPassword(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Forgot Password onResponse  code: ${response!!.raw()}")
+                Utils.log(TAG, "Forgot Password onResponse  code: ${response!!.raw()}")
                 val status = response!!.code()
 
                 if(response.isSuccessful){
-                    val mess = response!!.body().message.toString()
-                    val userId = response!!.body().result.userId
-                    countryCodeValues=response!!.body().result.countryCode.toString()
-                    Utils.log(TAG!!, "Forgot Password onResponse  body: $mess   $userId")
+                    val mess = response.body().message.toString()
+                    val userId = response.body().result.userId
+                    countryCodeValues= response.body().result.countryCode.toString()
+                    Utils.log(TAG, "Forgot Password onResponse  body: $mess   $userId")
                     Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
 
                     startActivity(Intent(this@ForgotPasswordActivity,OTPActivity::class.java)
@@ -88,7 +89,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if (status != 200) {
                     when (status) {
                         201 -> {
-                            val mess = response!!.body().message.toString()
+                            val mess = response.body().message.toString()
                             Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
                         }
                         204 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
@@ -104,7 +105,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Forgot Password Throwable : $t")
+                Utils.log(TAG, "Forgot Password Throwable : $t")
                 Utils.showToast(this@ForgotPasswordActivity, "Sorry!No internet available", Color.RED)
             }
         })

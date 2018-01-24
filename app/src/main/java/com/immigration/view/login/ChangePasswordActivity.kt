@@ -8,6 +8,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.immigration.R
+import com.immigration.appdata.Constant.key_oldPassword
+import com.immigration.appdata.Constant.key_password
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
@@ -25,7 +27,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
     private var loginPreference: LoginPrefences? = null
-    private val TAG = ChangePasswordActivity::class.java!!.getName()
+    private val TAG = ChangePasswordActivity::class.java.getName()
     private var userAccessToken: String? = null
 
 
@@ -92,20 +94,20 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     }
     private fun initJsonOperation(oldPass:String,pass:String) {
-        Utils.log(TAG!!, "Reset data :$pass ")
+        Utils.log(TAG, "Reset data :$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
 
         val requestBody = HashMap<String, String>()
-        requestBody.put("oldPassword",oldPass)
-        requestBody.put("password",pass)
+        requestBody.put(key_oldPassword,oldPass)
+        requestBody.put(key_password,pass)
 
-        APIService!!.changePasswords(this!!.userAccessToken!!,requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
+        APIService!!.changePasswords(this.userAccessToken!!,requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Change Pass onResponse  code: ${response!!.raw()}")
-                val status = response!!.code()
+                Utils.log(TAG, "Change Pass onResponse  code: ${response!!.raw()}")
+                val status = response.code()
 
                 if(status==200){
                     Toast.makeText(baseContext, response.body().message.toString(), Toast.LENGTH_SHORT).show()
@@ -116,7 +118,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 if (status != 200) {
                     when (status) {
                         201 -> {
-                            val mess = response!!.body().message.toString()
+                            val mess = response.body().message.toString()
                             Utils.showToast(this@ChangePasswordActivity, mess, Color.WHITE)
                         }
                         204 -> Utils.showToast(this@ChangePasswordActivity,errorHandler(response), Color.WHITE)
@@ -132,7 +134,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Change Pass Throwable : $t")
+                Utils.log(TAG, "Change Pass Throwable : $t")
                 Utils.showToast(this@ChangePasswordActivity, "Sorry!No internet available", Color.RED)
             }
         })

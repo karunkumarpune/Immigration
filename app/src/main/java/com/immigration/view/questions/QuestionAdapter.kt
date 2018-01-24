@@ -20,7 +20,7 @@ class QuestionAdapter(val context: Context, val list: ArrayList<Result>) : Recyc
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val res = list!![position]
+        val res = list[position]
 
 
         holder.txt_questation_num.text = "Question ${position + 1}"

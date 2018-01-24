@@ -49,7 +49,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private val TIME_DELAY = 2000
     private var back_pressed: Long = 0
 
-    private val TAG = NavigationActivity::class.java!!.name
+    private val TAG = NavigationActivity::class.java.name
     private var session_id: String = ""
     private var mViewHolder: ViewHolder? = null
 
@@ -477,7 +477,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                         pb.dismiss()
-                        Utils.log(TAG!!, "Login onResponse  code: ${response!!.raw()}")
+                        Utils.log(TAG, "Login onResponse  code: ${response!!.raw()}")
                         val status = response!!.code()
 
                         if(response.isSuccessful){
@@ -487,7 +487,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                         if (status != 200) {
                             when (status) {
                                 201 -> {
-                                    val mess = response!!.body().message.toString()
+                                    val mess = response.body().message.toString()
                                     Utils.showToast(this@NavigationActivity, mess, Color.WHITE) }
                                 204 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
                                 409 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
@@ -502,7 +502,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                     }
                     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                         pb.dismiss()
-                        Utils.log(TAG!!, "Login Throwable : $t")
+                        Utils.log(TAG, "Login Throwable : $t")
                         Utils.showToast(this@NavigationActivity, "Sorry!No internet available", Color.RED)
                     }
                 })

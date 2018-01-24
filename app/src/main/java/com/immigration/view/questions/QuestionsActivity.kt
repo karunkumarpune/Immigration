@@ -11,8 +11,8 @@ import android.widget.TextView
 import com.immigration.R
 import com.immigration.model.question_model.Result
 import com.immigration.model.question_model.Status
-import com.immigration.restservices.APIService2
-import com.immigration.restservices.ApiUtils2
+import com.immigration.restservices.APIService
+import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
 import com.immigration.utils.Utils
 import com.immigration.view.subscription.ResultActivity
@@ -27,7 +27,7 @@ class QuestionsActivity : AppCompatActivity() {
 
 
     private var rideAdapter: QuestionAdapter? = null
-    private var mAPIService: APIService2? = null
+    private var mAPIService: APIService? = null
     private lateinit var pb: CustomProgressBar
 
     companion object {
@@ -40,7 +40,7 @@ class QuestionsActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_questions)
 
-        mAPIService = ApiUtils2.apiService2;
+        mAPIService = ApiUtils.apiService2;
         pb = CustomProgressBar(this);
         pb.setCancelable(true)
         pb.show()

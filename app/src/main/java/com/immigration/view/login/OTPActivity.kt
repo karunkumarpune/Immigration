@@ -15,6 +15,9 @@ import android.widget.EditText
 import android.widget.TextView
 import com.immigration.R
 import com.immigration.appdata.Constant
+import com.immigration.appdata.Constant.key_otp
+import com.immigration.appdata.Constant.key_type
+import com.immigration.appdata.Constant.key_userId
 import com.immigration.model.ResponseModel
 import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
@@ -31,7 +34,7 @@ class OTPActivity : AppCompatActivity() {
 
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
-    private val TAG = OTPActivity::class.java!!.name
+    private val TAG = OTPActivity::class.java.name
 
 
     private var session_otp:String = ""
@@ -46,7 +49,7 @@ class OTPActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == "android.provider.Telephony.SMS_RECEIVED") {
                 otp = intent.getStringExtra("otp")
-                Utils.log(TAG!!, "OTP data : $otp")
+                Utils.log(TAG, "OTP data : $otp")
 
                 if (session_otp == "0") {
                     initJsonOperation("1",userId,otp)
@@ -64,7 +67,7 @@ class OTPActivity : AppCompatActivity() {
         APIService = ApiUtils.apiService
         session_otp = intent.getStringExtra("session_otp")
         userId = intent.getStringExtra("user_id")
-        Utils.log(TAG!!, "OTP data onResume : session_otp $session_otp , $userId")
+        Utils.log(TAG, "OTP data onResume : session_otp $session_otp , $userId")
 
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
@@ -86,7 +89,7 @@ class OTPActivity : AppCompatActivity() {
         session_otp = intent.getStringExtra("session_otp")
         userId = intent.getStringExtra("user_id")
         contact = intent.getStringExtra("contact")
-        Utils.log(TAG!!, "OTP data  : session_otp $session_otp , $userId")
+        Utils.log(TAG, "OTP data  : session_otp $session_otp , $userId")
         otp_txt_mobile.text= Constant.countryCodeValues+"-"+contact
         initView()
         initViewEditTextListener()
@@ -195,7 +198,7 @@ class OTPActivity : AppCompatActivity() {
                         Constant.contactValues =contact
 
 
-                        Utils.log(TAG!!, "OTP onResponse : $userId ,$email ,$countryCode ,$userId ,$contact , $accessToken")
+                        Utils.log(TAG, "OTP onResponse : $userId ,$email ,$countryCode ,$userId ,$contact , $accessToken")
                         startActivity(Intent(this@OTPActivity, EditProfileActivity::class.java)
                                 .putExtra("session_edit_profile", "0")
                                 .putExtra("otp_email", email))
@@ -222,16 +225,16 @@ class OTPActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                     pb.dismiss()
-                    Utils.log(TAG!!, "OTP Throwable : $t")
+                    Utils.log(TAG, "OTP Throwable : $t")
                     Utils.showToast(this@OTPActivity, "Sorry!No internet available", Color.RED)
                 }
             })
 
         } else {
             val requestBody = HashMap<String, String>()
-            requestBody.put("type", type)
-            requestBody.put("userId", userIds)
-            requestBody.put("otp", otp)
+            requestBody.put(key_type, type)
+            requestBody.put(key_userId, userIds)
+            requestBody.put(key_otp, otp)
 
             APIService!!.verifyOtp(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                 override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
@@ -239,7 +242,7 @@ class OTPActivity : AppCompatActivity() {
                     val status = response!!.code()
                     if (response.isSuccessful) {
                         val userId = response.body().result.userId
-                        Utils.log(TAG!!, "OTP onResponse Reset : $userId")
+                        Utils.log(TAG, "OTP onResponse Reset : $userId")
                         startActivity(Intent(this@OTPActivity, ResetPasswordActivity::class.java)
                                 .putExtra("userId",userId.toString())
 
@@ -266,7 +269,7 @@ class OTPActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                     pb.dismiss()
-                    Utils.log(TAG!!, "OTP Throwable : $t")
+                    Utils.log(TAG, "OTP Throwable : $t")
                     Utils.showToast(this@OTPActivity, "Sorry!No internet available", Color.RED)
                 }
             })
@@ -280,12 +283,12 @@ class OTPActivity : AppCompatActivity() {
         pb.show()
 
         val requestBody = HashMap<String, String>()
-        requestBody.put("userId",userIds)
+        requestBody.put(key_userId,userIds)
 
         APIService!!.resendOtp(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "OTP onResponse  code: ${response!!.raw()}")
+                Utils.log(TAG, "OTP onResponse  code: ${response!!.raw()}")
                 val status = response!!.code()
 
                 if (status != 200) {
@@ -306,7 +309,7 @@ class OTPActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "OTP Throwable : $t")
+                Utils.log(TAG, "OTP Throwable : $t")
                 Utils.showToast(this@OTPActivity, "Sorry!No internet available", Color.RED)
             }
         })

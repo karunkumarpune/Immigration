@@ -32,8 +32,9 @@ interface APIService {
 
     // http://www.androidhub4you.com/p/blog-page_27.html
 
-     @GET("/karunkumarpune/Expandeble/master/question_test.json")
-     fun getQuestion(): Call<Status>
+
+    @GET("/karunkumarpune/Expandeble/master/question_test.json")
+    fun getQuestion(): Call<Status>
 
     @Headers("Content-Type: application/json")
     @POST(urlSignUp)

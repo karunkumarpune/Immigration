@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -151,14 +150,6 @@ class CircleImageView : android.support.v7.widget.AppCompatImageView {
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         setup()
-    }
-
-    fun setBorderColorResource(@ColorRes borderColorRes: Int) {
-        borderColor = context.resources.getColor(borderColorRes)
-    }
-
-    fun setFillColorResource(@ColorRes fillColorRes: Int) {
-        fillColor = context.resources.getColor(fillColorRes)
     }
 
     override fun setImageBitmap(bm: Bitmap?) {

@@ -90,7 +90,7 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     }
     private fun initJsonOperation(pass:String) {
-        Utils.log(TAG!!, "Reset data :$pass ")
+        Utils.log(TAG, "Reset data :$pass ")
         pb = CustomProgressBar(this)
         pb.setCancelable(false)
         pb.show()
@@ -101,12 +101,12 @@ class ResetPasswordActivity : AppCompatActivity() {
         APIService!!.setPassword(requestBody).enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Reset Password onResponse  code: ${response!!.raw()}")
+                Utils.log(TAG, "Reset Password onResponse  code: ${response!!.raw()}")
                 val status = response!!.code()
 
                 if(response.isSuccessful){
                     val mess = response!!.body().message.toString()
-                    Utils.log(TAG!!, "Reset Password onResponse  body: $mess ")
+                    Utils.log(TAG, "Reset Password onResponse  body: $mess ")
                     Utils.showToast(this@ResetPasswordActivity, mess, Color.WHITE)
                     startActivity(Intent(this@ResetPasswordActivity, LoginActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -132,7 +132,7 @@ class ResetPasswordActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.log(TAG!!, "Reset Password Throwable : $t")
+                Utils.log(TAG, "Reset Password Throwable : $t")
                 Utils.showToast(this@ResetPasswordActivity, "Sorry!No internet available", Color.RED)
             }
         })
