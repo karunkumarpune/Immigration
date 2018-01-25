@@ -33,7 +33,6 @@ import com.immigration.view.subscription.SubscriptionListActivity
 import com.immigration.view.support.SupportActivitys
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
@@ -50,6 +49,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
     private var back_pressed: Long = 0
 
     private val TAG = NavigationActivity::class.java.name
+    private var snackbarMessage: String? = null
+    private var tagMessage: String? = null
+    
     private var session_id: String = ""
     private var mViewHolder: ViewHolder? = null
 
@@ -166,9 +168,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
     private fun showSnack(isConnected: Boolean) {
         if (isConnected)
-            Utils.showToast(this, "Good! Connected to Internet", Color.GREEN)
+            Utils.showToastSnackbar(this, "Good! Connected to Internet", Color.GREEN)
         else
-            Utils.showToast(this, "Sorry!No internet available", Color.RED)
+            Utils.showToastSnackbar(this, "Sorry!No internet available", Color.RED)
     }
 
     //----------------------------------------------------Open Menu Intent
@@ -195,7 +197,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_6.visibility = View.VISIBLE
             mViewHolder!!.txt_option_6.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
-                        .putExtra("option", 6)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -206,7 +208,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_7.visibility = View.VISIBLE
             mViewHolder!!.txt_option_7.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
-                        .putExtra("option", 4)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -278,7 +280,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.txt_option_1.text = resources.getString(R.string.txt_subscription)
             mViewHolder!!.txt_option_1.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, SubscriptionListActivity::class.java)
-                        .putExtra("option", 1)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -288,7 +290,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_2.visibility = View.VISIBLE
             mViewHolder!!.txt_option_2.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, GenerateReport::class.java)
-                        .putExtra("option", 2)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -298,7 +300,6 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_3.visibility = View.VISIBLE
             mViewHolder!!.txt_option_3.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, StatisticReportActivity::class.java)
-                        .putExtra("option", 3)
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -309,7 +310,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_4.visibility = View.VISIBLE
             mViewHolder!!.noti_relative_click.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, NotificationActivity::class.java)
-                        .putExtra("option", 4)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -327,7 +328,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_6.visibility = View.VISIBLE
             mViewHolder!!.txt_option_6.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, FAQActivity::class.java)
-                        .putExtra("option", 6)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -338,7 +339,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.view_id_7.visibility = View.VISIBLE
             mViewHolder!!.txt_option_7.setOnClickListener { _ ->
                 startActivity(Intent(this@NavigationActivity, PrivecyPolicyActivity::class.java)
-                        .putExtra("option", 4)
+
                 )
                 mViewHolder!!.mDuoDrawerLayout.closeDrawer()
             }
@@ -368,10 +369,13 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                         .setTitle("")
                         .setMessage(resources.getString(R.string.txt_close_app))
                         .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
-                            Logout(accessToken)
-                            startActivity(Intent(this@NavigationActivity, LoginActivity::class.java))
+                            LogOut(accessToken)
+
+                            startActivity(Intent(this, LoginActivity::class.java))
                             loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@NavigationActivity));
                             finish()
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
                         }
                         .setNegativeButton(resources.getString(R.string.txt_No), null)
                         .show()
@@ -436,7 +440,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
         if (back_pressed + TIME_DELAY > System.currentTimeMillis()) {
             super.onBackPressed()
         } else {
-            Toast.makeText(baseContext, "Press once again to exit!", Toast.LENGTH_SHORT).show() }
+            Toast.makeText(baseContext, getString(R.string.press_back), Toast.LENGTH_SHORT).show() }
         back_pressed = System.currentTimeMillis()
     }
 
@@ -471,50 +475,34 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
 
 
-    private fun Logout(accessToken:String){
+    private fun LogOut(accessToken:String){
 
         APIService!!.logout(accessToken)
                 .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
                     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
                         pb.dismiss()
-                        Utils.log(TAG, "Login onResponse  code: ${response!!.raw()}")
                         val status = response!!.code()
-
-                        if(response.isSuccessful){
-                            Utils.showToast(this@NavigationActivity,response.body().message, Color.WHITE)
-                        }
-
-                        if (status != 200) {
-                            when (status) {
-                                201 -> {
-                                    val mess = response.body().message.toString()
-                                    Utils.showToast(this@NavigationActivity, mess, Color.WHITE) }
-                                204 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                409 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                400 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                401 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                403 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                404 -> Utils.showToast(this@NavigationActivity,errorHandler(response), Color.WHITE)
-                                500 -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.WHITE)
-                                else -> Utils.showToast(this@NavigationActivity,resources.getString(R.string.error_status_1), Color.RED)
+                        when (status) {
+                            200 -> {
+                                Utils.showToast(applicationContext, response.body().message.toString())
+                            }
+                            401 -> {
+                                Utils.showToast(applicationContext, Utils.errorHandler(response))
+                                Utils.invalidToken(this@NavigationActivity, loginPreference, LoginActivity())
                             }
                         }
+                        snackbarMessage = Utils.responseStatus(this@NavigationActivity, status, response)
+                        if (snackbarMessage != null) {
+                            Utils.showToastSnackbar(this@NavigationActivity, snackbarMessage!!, Color.WHITE)
+                        }
                     }
+    
                     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                         pb.dismiss()
-                        Utils.log(TAG, "Login Throwable : $t")
-                        Utils.showToast(this@NavigationActivity, "Sorry!No internet available", Color.RED)
+                        tagMessage = "logout:  Throwable-:   $t"
+                        Utils.showToastSnackbar(this@NavigationActivity, getString(R.string.no_internet).toString(), Color.RED)
                     }
                 })
-
-    }
-
-    private fun errorHandler(response: Response<ResponseModel>?):String{
-        return try {
-            val jObjError = JSONObject(response!!.errorBody().string())
-            jObjError.getString("message")
-        } catch (e: Exception) {
-            e.message!!
-        }
+        Utils.log(TAG, tagMessage!!)
     }
 }

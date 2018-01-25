@@ -60,23 +60,23 @@ class ResetPasswordActivity : AppCompatActivity() {
 
             if(pass.isEmpty()){
                 hideSoftKeyboad(v)
-                Utils.showToast(this@ResetPasswordActivity, getString(R.string.login_validation_reset), Color.WHITE)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, getString(R.string.login_validation_reset), Color.WHITE)
                 txt_et_new.requestFocus()
             }else if(pass.length <8){
                 hideSoftKeyboad(v)
-                Utils.showToast(this@ResetPasswordActivity, getString(R.string.login_validation_valid), Color.WHITE)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_et_new.requestFocus()
             }else if(conf_pass.isEmpty()){
                 hideSoftKeyboad(v)
-                Utils.showToast(this@ResetPasswordActivity, getString(R.string.signup_validation_4), Color.WHITE)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, getString(R.string.signup_validation_4), Color.WHITE)
                 txt_et_confirm.requestFocus()
             }/*else if(conf_pass.length <8){
                 hideSoftKeyboad(v)
-                Utils.showToast(this@ResetPasswordActivity, getString(R.string.login_validation_valid), Color.WHITE)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_et_confirm.requestFocus()
             }*/else if(pass !=conf_pass){
                 hideSoftKeyboad(v)
-                Utils.showToast(this@ResetPasswordActivity, getString(R.string.signup_validation_5), Color.WHITE)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, getString(R.string.signup_validation_5), Color.WHITE)
                 txt_et_confirm.requestFocus()
             } else {
                 hideSoftKeyboad(v)
@@ -107,7 +107,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val mess = response!!.body().message.toString()
                     Utils.log(TAG, "Reset Password onResponse  body: $mess ")
-                    Utils.showToast(this@ResetPasswordActivity, mess, Color.WHITE)
+                    Utils.showToastSnackbar(this@ResetPasswordActivity, mess, Color.WHITE)
                     startActivity(Intent(this@ResetPasswordActivity, LoginActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                     finish()
@@ -117,23 +117,23 @@ class ResetPasswordActivity : AppCompatActivity() {
                     when (status) {
                         201 -> {
                             val mess = response!!.body().message.toString()
-                            Utils.showToast(this@ResetPasswordActivity, mess, Color.WHITE)
+                            Utils.showToastSnackbar(this@ResetPasswordActivity, mess, Color.WHITE)
                         }
-                        204 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        409 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        400 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        401 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        403 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        404 -> Utils.showToast(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
-                        500 -> Utils.showToast(this@ResetPasswordActivity,resources.getString(R.string.error_status_1), Color.WHITE)
-                        else -> Utils.showToast(this@ResetPasswordActivity,resources.getString(R.string.error_status_1), Color.RED)
+                        204 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToastSnackbar(this@ResetPasswordActivity,errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToastSnackbar(this@ResetPasswordActivity,resources.getString(R.string.error_status_1), Color.WHITE)
+                        else -> Utils.showToastSnackbar(this@ResetPasswordActivity,resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
                 Utils.log(TAG, "Reset Password Throwable : $t")
-                Utils.showToast(this@ResetPasswordActivity, "Sorry!No internet available", Color.RED)
+                Utils.showToastSnackbar(this@ResetPasswordActivity, "Sorry!No internet available", Color.RED)
             }
         })
     }

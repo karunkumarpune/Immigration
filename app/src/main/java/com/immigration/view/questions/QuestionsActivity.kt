@@ -90,7 +90,7 @@ class QuestionsActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Status>?, t: Throwable?) {
                 pb.dismiss()
-                Utils.showToast(this@QuestionsActivity,"Sorry!No internet available",Color.RED)
+                Utils.showToastSnackbar(this@QuestionsActivity,"Sorry!No internet available",Color.RED)
 
             }
         })
@@ -103,7 +103,7 @@ class QuestionsActivity : AppCompatActivity() {
                 )
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
-            } else Utils.showToast(this, getString(R.string.question_validation), Color.WHITE)
+            } else Utils.showToastSnackbar(this, getString(R.string.question_validation), Color.WHITE)
 
         }
 

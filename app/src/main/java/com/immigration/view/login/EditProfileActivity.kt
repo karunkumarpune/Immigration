@@ -34,6 +34,7 @@ import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.CustomProgressBar
 import com.immigration.utils.Utils
+import com.immigration.utils.Utils.showToast
 import com.immigration.view.home.NavigationActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
@@ -46,6 +47,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.net.URISyntaxException
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.security.auth.callback.Callback
 
@@ -58,17 +60,13 @@ class EditProfileActivity : AppCompatActivity() {
     private var APIService: APIService? = null
     private lateinit var pb: CustomProgressBar
     private var loginPreference: LoginPrefences? = null
-    private val TAG = EditProfileActivity::class.java!!.getName()
-    var userImage: ByteArray? = null
+    private val TAG = EditProfileActivity::class.java.getName()
 
     private val SELECT_PICTURE = 170
     private var REQUEST_IMAGE_CAPTURE = 291
     private val REQUEST_CODE_STORAGE_PERMS = 501
-    private var outPutfileUri: Uri? = null
     private var resultUri: Uri? = null
     private var croupresultUri: Uri? = null
-    private var camera_file: File? = null
-    private var uriString: String? = null
 
 
     private var isCheckImage: Boolean? = null
@@ -178,11 +176,11 @@ class EditProfileActivity : AppCompatActivity() {
             val last_name_ = et_profile_last.text.toString().trim()
 
             if (first_name_.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_1), Color.WHITE)
+                Utils.showToastSnackbar(this@EditProfileActivity, getString(R.string.edit_profile_validation_1), Color.WHITE)
                 et_profile_first.requestFocus()
                 hideSoftKeyboad(v)
             } /*else if (last_name_.isEmpty()) {
-                Utils.showToast(this@EditProfileActivity, getString(R.string.edit_profile_validation_2), Color.WHITE)
+                Utils.showToastSnackbar(this@EditProfileActivity, getString(R.string.edit_profile_validation_2), Color.WHITE)
                 et_profile_last.requestFocus()
                 hideSoftKeyboad(v)
             }*/ else {
@@ -195,6 +193,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
+
+
+
 
     //ASK Runtime permisstion camera open
     private fun AskPermissions() {
@@ -272,45 +273,14 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-
-  /*  private fun openCamera() {
-
+    private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         file = Uri.fromFile(getFile())
         intent.putExtra(MediaStore.EXTRA_OUTPUT, file)
-
-        if (intent.resolveActivity(activity!!.packageManager) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-        }
-
-      //  val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-      //  startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-        // camera_file = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
-        //  outPutfileUri = Uri.fromFile(camera_file)
-        //  uriString = outPutfileUri.toString()
-        //  val myFile = File(uriString)
-        //  val path = myFile.absolutePath
-        // this method is used to get pic name
-        // getPicName(path, outPutfileUri, myFile);
-
-        // intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri)
-        // startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-
-    }*/
-
-    private fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val file_temp:File
-        file_temp = getFile()
-        file = Uri.fromFile(file_temp)
-        //fileStored = file_temp.absolutePath
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, file)
-
         if (intent.resolveActivity(this.packageManager) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
         }
     }
-
 
     private fun chooseFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -318,8 +288,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //super.onActivityResult(requestCode, resultCode, data)
-
          if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {;
              try {
                  val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, file)
@@ -353,13 +321,9 @@ class EditProfileActivity : AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 resultUri = result.uri
-                var bitmap: Bitmap? = null
+                var bitmap: Bitmap?
                 try {
                     isCheckImage = true
-                    //  profile_image.setImageURI(resultUri)
-                    //  this.path = file.getPath();
-                    // this method is used to get pic name
-                    //  getPicName(path, resultUri, file);
                 } catch (e: URISyntaxException) {
                     e.printStackTrace()
                 }
@@ -385,15 +349,15 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private fun getFile(): File {
-        val folder = Environment.getExternalStoragePublicDirectory("/From_camera/imagens")// the file path
+        val folder = Environment.getExternalStoragePublicDirectory("/immigration/images")// the file path
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        //val timeStamp = SimpleDateFormat("yyyyMMdd_HHmm").format(Date())
-       // val imageFileName = "JPEG_" + timeStamp
+        val timeStamp = SimpleDateFormat("yyyyMMdd").format(Date())
+        val imageFileName = "pic"+ timeStamp
         var image_file: File? = null
         try {
-              image_file= File(folder,"pic"+".jpg")
+              image_file= File(folder,imageFileName+".jpg")
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -461,9 +425,14 @@ class EditProfileActivity : AppCompatActivity() {
          return Bitmap.createScaledBitmap(image, width, height, true)
      }
 
-
     private fun crop_Method(imageUri: Uri) {
         CropImage.activity(imageUri).start(this@EditProfileActivity)
+    }
+
+    private fun deleteFiles() {
+        val tempFile = File(mCurrentPhotoPath)
+        if(tempFile.exists())
+            tempFile.delete()
     }
 
 
@@ -552,39 +521,41 @@ class EditProfileActivity : AppCompatActivity() {
                                             contact, SignupActivity.passwords_signup,
                                             email, firstName, lastName, profilePic)
                                     startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
-                                            .putExtra("session", "1")
                                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                            .putExtra("session", "1"))
                                     finish()
 
                                 }
-
-                                if (status != 200) {
                                     when (status) {
                                         201 -> {
                                             val mess = response!!.body().message.toString()
-                                            Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
+                                            Utils.showToastSnackbar(this@EditProfileActivity, mess, Color.WHITE)
                                         }
-                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        204 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        409 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        400 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         401 -> {
-                                            Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
-                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+                                            showToast(applicationContext,errorHandler(response))
+                                            loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@EditProfileActivity));
+                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java)
+                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                             finish()
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
                                         }
-                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
-                                        else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
+                                        403 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        404 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        500 -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
+                                        else -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
                                     }
                                 }
-                            }
+
 
                             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                                 pb.dismiss()
                                 Utils.log(TAG, "EditProfile Throwable : $t")
-                                Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
+                                Utils.showToastSnackbar(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                             }
                         })
 
@@ -641,39 +612,42 @@ class EditProfileActivity : AppCompatActivity() {
 
 
                                         startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
-                                                .putExtra("session", "1")
                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                                .putExtra("session", "1"))
                                         finish()
 
                                 }
 
-                                if (status != 200) {
                                     when (status) {
                                         201 -> {
                                             val mess = response!!.body().message.toString()
-                                            Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
+                                            Utils.showToastSnackbar(this@EditProfileActivity, mess, Color.WHITE)
                                         }
-                                        204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        204 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        409 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        400 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                         401 -> {
-                                            Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
-                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+                                            showToast(applicationContext,errorHandler(response))
+                                            loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@EditProfileActivity));
+                                            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java)
+                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                             finish()
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
                                         }
-                                        403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                        500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
-                                        else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
+                                        403 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        404 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                        500 -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
+                                        else -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
                                     }
-                                }
+
                             }
 
                             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                                 pb.dismiss()
                                 Utils.log(TAG, "EditProfile Throwable : $t")
-                                Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
+                                Utils.showToastSnackbar(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                             }
                         })
             }
@@ -721,8 +695,6 @@ class EditProfileActivity : AppCompatActivity() {
                                     contact = ""
                                 }
 
-
-                                Utils.log(TAG, "EditProfile onResponse  isSuccessful:$userId, $email ,$countryCode, $contact  $firstName ,$lastName , $accessToken , $profilePic ")
                                 LoginPrefences.getInstance().addData(this@EditProfileActivity,
                                         accessToken,
                                         userId.toString(),
@@ -730,39 +702,44 @@ class EditProfileActivity : AppCompatActivity() {
                                         contact, SignupActivity.passwords_signup,
                                         email, firstName, lastName, profilePic)
                                 startActivity(Intent(this@EditProfileActivity, NavigationActivity::class.java)
-                                        .putExtra("session", "1")
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                                finish()
+                                        .putExtra("session", "1"))
+                                         finish()
 
                             }
 
-                            if (status != 200) {
                                 when (status) {
                                     201 -> {
-                                        val mess = response!!.body().message.toString()
-                                        Utils.showToast(this@EditProfileActivity, mess, Color.WHITE)
+                                        val mess = response.body().message.toString()
+                                        Utils.showToastSnackbar(this@EditProfileActivity, mess, Color.WHITE)
                                     }
-                                    204 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                    409 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                    400 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    204 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    409 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    400 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
                                     401 -> {
-                                        Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
-                                        startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+
+                                        showToast(applicationContext,errorHandler(response))
+                                      //  Toast.makeText(applicationContext, errorHandler(response), Toast.LENGTH_SHORT).show()
+                                        loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@EditProfileActivity));
+                                        startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java)
+                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                         finish()
+                                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
                                     }
-                                    403 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                    404 -> Utils.showToast(this@EditProfileActivity, errorHandler(response), Color.WHITE)
-                                    500 -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
-                                    else -> Utils.showToast(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
-                                }
+                                    403 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    404 -> Utils.showToastSnackbar(this@EditProfileActivity, errorHandler(response), Color.WHITE)
+                                    500 -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.WHITE)
+                                    else -> Utils.showToastSnackbar(this@EditProfileActivity, resources.getString(R.string.error_status_1), Color.RED)
+
                             }
                         }
 
                         override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                             pb.dismiss()
                             Utils.log(TAG, "EditProfile Throwable : $t")
-                            Utils.showToast(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
+                            Utils.showToastSnackbar(this@EditProfileActivity, "Sorry!No internet available", Color.RED)
                         }
                     })
 
@@ -780,18 +757,7 @@ class EditProfileActivity : AppCompatActivity() {
       }*/
 
 
-    fun deleteFiles() {
 
-        val tempFile = File(mCurrentPhotoPath)
-        if(tempFile.exists())
-            tempFile.delete()
-
-
-        /*if(getFile().exists())
-           {
-               getFile().delete()
-        }*/
-    }
 
     private fun errorHandler(response: Response<ResponseModel>?): String {
         return try {
@@ -805,7 +771,11 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         if (session_edit_profile == "0") {
+            startActivity(Intent(this@EditProfileActivity, LoginActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             finish()
+        }else{
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 }

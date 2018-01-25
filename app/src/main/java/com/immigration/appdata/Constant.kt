@@ -45,6 +45,11 @@ object Constant {
     var accessTokenValues=""
     var countryCodeValues=""
     var contactValues=""
+    
+    
+    //validation lenth
+    var validationMobLenth=5
+    var validationPassLenth=8
 
 
 

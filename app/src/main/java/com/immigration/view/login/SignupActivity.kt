@@ -80,7 +80,7 @@ class SignupActivity : AppCompatActivity() {
 
     private fun openCountryCodeDialog() {
         val picker = CountryPicker.newInstance("Select Country")  // dialog title
-        picker.setListener { name, code, dialCode, _ ->
+        picker.setListener { _, _, dialCode, _ ->
             picker.dismiss()
             country_code.text = dialCode.toString()
             countryCodeS = dialCode.toString()
@@ -107,43 +107,43 @@ class SignupActivity : AppCompatActivity() {
 
             if (mobile.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_1), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_1), Color.WHITE)
                 txt_signup_mob.requestFocus()
             } else if (mobile.length < 5) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_2), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_2), Color.WHITE)
                 txt_signup_mob.requestFocus()
             } else if (email.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_email), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_email), Color.WHITE)
                 txt_signup_email.requestFocus()
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_2), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.signup_validation_2), Color.WHITE)
                 txt_signup_email.requestFocus()
             } else if (pass.isEmpty()) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_3), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_3), Color.WHITE)
                 txt_signup_pass.requestFocus()
             } else if (pass.length < 8) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_signup_pass.requestFocus()
             } else if (conf_pass.isEmpty()) {
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_4), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.signup_validation_4), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
             } /*else if (conf_pass.length <8) {
-                Utils.showToast(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.login_validation_valid), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
                 hideSoftKeyboad(v)
             }*/ else if (pass != conf_pass) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_5), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.signup_validation_5), Color.WHITE)
                 txt_signup_conf_pass.requestFocus()
             } else if (!txt_signup_check.isChecked) {
                 hideSoftKeyboad(v)
-                Utils.showToast(this@SignupActivity, getString(R.string.signup_validation_6), Color.WHITE)
+                Utils.showToastSnackbar(this@SignupActivity, getString(R.string.signup_validation_6), Color.WHITE)
             } else {
                 hideSoftKeyboad(v)
                 initJsonOperation(countryCodeS.toString(), mobile, email, conf_pass)
@@ -186,14 +186,14 @@ class SignupActivity : AppCompatActivity() {
                             finish()
 
                         }
-                        204 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        409 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        400 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        401 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        403 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        404 -> Utils.showToast(this@SignupActivity, errorHandler(response), Color.WHITE)
-                        500 -> Utils.showToast(this@SignupActivity, resources.getString(R.string.error_status_1), Color.WHITE)
-                        else -> Utils.showToast(this@SignupActivity, resources.getString(R.string.error_status_1), Color.RED)
+                        204 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToastSnackbar(this@SignupActivity, errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToastSnackbar(this@SignupActivity, resources.getString(R.string.error_status_1), Color.WHITE)
+                        else -> Utils.showToastSnackbar(this@SignupActivity, resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }
             }
@@ -201,7 +201,7 @@ class SignupActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
                 Utils.log(TAG, "signup Throwable : $t")
-                Utils.showToast(this@SignupActivity, "Sorry!No internet available", Color.RED)
+                Utils.showToastSnackbar(this@SignupActivity, "Sorry!No internet available", Color.RED)
             }
         })
     }

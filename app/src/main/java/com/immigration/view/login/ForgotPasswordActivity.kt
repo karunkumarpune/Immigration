@@ -41,10 +41,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
         btn_forgot_pass.setOnClickListener {
             val mob = forgot_et.text.toString()
             if (mob.isEmpty()) {
-                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_1), Color.WHITE)
+                Utils.showToastSnackbar(this@ForgotPasswordActivity, getString(R.string.login_validation_1), Color.WHITE)
                 forgot_et.requestFocus()
             }else if (mob.length <5) {
-                Utils.showToast(this@ForgotPasswordActivity, getString(R.string.login_validation_2), Color.WHITE)
+                Utils.showToastSnackbar(this@ForgotPasswordActivity, getString(R.string.login_validation_2), Color.WHITE)
                 forgot_et.requestFocus()
             }else {
                 val view1 = this@ForgotPasswordActivity.currentFocus
@@ -75,7 +75,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     val userId = response.body().result.userId
                     countryCodeValues= response.body().result.countryCode.toString()
                     Utils.log(TAG, "Forgot Password onResponse  body: $mess   $userId")
-                    Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
+                    Utils.showToastSnackbar(this@ForgotPasswordActivity, mess, Color.WHITE)
 
                     startActivity(Intent(this@ForgotPasswordActivity,OTPActivity::class.java)
                             .putExtra("session_otp","1")
@@ -90,23 +90,23 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     when (status) {
                         201 -> {
                             val mess = response.body().message.toString()
-                            Utils.showToast(this@ForgotPasswordActivity, mess, Color.WHITE)
+                            Utils.showToastSnackbar(this@ForgotPasswordActivity, mess, Color.WHITE)
                         }
-                        204 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        409 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        400 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        401 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        403 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        404 -> Utils.showToast(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
-                        500 -> Utils.showToast(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.WHITE)
-                        else -> Utils.showToast(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.RED)
+                        204 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        409 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        400 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        401 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        403 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        404 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,errorHandler(response), Color.WHITE)
+                        500 -> Utils.showToastSnackbar(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.WHITE)
+                        else -> Utils.showToastSnackbar(this@ForgotPasswordActivity,resources.getString(R.string.error_status_1), Color.RED)
                     }
                 }
             }
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                 pb.dismiss()
                 Utils.log(TAG, "Forgot Password Throwable : $t")
-                Utils.showToast(this@ForgotPasswordActivity, "Sorry!No internet available", Color.RED)
+                Utils.showToastSnackbar(this@ForgotPasswordActivity, "Sorry!No internet available", Color.RED)
             }
         })
     }

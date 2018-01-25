@@ -12,7 +12,7 @@
     <string name="txt_faq">FAQ\'s</string>
     <string name="txt_privacy">Privacy Policy</string>
     <string name="txt_support">Support</string>
-    <string name="txt_logout">Logout</string>
+    <string name="txt_logout">LogOut</string>
 
 
     <!--Side menu content-->
@@ -45,7 +45,7 @@
 
 
     <!--ask Close app-->
-    <string name="txt_close_app">Are you sure you want to Logout?</string>
+    <string name="txt_close_app">Are you sure you want to LogOut?</string>
     <string name="txt_yes">yes</string>
     <string name="txt_No">No</string>
 
@@ -186,6 +186,8 @@ Immigration never supplies any other person or organization with your informatio
     <string name="action_sms">Please enter valid OTP.</string>
     <string name="result_3">Candidates that are invited to apply for \n PR Score Above</string>
     <string name="error_status_1">Please try again!!</string>
+    <string name="no_internet">Sorry!No internet available</string>
+    <string name="press_back">Press once again to exit!</string>
 
 
 </resources>
