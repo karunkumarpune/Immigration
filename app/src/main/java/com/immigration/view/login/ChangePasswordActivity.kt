@@ -26,11 +26,11 @@ import javax.security.auth.callback.Callback
 class ChangePasswordActivity : AppCompatActivity() {
    private var APIService: APIService? = null
    private lateinit var pb: CustomProgressBar
-   private var loginPreference: LoginPrefences? = null
    private val TAG = ChangePasswordActivity::class.java.name
+  
    private var userAccessToken: String? = null
+   private var loginPreference: LoginPrefences? = null
    private var snackbarMessage: String? = null
-   private var tagMessage: String? = null
    
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -63,26 +63,32 @@ class ChangePasswordActivity : AppCompatActivity() {
             old_pass.isEmpty() -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.edit_profile_validation_5)
+               txt_et_old_pass.requestFocus()
             }
             old_pass.length < validationPassLenth -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.login_validation_valid)
+               txt_et_old_pass.requestFocus()
             }
             pass.isEmpty() -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.login_validation_reset)
+               txt_et_new.requestFocus()
             }
             pass.length < validationPassLenth -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.login_validation_valid)
+               txt_et_new.requestFocus()
             }
             conf_pass.isEmpty() -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.signup_validation_4)
+               txt_et_confirm.requestFocus()
             }
             pass != conf_pass -> {
                hideSoftKeyboad(applicationContext, v)
                snackbarMessage = getString(R.string.signup_validation_5)
+               txt_et_confirm.requestFocus()
             }
             else -> {
                hideSoftKeyboad(applicationContext, v)
@@ -96,7 +102,7 @@ class ChangePasswordActivity : AppCompatActivity() {
    }
    
    private fun initJsonOperation(oldPass: String, pass: String) {
-      tagMessage = "change password  oldPass: $oldPass ,newPass $pass"
+      Utils.log(TAG, "change password  oldPass: $oldPass ,newPass $pass")
       pb = CustomProgressBar(this)
       pb.setCancelable(false)
       pb.show()
@@ -110,7 +116,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             val status = response!!.code()
             when (status) {
                200 -> {
-                  Utils.showToast(applicationContext, response.body().message.toString())
+                  Utils.showToast(applicationContext, response.body()!!.message.toString())
                   onBackPressed()
                   moveLeftToRight(this@ChangePasswordActivity)
                }
@@ -127,10 +133,9 @@ class ChangePasswordActivity : AppCompatActivity() {
          
          override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
             pb.dismiss()
-            tagMessage = "change password:  Throwable-:   $t"
+            Utils.log(TAG, "otp:  Throwable-:   $t")
             Utils.showToastSnackbar(this@ChangePasswordActivity, getString(R.string.no_internet).toString(), Color.RED)
          }
       })
-      Utils.log(TAG, tagMessage!!)
    }
 }

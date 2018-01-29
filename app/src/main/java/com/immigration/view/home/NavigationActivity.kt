@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.immigration.R
+import com.immigration.appdata.Constant.BASE_URL_Image
 import com.immigration.controller.application.AppController
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
@@ -19,6 +20,7 @@ import com.immigration.restservices.APIService
 import com.immigration.restservices.ApiUtils
 import com.immigration.utils.ConnectivityReceiver
 import com.immigration.utils.CustomProgressBar
+import com.immigration.utils.TokenSharedPrefManager
 import com.immigration.utils.Utils
 import com.immigration.view.faq.FAQActivity
 import com.immigration.view.generateReport.GenerateReport
@@ -72,7 +74,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        Utils.moveLeftToRight(this)
         setContentView(R.layout.activity_navigation)
 
         session_id = intent.getStringExtra("session")
@@ -242,7 +244,7 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
             mViewHolder!!.profile_pic.visibility = View.VISIBLE
             try {
                 Glide.with(baseContext)
-                        .load(profilePic)
+                        .load(BASE_URL_Image+profilePic)
                         .asBitmap()
                         .error(R.drawable.user_holder)
                         .placeholder(R.drawable.user_holder)
@@ -251,6 +253,9 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                 e.printStackTrace()
             }
 
+            
+            
+            
 
             //--------------------------------btn_Edit--------------------
 
@@ -370,12 +375,11 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
                         .setMessage(resources.getString(R.string.txt_close_app))
                         .setPositiveButton(resources.getString(R.string.txt_yes)) { _, _ ->
                             LogOut(accessToken)
-
+                            TokenSharedPrefManager.getInstance(this).getDeviceTokenClear()
                             startActivity(Intent(this, LoginActivity::class.java))
                             loginPreference!!.removeData(loginPreference!!.getLoginPreferences(this@NavigationActivity));
                             finish()
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
+                            Utils.moveLeftToRight(this)
                         }
                         .setNegativeButton(resources.getString(R.string.txt_No), null)
                         .show()
@@ -464,45 +468,44 @@ class NavigationActivity : AppCompatActivity(), ConnectivityReceiver.Connectivit
 
     //------------------------------------0peration --------------------our------------
 
-    private fun callFinish() {
+    /*private fun callFinish() {
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             finishAndRemoveTask()
         } else {
             this.moveTaskToBack(true);
 
         }
-    }
+    }*/
 
 
 
-    private fun LogOut(accessToken:String){
-
+    private fun LogOut(accessToken:String) {
         APIService!!.logout(accessToken)
-                .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
-                    override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
-                        pb.dismiss()
-                        val status = response!!.code()
-                        when (status) {
-                            200 -> {
-                                Utils.showToast(applicationContext, response.body().message.toString())
-                            }
-                            401 -> {
-                                Utils.showToast(applicationContext, Utils.errorHandler(response))
-                                Utils.invalidToken(this@NavigationActivity, loginPreference, LoginActivity())
-                            }
-                        }
-                        snackbarMessage = Utils.responseStatus(this@NavigationActivity, status, response)
-                        if (snackbarMessage != null) {
-                            Utils.showToastSnackbar(this@NavigationActivity, snackbarMessage!!, Color.WHITE)
-                        }
-                    }
-    
-                    override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
-                        pb.dismiss()
-                        tagMessage = "logout:  Throwable-:   $t"
-                        Utils.showToastSnackbar(this@NavigationActivity, getString(R.string.no_internet).toString(), Color.RED)
-                    }
-                })
-        Utils.log(TAG, tagMessage!!)
+         .enqueue(object : Callback, retrofit2.Callback<ResponseModel> {
+             override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
+                 pb.dismiss()
+                 val status = response!!.code()
+                 when (status) {
+                     200 -> {
+                         Utils.showToast(applicationContext, response.body()!!.message.toString())
+                     }
+                     401 -> {
+                         Utils.showToast(applicationContext, Utils.errorHandler(response))
+                         Utils.invalidToken(this@NavigationActivity, loginPreference, LoginActivity())
+                     }
+                 }
+                 snackbarMessage = Utils.responseStatus(this@NavigationActivity, status, response)
+                 if (snackbarMessage != null) {
+                     Utils.showToastSnackbar(this@NavigationActivity, snackbarMessage!!, Color.WHITE)
+                 }
+             }
+         
+             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
+                 pb.dismiss()
+                 Utils.log(TAG, "logout:  Throwable-:   $t")
+                 Utils.showToastSnackbar(this@NavigationActivity, getString(R.string.no_internet).toString(), Color.RED)
+             }
+         })
     }
+    
 }

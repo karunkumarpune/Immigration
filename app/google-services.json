@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "463271627113",
+    "firebase_url": "https://immigration-79dea.firebaseio.com",
+    "project_id": "immigration-79dea",
+    "storage_bucket": "immigration-79dea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463271627113:android:0ec10fcd86cedb2c",
+        "android_client_info": {
+          "package_name": "com.immigration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463271627113-np0al8l34l1bnf7vq5e77a7f95pg9l5t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.immigration",
+            "certificate_hash": "b1731ce7367a6fab0743bae71ba30abd0ff75e8f"
+          }
+        },
+        {
+          "client_id": "463271627113-vl4atb69ka893bohimeraet1er9t1p33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8ETfwnZyU3ECx5tQaSYb6AufDUxWPmIM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463271627113-vl4atb69ka893bohimeraet1er9t1p33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

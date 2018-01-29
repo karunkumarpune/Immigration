@@ -56,7 +56,6 @@
         <activity android:name=".view.login.SignupActivity" />
         <activity android:name=".view.login.OTPActivity" />
         <activity android:name=".view.home.NavigationActivity" />
-        <activity android:name=".view.notification.NotificationActivity" />
         <activity android:name=".view.statisticReport.StatisticReportActivity" />
         <activity android:name=".view.generateReport.GenerateReport" />
         <activity android:name=".view.subscription.ResultActivity" />
@@ -66,6 +65,27 @@
         <activity android:name=".view.faq.FAQActivity" />
         <activity android:name=".view.privecy.PrivecyPolicyActivity" />
         <activity android:name=".view.term_condition.TermConditionActivity" />
+
+
+
+        <!--  Push Notification- -->
+
+        <service android:name=".push_notification.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".push_notification.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".view.notification.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <!--  end Push Notification- -->
 
         <!-- SMS OTP -->
         <receiver android:name=".controller.SmsReceiver">
@@ -91,6 +111,9 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
+
+
     </application>
 
 </manifest>

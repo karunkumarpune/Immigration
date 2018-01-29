@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.immigration.utils.TokenSharedPrefManager;
 
 public class FirebaseIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
@@ -17,6 +18,6 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
 
     private void storeToken(String token) {
         //saving the token on shared preferences
-        SharedPrefManager.getInstance(getApplicationContext()).saveDeviceToken(token);
+        TokenSharedPrefManager.getInstance(getApplicationContext()).saveDeviceToken(token);
     }
 }

@@ -3,6 +3,8 @@ package com.immigration.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.util.Log
@@ -11,12 +13,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import com.immigration.R
-import com.immigration.appdata.Constant
 import com.immigration.controller.sharedpreferences.LoginPrefences
 import com.immigration.model.ResponseModel
 import com.immigration.view.login.LoginActivity
 import org.json.JSONObject
 import retrofit2.Response
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 object Utils {
@@ -56,42 +60,21 @@ object Utils {
         contexts.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
     
-    //API Is null Check
     
-    fun isNullCheck(response: Response<ResponseModel>?){
-    
-        val accessToken = response!!.body().result.accessToken
-        val userId = response.body().result.userId
-        var email = response.body().result.email
-        var countryCode = response.body().result.countryCode
-        var contact = response.body().result.contact
-        var firstName = response.body().result.firstName
-        var lastName = response.body().result.lastName
-        var profilePic = response.body().result.profilePic
-    
-        if (profilePic == null) {
-            profilePic = Constant.DefaultImage
-        } else {
-            profilePic = Constant.BASE_URL_Image + profilePic
+    //Notification URL convert Bitmap
+     fun getBitmapFromURL(strURL: String): Bitmap? {
+        return try {
+            val url = URL(strURL)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val input = connection.inputStream
+            BitmapFactory.decodeStream(input)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
         }
-        if (firstName == null) {
-            firstName = ""
-        }
-        if (lastName == null) {
-            lastName = ""
-        }
-        if (email == null) {
-            email = ""
-        }
-        if (countryCode == null) {
-            countryCode = ""
-        }
-        if (contact == null) {
-            contact = ""
-        }
-    
     }
-    
     
     
     // API Response Status check
@@ -99,22 +82,26 @@ object Utils {
         val contexts =context as Activity
         var snackbarMessage:String
         snackbarMessage = when (status) {
+            201->response!!.body()!!.message.toString()
             204 -> errorHandler(response)
             409 -> errorHandler(response)
             400 -> errorHandler(response)
             403 -> errorHandler(response)
             404 -> errorHandler(response)
             500 -> contexts.resources.getString(R.string.error_status_1)
-            else -> contexts.resources.getString(R.string.error_status_1)
+            else ->contexts.resources.getString(R.string.error_status_1)
         }
             return snackbarMessage
     }
     
     
+    
     // API Response 401
     fun invalidToken(context: Context,loginPreference:LoginPrefences?,loginActivity: LoginActivity){
         val contexts =context as Activity
-        loginPreference!!.removeData(loginPreference.getLoginPreferences(contexts));
+        loginPreference!!.removeData(loginPreference.getLoginPreferences(contexts))
+    
+        TokenSharedPrefManager.getInstance(contexts).getDeviceTokenClear()
         contexts.startActivity(Intent(contexts, loginActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
@@ -126,7 +113,7 @@ object Utils {
     fun errorHandler(response: Response<ResponseModel>?): String {
        val errorResponseKey="message"
        return try {
-           val jObjError = JSONObject(response!!.errorBody().string())
+           val jObjError = JSONObject(response!!.errorBody()!!.string())
            jObjError.getString(errorResponseKey)
        } catch (e: Exception) { e.message!! }
    }

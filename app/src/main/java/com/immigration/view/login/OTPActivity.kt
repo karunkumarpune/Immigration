@@ -36,7 +36,6 @@ class OTPActivity : AppCompatActivity() {
    private val TAG = OTPActivity::class.java.name
    private var loginPreference: LoginPrefences? = null
    private var snackbarMessage: String? = null
-   private var tagMessage: String? = null
    private var session_otp: String = ""
    private var userId: String = ""
    private var contact: String = ""
@@ -68,8 +67,6 @@ class OTPActivity : AppCompatActivity() {
       session_otp = intent.getStringExtra("session_otp")
       userId = intent.getStringExtra("user_id")
       Utils.log(TAG, "OTP data onResume : session_otp $session_otp , $userId")
-      
-      
       LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
    }
    
@@ -102,11 +99,11 @@ class OTPActivity : AppCompatActivity() {
    }
    
    private fun initView() {
-      // Click Back Button
-      otp_btn_click_back.setOnClickListener {
+         otp_btn_click_back.setOnClickListener {
          onBackPressed()
-         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-      }
+            Utils.moveLeftToRight(this)
+   
+         }
    }
    
    private fun initViewSubmitOTPListener() {
@@ -176,15 +173,14 @@ class OTPActivity : AppCompatActivity() {
                val status = response!!.code()
                when (status) {
                   200 -> {
-                     val userId = response.body().result.userId
-                     val email = response.body().result.email
-                     val countryCode = response.body().result.countryCode
-                     val contact = response.body().result.contact
-                     val accessToken = response.body().result.accessToken
+                     val email = response.body()!!.result!!.email
+                     val countryCode = response.body()!!.result!!.countryCode
+                     val contact = response.body()!!.result!!.contact
+                     val accessToken = response.body()!!.result!!.accessToken
                      
-                     Constant.accessTokenValues = accessToken
-                     Constant.countryCodeValues = countryCode
-                     Constant.contactValues = contact
+                     Constant.accessTokenValues = accessToken!!
+                     Constant.countryCodeValues = countryCode!!
+                     Constant.contactValues = contact!!
                      
                      startActivity(Intent(this@OTPActivity, EditProfileActivity::class.java)
                       .putExtra("session_edit_profile", "0")
@@ -222,6 +218,7 @@ class OTPActivity : AppCompatActivity() {
                   200 -> {
                      startActivity(Intent(this@OTPActivity, ResetPasswordActivity::class.java)
                       .putExtra("userId", userId))
+                     
                   }
                   401 -> {
                      Utils.showToast(applicationContext, errorHandler(response))
@@ -236,7 +233,7 @@ class OTPActivity : AppCompatActivity() {
             
             override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
                pb.dismiss()
-               tagMessage = "otp:  Throwable-:   $t"
+               Utils.log(TAG, "otp:  Throwable-:   $t")
                Utils.showToastSnackbar(this@OTPActivity, getString(R.string.no_internet).toString(), Color.RED)
             }
          })
@@ -256,9 +253,6 @@ class OTPActivity : AppCompatActivity() {
             pb.dismiss()
             val status = response!!.code()
             when (status) {
-               200 -> {
-                  Utils.showToast(applicationContext, response.body().message.toString())
-               }
                401 -> {
                   Utils.showToast(applicationContext, Utils.errorHandler(response))
                   Utils.invalidToken(this@OTPActivity, loginPreference, LoginActivity())
@@ -272,10 +266,9 @@ class OTPActivity : AppCompatActivity() {
          
          override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
             pb.dismiss()
-            tagMessage = "otp:  Throwable-:   $t"
+            Utils.log(TAG, "otp:  Throwable-:   $t")
             Utils.showToastSnackbar(this@OTPActivity, getString(R.string.no_internet).toString(), Color.RED)
          }
       })
-      Utils.log(TAG, tagMessage!!)
    }
 }

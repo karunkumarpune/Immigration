@@ -31,7 +31,7 @@ class QuestionAdapter(val context: Context, val list: ArrayList<Result>) : Recyc
 
             if (flags) {
                 val layoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                var view: View? = null
+                var view: View?
                 holder.llRootLayout.removeAllViews()
 
                 view = layoutInflater.inflate(R.layout.adapter_answer_layout, holder.llRootLayout, false)

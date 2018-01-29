@@ -75,7 +75,7 @@ class QuestionsActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Status>?, response: Response<Status>?) {
                 pb.dismiss()
                 if (response!!.isSuccessful) {
-                    val list = response.body().result
+                    val list = response.body()!!.result
                     try {
                         rideAdapter = QuestionAdapter(this@QuestionsActivity, list as ArrayList<Result>)
                         recyclerView!!.adapter = rideAdapter
