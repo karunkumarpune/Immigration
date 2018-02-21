@@ -1,5 +1,6 @@
 package com.immigration.view.questions
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -24,13 +25,12 @@ import javax.security.auth.callback.Callback
 class QuestionsActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
-
-
     private var rideAdapter: QuestionAdapter? = null
     private var mAPIService: APIService? = null
     private lateinit var pb: CustomProgressBar
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         lateinit var txt_count: TextView
         var isChecks: Boolean = false
     }

@@ -3,7 +3,10 @@ package com.immigration.controller.application;
 import android.app.Application;
 import android.os.StrictMode;
 
+import com.crashlytics.android.Crashlytics;
 import com.immigration.utils.ConnectivityReceiver;
+
+import io.fabric.sdk.android.Fabric;
 
 public class AppController extends Application {
 
@@ -18,6 +21,8 @@ public class AppController extends Application {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        Fabric.with(this, new Crashlytics());
 
 
     }

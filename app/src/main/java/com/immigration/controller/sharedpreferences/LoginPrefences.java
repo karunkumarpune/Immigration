@@ -46,9 +46,7 @@ public class LoginPrefences {
         editor.putString(PRE_Fname, firstName);
         editor.putString(PRE_Lname, lastName);
         editor.putString(PRE_ProfilePic, profilePic);
-
-
-        editor.commit();
+        editor.apply();
     }
 
 

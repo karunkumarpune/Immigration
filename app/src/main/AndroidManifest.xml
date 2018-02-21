@@ -35,10 +35,13 @@
             </intent-filter>
         </activity>
 -->
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
 
           <activity
             android:name=".view.main.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+              android:screenOrientation="portrait"
+              >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,35 +51,71 @@
 
 
 
-        <activity android:name=".view.login.LoginActivity" />
-        <activity android:name=".view.login.ForgotPasswordActivity" />
-        <activity android:name=".view.login.EditProfileActivity" />
-        <activity android:name=".view.login.ResetPasswordActivity" />
-        <activity android:name=".view.login.ChangePasswordActivity" />
-        <activity android:name=".view.login.SignupActivity" />
-        <activity android:name=".view.login.OTPActivity" />
-        <activity android:name=".view.home.NavigationActivity" />
-        <activity android:name=".view.statisticReport.StatisticReportActivity" />
-        <activity android:name=".view.generateReport.GenerateReport" />
-        <activity android:name=".view.subscription.ResultActivity" />
-        <activity android:name=".view.subscription.SubscriptionListActivity" />
-        <activity android:name=".view.questions.QuestionsActivity" />
-        <activity android:name=".view.support.SupportActivitys" />
-        <activity android:name=".view.faq.FAQActivity" />
-        <activity android:name=".view.privecy.PrivecyPolicyActivity" />
-        <activity android:name=".view.term_condition.TermConditionActivity" />
+        <activity android:name=".view.login.LoginActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.EditProfileActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.SignupActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.login.OTPActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.home.NavigationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.statisticReport.StatisticReportActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.generateReport.GenerateReport"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.subscription.ResultActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.subscription.SubscriptionListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.questions.QuestionsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.support.SupportActivitys"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.faq.FAQActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.privecy.PrivecyPolicyActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.term_condition.TermConditionActivity"
+            android:screenOrientation="portrait"
+            />
 
 
 
         <!--  Push Notification- -->
 
-        <service android:name=".push_notification.MyFirebaseMessagingService">
+        <service android:name=".push_notification.MyFirebaseMessagingService"
+            android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
-        <service android:name=".push_notification.FirebaseIDService">
+        <service android:name=".push_notification.FirebaseIDService"
+            android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
@@ -88,7 +127,8 @@
         <!--  end Push Notification- -->
 
         <!-- SMS OTP -->
-        <receiver android:name=".controller.SmsReceiver">
+        <receiver android:name=".controller.SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="1">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -105,10 +145,13 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".view.subscription.PDFViewerActivity"></activity>
+        <activity android:name=".view.subscription.PDFViewerActivity"
+            android:screenOrientation="portrait"
+            />
 
         <!--need crop Image-->
         <activity
+            android:screenOrientation="portrait"
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
